@@ -1,0 +1,5 @@
+/hexagonal-architecture-docs/
+.idea
+.gradle
+gradlew
+gradlew.bat

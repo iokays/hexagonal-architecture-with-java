@@ -1,0 +1,73 @@
+// Root Project中build.gradle
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.4' apply(false)
+    id 'io.spring.dependency-management' version '1.1.4' apply(false)
+}
+
+allprojects {
+
+    apply plugin: 'java'
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs += "--enable-preview"
+    }
+
+    tasks.withType(Test).configureEach {
+        jvmArgs += "--enable-preview"
+    }
+
+    tasks.withType(JavaExec).configureEach {
+        jvmArgs += "--enable-preview"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    dependencies {
+        implementation 'io.vavr:vavr:0.10.4'
+        implementation 'org.apache.commons:commons-collections4:4.4'
+        implementation 'com.google.guava:guava:33.0.0-jre'
+        implementation 'org.apache.commons:commons-lang3:3.12.0'
+        implementation 'commons-codec:commons-codec:1.16.0'
+        implementation 'org.jasypt:jasypt:1.9.3'
+        implementation 'org.slf4j:slf4j-api:2.0.9'
+        implementation 'ch.qos.logback:logback-core:1.4.12'
+        implementation 'ch.qos.logback:logback-classic:1.4.14'
+        implementation 'io.swagger.core.v3:swagger-annotations:2.2.21'
+
+        compileOnly 'org.projectlombok:lombok:1.18.34'
+        annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'https://repo.maven.apache.org/maven2' }
+        maven { url 'https://repository.jboss.org/nexus/content/groups/public-jboss' }
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/snapshot' }
+        mavenCentral()
+    }
+
+    buildscript {
+        repositories {
+            mavenLocal()
+            maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
+            maven { url 'https://repo.maven.apache.org/maven2' }
+            maven { url 'https://repository.jboss.org/nexus/content/groups/public-jboss' }
+            maven { url 'https://repo.spring.io/milestone' }
+            maven { url 'https://repo.spring.io/snapshot' }
+            mavenCentral()
+        }
+    }
+}
+
