@@ -1,1 +1,2 @@
 include 'common-core'
+include 'common-domain-with-spring-data-jpa'

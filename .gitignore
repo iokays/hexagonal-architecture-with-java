@@ -1,4 +1,6 @@
 /hexagonal-architecture-docs/
+build
+.DS_Store
 .idea
 .gradle
 gradlew
