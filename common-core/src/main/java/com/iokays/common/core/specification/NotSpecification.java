@@ -7,7 +7,7 @@ package com.iokays.common.core.specification;
  */
 public class NotSpecification<T> extends AbstractSpecification<T> {
 
-    private Specification<T> spec1;
+    private final Specification<T> spec1;
 
     /**
      * 构造函数。
