@@ -1,4 +1,4 @@
-package com.iokays.domain.event.send;
+package com.iokays.common.domain.event.store;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

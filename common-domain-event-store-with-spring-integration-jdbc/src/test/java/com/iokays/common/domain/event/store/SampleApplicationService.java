@@ -1,4 +1,4 @@
-package com.iokays.domain.event.store;
+package com.iokays.common.domain.event.store;
 
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
