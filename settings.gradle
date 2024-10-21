@@ -3,5 +3,6 @@ include 'common-domain-with-spring-data-jpa'
 include 'common-domain-serialization-with-jackson'
 include 'common-domain-event-store-with-spring-integration-jdbc'
 include 'common-domain-event-send-with-spring-integration-jdbc'
+include 'common-domain-serialization-with-jackson'
 
 include 'sample-spring-integration-jdbc'
