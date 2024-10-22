@@ -5,6 +5,6 @@ include 'common-domain-event-store-with-spring-integration-jdbc'
 include 'common-domain-event-send-with-spring-integration-jdbc'
 include 'common-domain-serialization-with-jackson'
 include 'common-distributed-lock-with-spring-integration'
-
+include 'common-distributed-traceid-with-open-telemetry'
 
 include 'sample-spring-integration-jdbc'
