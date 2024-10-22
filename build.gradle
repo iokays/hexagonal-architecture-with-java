@@ -1,8 +1,8 @@
 // Root Project中build.gradle
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4' apply(false)
-    id 'io.spring.dependency-management' version '1.1.4' apply(false)
+    id 'org.springframework.boot' version '3.3.4' apply(false)
+    id 'io.spring.dependency-management' version '1.1.6' apply(false)
 }
 
 allprojects {
@@ -38,7 +38,7 @@ allprojects {
         implementation 'commons-codec:commons-codec:1.16.0'
         implementation 'org.jasypt:jasypt:1.9.3'
         implementation 'org.slf4j:slf4j-api:2.0.9'
-        implementation 'ch.qos.logback:logback-core:1.4.12'
+        implementation 'ch.qos.logback:logback-core:1.4.14'
         implementation 'ch.qos.logback:logback-classic:1.4.14'
         implementation 'io.swagger.core.v3:swagger-annotations:2.2.21'
 
