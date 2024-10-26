@@ -8,3 +8,4 @@ include 'common-distributed-lock-with-spring-integration'
 include 'common-distributed-traceid-with-open-telemetry'
 
 include 'sample-spring-integration-jdbc'
+include 'sample-traceid-with-spring'
