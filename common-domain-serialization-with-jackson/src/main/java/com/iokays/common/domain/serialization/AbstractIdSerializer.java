@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * 将默认的 abstractId.id() 序列化为Id字符串
+ * 当对象是 AbstractId, 将值序列化为: abstractId.id。而不是默认的嵌套结构。
  */
 public class AbstractIdSerializer<T extends AbstractId> extends JsonSerializer<T> {
 

@@ -19,6 +19,7 @@ public class SampleLoggerService {
             logger.info("forEach: threadId: {}, traceId: {}, spanId: {}", Thread.currentThread().getName(), Span.current().getSpanContext().getTraceId(), Span.current().getSpanContext().getSpanId());
         });
 
+        logger.info("spanContext: {}", Span.current().getSpanContext());
         logger.info("span: {}", Span.current());
 
     }
