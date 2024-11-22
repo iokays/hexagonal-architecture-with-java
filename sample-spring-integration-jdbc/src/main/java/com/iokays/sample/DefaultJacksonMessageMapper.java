@@ -17,9 +17,6 @@ import java.io.OutputStream;
  */
 public class DefaultJacksonMessageMapper {
 
-    //log
-    private static final Logger logger = LoggerFactory.getLogger(DefaultJacksonMessageMapper.class);
-
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {

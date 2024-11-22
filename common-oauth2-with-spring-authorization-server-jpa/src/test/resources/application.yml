@@ -1,0 +1,25 @@
+#spring:
+#  security:
+#    user:
+#      name: "user"
+#      password: "password"
+#      roles:
+#        - "USER"
+#    oauth2:
+#      authorizationserver:
+#        client:
+#          login-client:
+#            registration:
+#              client-id: "login-client"
+#              client-secret: "{noop}openid-connect"
+#              client-authentication-methods:
+#                - "client_secret_basic"
+#              authorization-grant-types:
+#                - "authorization_code"
+#                - "refresh_token"
+#              redirect-uris:
+#                - "https://www.iokays.com"
+#              scopes:
+#                - "openid"
+#                - "profile"
+#            require-authorization-consent: true

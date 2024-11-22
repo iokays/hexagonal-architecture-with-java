@@ -48,8 +48,8 @@ public class DistributedLockAspect {
      */
     @Around("@annotation(distributedLock)")
     public Object around(final ProceedingJoinPoint pjp, final DistributedLock distributedLock) throws Throwable {
-        Validate.notNull(pjp);
-        Validate.notNull(distributedLock);
+        Validate.notNull(pjp, "pjp is null");
+        Validate.notNull(distributedLock, "distributedLock is null");
         Validate.noNullElements(new Object[]{distributedLock.key(), distributedLock.time(), distributedLock.unit()});
 
         final String key = getKey(distributedLock.key(), pjp);

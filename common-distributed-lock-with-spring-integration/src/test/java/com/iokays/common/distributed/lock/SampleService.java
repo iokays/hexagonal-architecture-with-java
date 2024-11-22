@@ -1,12 +1,12 @@
 package com.iokays.common.distributed.lock;
 
 import com.iokays.common.core.lock.DistributedLock;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static io.vavr.API.println;
-
+@Slf4j
 @Service
 public class SampleService {
 
@@ -14,7 +14,7 @@ public class SampleService {
 
     @DistributedLock(value = "sampleLock", key = "#key", time = 1)
     public void run(final String key) {
-        println(STR."counter: \{counter.getAndIncrement()}");
+        log.info("run: {}, counter: {}", key, counter.getAndIncrement());
     }
 
 }

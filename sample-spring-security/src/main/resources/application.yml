@@ -1,0 +1,26 @@
+server:
+  port: 8082
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: XXXXXXXXXXXXX
+            client-secret: XXXXXXXXXXXXXXXXXXXXX
+          github:
+            client-id: YYYYYYYYYY
+            client-secret: YYYYYYYYYYYYYYYYYYYYY
+          local:
+            client-id: login-client
+            client-secret: openid-connect
+            authorization-grant-type: authorization_code
+            scope: openid,profile
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+        provider:
+          local:
+            authorization-uri: http://127.0.0.1:8081/oauth2/authorize
+            token-uri: http://127.0.0.1:8081/oauth2/token
+            jwk-set-uri: http://127.0.0.1:8081/oauth2/jwks
+            user-info-uri: http://127.0.0.1:8081/userinfo
+            user-name-attribute: sub

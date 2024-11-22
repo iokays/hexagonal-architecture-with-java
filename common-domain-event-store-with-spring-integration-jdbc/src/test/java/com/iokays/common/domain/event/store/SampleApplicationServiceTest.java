@@ -11,8 +11,6 @@ import org.springframework.test.annotation.Rollback;
 @SpringBootTest
 class SampleApplicationServiceTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(SampleApplicationServiceTest.class);
-
     @Resource
     private SampleApplicationService service;
 

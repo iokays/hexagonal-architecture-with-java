@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 @SpringBootTest
 class SampleJdbcServiceTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(SampleJdbcServiceTest.class);
+    private static final Logger log = LoggerFactory.getLogger(SampleJdbcServiceTest.class);
 
     @Resource
     private SampleJdbcService service;
@@ -44,7 +44,7 @@ class SampleJdbcServiceTest {
             }
             result.add(content.toString());
         }
-        logger.info("数据已准备");
+        log.info("数据已准备");
         return result;
 
     }
@@ -62,7 +62,7 @@ class SampleJdbcServiceTest {
         final var content = create(4000, 10 * 10000);
         final var now = System.currentTimeMillis();
         service.insert("t_content", content, 1000);
-        logger.info("耗时: {}", System.currentTimeMillis() - now);
+        log.info("耗时: {}", System.currentTimeMillis() - now);
     }
 
     @Test
@@ -70,7 +70,7 @@ class SampleJdbcServiceTest {
         final var content = create(4000, 10 * 10000);
         final var now = System.currentTimeMillis();
         service.multiInsert("t_content", content, 1000);
-        logger.info("耗时: {}", System.currentTimeMillis() - now);
+        log.info("耗时: {}", System.currentTimeMillis() - now);
     }
 
     /**
@@ -84,7 +84,7 @@ class SampleJdbcServiceTest {
         Lists.partition(content, 8).stream().parallel().forEach(v -> {
             service.insert("t_content", v, 1000);
         });
-        logger.info("耗时: {}", System.currentTimeMillis() - now);
+        log.info("耗时: {}", System.currentTimeMillis() - now);
     }
 
     /**
@@ -97,7 +97,7 @@ class SampleJdbcServiceTest {
         Lists.partition(content, 8).stream().parallel().forEach(v -> {
             service.multiInsert("t_content", v, 1000);
         });
-        logger.info("耗时: {}", System.currentTimeMillis() - now);
+        log.info("耗时: {}", System.currentTimeMillis() - now);
     }
 
     /**
@@ -115,6 +115,6 @@ class SampleJdbcServiceTest {
             service.multiInsert("t_content", content, 1000);
         }
 
-        logger.info("耗时: {}", System.currentTimeMillis() - now);
+        log.info("耗时: {}", System.currentTimeMillis() - now);
     }
 }

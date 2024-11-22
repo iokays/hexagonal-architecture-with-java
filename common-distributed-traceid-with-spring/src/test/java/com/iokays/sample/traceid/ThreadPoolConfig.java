@@ -1,5 +1,6 @@
 package com.iokays.sample.traceid;
 
+import com.iokays.common.traceid.ThreadPoolMDCExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;

@@ -10,17 +10,17 @@ import java.util.stream.IntStream;
 @Service
 public class SampleLoggerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SampleLoggerService.class);
+    private static final Logger log = LoggerFactory.getLogger(SampleLoggerService.class);
 
     public void show() {
-        logger.info("threadId: {}, traceId: {}, spanId: {}", Thread.currentThread().getName(), Span.current().getSpanContext().getTraceId(), Span.current().getSpanContext().getSpanId());
+        log.info("threadId: {}, traceId: {}, spanId: {}", Thread.currentThread().getName(), Span.current().getSpanContext().getTraceId(), Span.current().getSpanContext().getSpanId());
         IntStream.range(0, 10).parallel().forEach(v -> {
             //不支持 请查看: https://github.com/open-telemetry/opentelemetry-java-instrumentation/issues/709
-            logger.info("forEach: threadId: {}, traceId: {}, spanId: {}", Thread.currentThread().getName(), Span.current().getSpanContext().getTraceId(), Span.current().getSpanContext().getSpanId());
+            log.info("forEach: threadId: {}, traceId: {}, spanId: {}", Thread.currentThread().getName(), Span.current().getSpanContext().getTraceId(), Span.current().getSpanContext().getSpanId());
         });
 
-        logger.info("spanContext: {}", Span.current().getSpanContext());
-        logger.info("span: {}", Span.current());
+        log.info("spanContext: {}", Span.current().getSpanContext());
+        log.info("span: {}", Span.current());
 
     }
 

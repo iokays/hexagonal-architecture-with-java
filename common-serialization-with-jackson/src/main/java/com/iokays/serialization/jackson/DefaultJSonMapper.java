@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.collect.Maps;
 import io.vavr.control.Try;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +19,10 @@ import static io.vavr.API.println;
 
 public final class DefaultJSonMapper implements Serializable {
 
+
+    private DefaultJSonMapper() {
+    }
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
@@ -25,6 +30,8 @@ public final class DefaultJSonMapper implements Serializable {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     public static String toJson(Object x) {

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class DomainEventInputMessageMapper {
 
     //log
-    private static final Logger logger = LoggerFactory.getLogger(DomainEventInputMessageMapper.class);
+    private static final Logger log = LoggerFactory.getLogger(DomainEventInputMessageMapper.class);
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 

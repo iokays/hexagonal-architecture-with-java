@@ -1,5 +1,6 @@
 package com.iokays.sample.traceid;
 
+import com.iokays.common.traceid.JunitMDCSupport;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
