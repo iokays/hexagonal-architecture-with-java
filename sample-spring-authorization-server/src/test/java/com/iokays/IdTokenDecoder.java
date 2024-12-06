@@ -11,7 +11,7 @@ public class IdTokenDecoder {
      * @param args
      */
     public static void main(String[] args) {
-        final var idToken = ConfigProperties.value("code");
+        final var idToken = ConfigProperties.value("id_token");
 
         String[] parts = idToken.split("\\.");
 

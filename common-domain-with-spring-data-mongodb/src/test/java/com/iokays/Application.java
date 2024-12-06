@@ -6,9 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableMongoAuditing
@@ -21,7 +19,7 @@ public class Application {
         System.out.println("Hello World!");
         SpringApplication.run(Application.class, args);
 
-         }
+    }
 
     @Bean
     MongoTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {

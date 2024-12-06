@@ -51,17 +51,10 @@ public class JwtUserInfoMapperSecurityConfig {
             return userInfoService.loadUser(principal.getName());
         };
 
-        authorizationServerConfigurer
-                .oidc((oidc) -> oidc
-                        .userInfoEndpoint((userInfo) -> userInfo
-                                .userInfoMapper(userInfoMapper)
-                        )
-                );
         http
                 .securityMatcher(endpointsMatcher)
-                .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated()
-                )
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+                .with(authorizationServerConfigurer, v -> v.oidc((oidc) -> oidc.userInfoEndpoint((userInfo) -> userInfo.userInfoMapper(userInfoMapper))))
                 .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
                 .oauth2ResourceServer(resourceServer -> resourceServer
                         .jwt(Customizer.withDefaults())
@@ -69,8 +62,8 @@ public class JwtUserInfoMapperSecurityConfig {
                 .exceptionHandling((exceptions) -> exceptions
                         .defaultAuthenticationEntryPointFor(
                                 new LoginUrlAuthenticationEntryPoint("/login"), createRequestMatcher())
-                )
-                .apply(authorizationServerConfigurer);
+                );
+
 
         return http.build();
     }

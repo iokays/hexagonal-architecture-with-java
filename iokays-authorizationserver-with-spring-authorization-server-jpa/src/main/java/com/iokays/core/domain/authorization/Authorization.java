@@ -1,0 +1,189 @@
+package com.iokays.core.domain.authorization;
+
+import com.iokays.common.core.event.EventId;
+import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.core.domain.authorization.command.SaveAuthorization;
+import com.iokays.core.domain.authorization.event.AuthorizationCreated;
+import com.iokays.core.domain.authorization.event.AuthorizationUpdated;
+import com.iokays.core.domain.registeredclient.RegisteredClientId;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import org.apache.commons.lang3.StringUtils;
+
+import java.time.Instant;
+
+@Entity
+@Table(name = "`t_authorization`")
+public class Authorization extends AbstractAggregateRoot<Authorization> {
+
+    @AttributeOverride(name = "id", column = @Column(name = "authorization_id", unique = true, length = 40, nullable = false))
+    private AuthorizationId authorizationId;
+
+    @AttributeOverride(name = "id", column = @Column(name = "registeredClient_id", length = 40, nullable = false))
+    private RegisteredClientId registeredClientId;
+
+    @Column(nullable = false)
+    private String principalName;
+
+    @Column(nullable = false)
+    private String authorizationGrantType;
+
+    @Column(length = 1000, nullable = false)
+    private String authorizedScopes;
+    @Column(length = 4000, nullable = false)
+    private String attributes;
+    @Column(length = 500, nullable = false)
+    private String state;
+
+    @Column(length = 4000)
+    private String authorizationCodeValue;
+    private Instant authorizationCodeIssuedAt;
+    private Instant authorizationCodeExpiresAt;
+    private String authorizationCodeMetadata;
+
+    @Column(length = 4000)
+    private String accessTokenValue;
+    private Instant accessTokenIssuedAt;
+    private Instant accessTokenExpiresAt;
+    @Column(length = 2000)
+    private String accessTokenMetadata;
+    private String accessTokenType;
+    @Column(length = 1000)
+    private String accessTokenScopes;
+
+    @Column(length = 4000)
+    private String refreshTokenValue;
+    private Instant refreshTokenIssuedAt;
+    private Instant refreshTokenExpiresAt;
+    @Column(length = 2000)
+    private String refreshTokenMetadata;
+
+    @Column(length = 4000)
+    private String oidcIdTokenValue;
+    private Instant oidcIdTokenIssuedAt;
+    private Instant oidcIdTokenExpiresAt;
+    @Column(length = 2000)
+    private String oidcIdTokenMetadata;
+    @Column(length = 2000)
+    private String oidcIdTokenClaims;
+
+    @Column(length = 4000)
+    private String userCodeValue;
+    private Instant userCodeIssuedAt;
+    private Instant userCodeExpiresAt;
+    @Column(length = 2000)
+    private String userCodeMetadata;
+
+    @Column(length = 4000)
+    private String deviceCodeValue;
+    private Instant deviceCodeIssuedAt;
+    private Instant deviceCodeExpiresAt;
+    @Column(length = 2000)
+    private String deviceCodeMetadata;
+
+    protected Authorization() {
+        super();
+    }
+
+    public Authorization(SaveAuthorization command) {
+        this();
+        this.set(command);
+        this.registerEvent(AuthorizationCreated.builder().id(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
+    }
+
+    public void update(SaveAuthorization command) {
+        this.set(command);
+        this.registerEvent(AuthorizationUpdated.builder().id(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
+    }
+
+    private void set(SaveAuthorization command) {
+        this.authorizationId = command.authorizationId();
+        this.registeredClientId = command.registeredClientId();
+        this.principalName = command.principalName();
+        this.authorizationGrantType = command.authorizationGrantType();
+        this.authorizedScopes = command.authorizedScopes();
+        this.attributes = command.attributes();
+        this.state = StringUtils.defaultString(command.state());
+
+        this.authorizationCodeValue = command.authorizationCodeValue();
+        this.authorizationCodeIssuedAt = command.authorizationCodeIssuedAt();
+        this.authorizationCodeExpiresAt = command.authorizationCodeExpiresAt();
+        this.authorizationCodeMetadata = command.authorizationCodeMetadata();
+
+        this.accessTokenValue = command.accessTokenValue();
+        this.accessTokenIssuedAt = command.accessTokenIssuedAt();
+        this.accessTokenExpiresAt = command.accessTokenExpiresAt();
+        this.accessTokenMetadata = command.accessTokenMetadata();
+        this.accessTokenType = command.accessTokenType();
+        this.accessTokenScopes = command.accessTokenScopes();
+
+        this.refreshTokenValue = command.refreshTokenValue();
+        this.refreshTokenIssuedAt = command.refreshTokenIssuedAt();
+        this.refreshTokenExpiresAt = command.refreshTokenExpiresAt();
+        this.refreshTokenMetadata = command.refreshTokenMetadata();
+
+        this.oidcIdTokenValue = command.oidcIdTokenValue();
+        this.oidcIdTokenIssuedAt = command.oidcIdTokenIssuedAt();
+        this.oidcIdTokenExpiresAt = command.oidcIdTokenExpiresAt();
+        this.oidcIdTokenMetadata = command.oidcIdTokenMetadata();
+        this.oidcIdTokenClaims = command.oidcIdTokenClaims();
+
+        this.userCodeValue = command.userCodeValue();
+        this.userCodeIssuedAt = command.userCodeIssuedAt();
+        this.userCodeExpiresAt = command.userCodeExpiresAt();
+        this.userCodeMetadata = command.userCodeMetadata();
+
+        this.deviceCodeValue = command.deviceCodeValue();
+        this.deviceCodeIssuedAt = command.deviceCodeIssuedAt();
+        this.deviceCodeExpiresAt = command.deviceCodeExpiresAt();
+        this.deviceCodeMetadata = command.deviceCodeMetadata();
+
+    }
+
+
+    public AuthorizationInfo info() {
+        return AuthorizationInfo.builder()
+                .authorizationId(this.authorizationId)
+                .registeredClientId(this.registeredClientId)
+                .principalName(this.principalName)
+                .authorizationGrantType(this.authorizationGrantType)
+                .authorizedScopes(this.authorizedScopes)
+                .attributes(this.attributes)
+                .state(this.state)
+                .authorizationCodeValue(this.authorizationCodeValue)
+                .authorizationCodeIssuedAt(this.authorizationCodeIssuedAt)
+                .authorizationCodeExpiresAt(this.authorizationCodeExpiresAt)
+                .authorizationCodeMetadata(this.authorizationCodeMetadata)
+                .accessTokenValue(this.accessTokenValue)
+                .accessTokenIssuedAt(this.accessTokenIssuedAt)
+                .accessTokenExpiresAt(this.accessTokenExpiresAt)
+                .accessTokenMetadata(this.accessTokenMetadata)
+                .accessTokenType(this.accessTokenType)
+                .accessTokenScopes(this.accessTokenScopes)
+                .refreshTokenValue(this.refreshTokenValue)
+                .refreshTokenIssuedAt(this.refreshTokenIssuedAt)
+                .refreshTokenExpiresAt(this.refreshTokenExpiresAt)
+                .refreshTokenMetadata(this.refreshTokenMetadata)
+                .oidcIdTokenValue(this.oidcIdTokenValue)
+                .oidcIdTokenIssuedAt(this.oidcIdTokenIssuedAt)
+                .oidcIdTokenExpiresAt(this.oidcIdTokenExpiresAt)
+                .oidcIdTokenMetadata(this.oidcIdTokenMetadata)
+                .oidcIdTokenClaims(this.oidcIdTokenClaims)
+                .userCodeValue(this.userCodeValue)
+                .userCodeIssuedAt(this.userCodeIssuedAt)
+                .userCodeExpiresAt(this.userCodeExpiresAt)
+                .userCodeMetadata(this.userCodeMetadata)
+                .deviceCodeValue(this.deviceCodeValue)
+                .deviceCodeIssuedAt(this.deviceCodeIssuedAt)
+                .deviceCodeExpiresAt(this.deviceCodeExpiresAt)
+                .deviceCodeMetadata(this.deviceCodeMetadata)
+                .build();
+    }
+
+    @Override
+    public boolean sameIdentityAs(Authorization other) {
+        return this.authorizationId.equals(other.authorizationId);
+    }
+}

@@ -1,7 +1,6 @@
 package com.iokays.sample
 
 import com.iokays.sample.captcha.UsernameCaptchaAuthenticationFilter
-import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -60,12 +59,15 @@ class MyDefaultSecurityConfig {
     }
 
     @Bean
-    fun authenticationEventPublisher(applicationEventPublisher : ApplicationEventPublisher): AuthenticationEventPublisher {
+    fun authenticationEventPublisher(applicationEventPublisher: ApplicationEventPublisher): AuthenticationEventPublisher {
         return DefaultAuthenticationEventPublisher(applicationEventPublisher);
     }
 
     @Bean
-    fun authenticationManager(userDetailsService: UserDetailsService, passwordEncoder: PasswordEncoder): AuthenticationManager {
+    fun authenticationManager(
+        userDetailsService: UserDetailsService,
+        passwordEncoder: PasswordEncoder
+    ): AuthenticationManager {
         //验证用户密码
         val authenticationProvider = DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
