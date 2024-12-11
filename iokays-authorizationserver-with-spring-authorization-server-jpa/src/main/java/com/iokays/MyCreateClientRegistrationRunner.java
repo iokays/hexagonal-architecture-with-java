@@ -26,9 +26,9 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
             final var clientRegistration = new CreateClientRegistration(
                     CommandId.generate(),
                     ClientRegistrationType.GOOGLE,
-                    "google-client-id",
+                    "YYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
                     "Google",
-                    "google-client-secret",
+                    "XXXXXXXXXXXXXX",
                     "client_secret_basic",
                     "authorization_code",
                     "{baseUrl}/login/oauth2/code/{registrationId}",
@@ -46,9 +46,9 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
             final var clientRegistration = new CreateClientRegistration(
                     CommandId.generate(),
                     ClientRegistrationType.WORK_WEIXIN,
-                    "xxxxxxxxxxxxxxx",
+                    "YYYYYYYYYYYYYYYY",
                     "企微登录",
-                    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx",
+                    "NNNNNNNNNNNNNNNNNNNNNNNNNNNN",
                     "client_secret_basic",
                     "authorization_code",
                     "{baseUrl}/login/oauth2/code/{registrationId}",

@@ -54,7 +54,7 @@ public class MyOAuth2AuthorizationServiceAdapter implements OAuth2AuthorizationS
         List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
         this.objectMapper.registerModules(securityModules);
         this.objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
-        this.objectMapper.addMixIn(Collections.singletonMap(String.class, Object.class).getClass(),SingletonMapMixin.class);
+        this.objectMapper.addMixIn(Collections.singletonMap(String.class, Object.class).getClass(), SingletonMapMixin.class);
     }
 
     private static AuthorizationGrantType resolveAuthorizationGrantType(String authorizationGrantType) {

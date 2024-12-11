@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.time.Instant;
 
 @Entity
-@Table(name = "`t_authorization`")
+@Table(name = "t_oauth2_authorization")
 public class Authorization extends AbstractAggregateRoot<Authorization> {
 
     @AttributeOverride(name = "id", column = @Column(name = "authorization_id", unique = true, length = 40, nullable = false))
@@ -32,7 +32,7 @@ public class Authorization extends AbstractAggregateRoot<Authorization> {
 
     @Column(length = 1000, nullable = false)
     private String authorizedScopes;
-    @Column(length = 4000, nullable = false)
+    @Column(length = 40000, nullable = false)
     private String attributes;
     @Column(length = 500, nullable = false)
     private String state;

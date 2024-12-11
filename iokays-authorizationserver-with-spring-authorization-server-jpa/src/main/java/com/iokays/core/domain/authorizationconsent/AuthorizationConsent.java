@@ -6,9 +6,8 @@ import com.iokays.core.domain.registeredclient.RegisteredClientId;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "`t_authorization_consent`", uniqueConstraints = @UniqueConstraint(columnNames = {"registered_client_id", "principal_name"}))
+@Table(name = "t_oauth2_authorization_consent", uniqueConstraints = @UniqueConstraint(columnNames = {"registered_client_id", "principal_name"}))
 public class AuthorizationConsent extends AbstractAggregateRoot<AuthorizationConsent> {
-
 
     @AttributeOverride(name = "id", column = @Column(name = "authorization_consent_id", unique = true, length = 40, nullable = false))
     private AuthorizationConsentId authorizationConsentId;
@@ -27,7 +26,7 @@ public class AuthorizationConsent extends AbstractAggregateRoot<AuthorizationCon
     }
 
     public AuthorizationConsent(SaveAuthorizationConsent command) {
-        super();
+        this();
         this.authorizationConsentId = AuthorizationConsentId.makeAuthorizationConsentId(command.registeredClientId(), command.principalName());
         this.registeredClientId = command.registeredClientId();
         this.principalName = command.principalName();

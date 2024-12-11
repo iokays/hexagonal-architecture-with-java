@@ -31,17 +31,18 @@ public class MyClientRegistrationRepositoryAdapter implements ClientRegistration
 
     private ClientRegistration toClientRegistration(ClientRegistrationInfo source) {
         log.debug("source: {}", source);
-        return org.springframework.security.oauth2.client.registration.ClientRegistration
+        return ClientRegistration
                 .withRegistrationId(source.clientRegistrationId().id())
+                .clientName(source.clientName())
                 .clientId(source.clientId())
                 .clientSecret(source.clientSecret())
                 .clientAuthenticationMethod(new ClientAuthenticationMethod(source.clientAuthenticationMethod()))
                 .authorizationGrantType(new AuthorizationGrantType(source.authorizationGrantType()))
-                .redirectUri(source.redirectUri())
                 .scope(source.scopes())
+                .redirectUri(source.redirectUri())
                 .authorizationUri(source.authorizationUri())
                 .tokenUri(source.tokenUri())
-                .clientName(source.clientName())
+                .jwkSetUri(source.jwkSetUri())
                 .build();
     }
 

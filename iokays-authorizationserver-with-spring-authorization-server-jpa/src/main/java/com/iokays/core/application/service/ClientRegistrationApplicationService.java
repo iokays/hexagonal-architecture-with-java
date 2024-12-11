@@ -8,7 +8,6 @@ import com.iokays.core.domain.clientregistration.command.CreateClientRegistratio
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +29,8 @@ public class ClientRegistrationApplicationService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "ClientRegistrationById", key = "#id")
     public ClientRegistrationInfo findByRegistrationId(String registrationId) {
+        log.info("registrationId: {}", registrationId);
         final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByClientRegistrationId(new ClientRegistrationId(registrationId)));
         return clientRegistration.info();
     }

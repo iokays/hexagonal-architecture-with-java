@@ -1,6 +1,7 @@
 package com.iokays.config;
 
 import com.iokays.config.adapter.client.MyClientRegistrationRepositoryAdapter;
+import com.iokays.config.handler.FederatedIdentityAuthenticationSuccessHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -28,12 +29,14 @@ public class MySecurityClientConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   MyClientRegistrationRepositoryAdapter clientRegistrationRepositoryAdapter) throws Exception {
+                                                   MyClientRegistrationRepositoryAdapter clientRegistrationRepositoryAdapter,
+                                                   FederatedIdentityAuthenticationSuccessHandler federatedIdentityAuthenticationSuccessHandler
+    ) throws Exception {
 
         http
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(v -> v.successHandler(federatedIdentityAuthenticationSuccessHandler))
                 .sessionManagement(v -> v.maximumSessions(1))
         ;
 

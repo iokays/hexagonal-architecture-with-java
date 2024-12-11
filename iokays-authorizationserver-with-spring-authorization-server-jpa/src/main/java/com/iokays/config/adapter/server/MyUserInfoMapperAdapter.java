@@ -1,8 +1,23 @@
 package com.iokays.config.adapter.server;
 
+import com.iokays.core.application.service.OauthUserApplicationService;
+import com.iokays.core.application.service.UserApplicationService;
+import com.iokays.core.domain.clientregistration.ClientRegistrationId;
+import com.iokays.core.domain.oauth2user.OauthUserInfo;
+import com.iokays.core.domain.user.UserInfo;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ClassUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationContext;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
@@ -10,77 +25,160 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Slf4j
 @Component
+@AllArgsConstructor
 public class MyUserInfoMapperAdapter implements Function<OidcUserInfoAuthenticationContext, OidcUserInfo>, OAuth2TokenCustomizer<JwtEncodingContext> {
 
-    private final UserInfoRepository userInfoRepository = new UserInfoRepository();
+    private static final Set<String> ID_TOKEN_CLAIMS = Set.of(
+            IdTokenClaimNames.ISS,
+            IdTokenClaimNames.SUB,
+            IdTokenClaimNames.AUD,
+            IdTokenClaimNames.EXP,
+            IdTokenClaimNames.IAT,
+            IdTokenClaimNames.AUTH_TIME,
+            IdTokenClaimNames.NONCE,
+            IdTokenClaimNames.ACR,
+            IdTokenClaimNames.AMR,
+            IdTokenClaimNames.AZP,
+            IdTokenClaimNames.AT_HASH,
+            IdTokenClaimNames.C_HASH
+    );
+
+    private final UserApplicationService userApplicationService;
+    private final OauthUserApplicationService oauthUserApplicationService;
 
     @Override
     public OidcUserInfo apply(OidcUserInfoAuthenticationContext context) {
+        final OAuth2Authorization authorization = context.getAuthorization();
+
         final OidcUserInfoAuthenticationToken authentication = context.getAuthentication();
         final JwtAuthenticationToken principal = (JwtAuthenticationToken) authentication.getPrincipal();
 
-        log.info("principal: {}", principal);
+        final var formLogin = authorization.getAttributes().values().stream().map(this::formLogin).filter(Objects::nonNull).findAny().orElse(null);
+        final var oauthLogin = authorization.getAttributes().values().stream().map(this::oauthLogin).filter(Objects::nonNull).findAny().orElse(null);
 
-        //加载为业务的用户信息
-        return new OidcUserInfo(userInfoRepository.findByUsername(principal.getName()));
+        log.info("principal.class: {}, formLogin: {}, oauthLogin: {}", ClassUtils.getName(principal), formLogin, oauthLogin);
+
+        if (Objects.nonNull(formLogin)) {
+            //加载为业务的用户信息
+            return toOidcUserInfo(userApplicationService.findByUsername(principal.getName()));
+        }
+
+        if (Objects.nonNull(oauthLogin)) {
+            //本业务系统的用户信息
+            return toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new ClientRegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
+
+            //第三方的用户信息
+//            Map<String, Object> thirdPartyClaims = extractClaims(oauthLogin);
+//            return new OidcUserInfo(thirdPartyClaims);
+        }
+
+        throw new IllegalArgumentException("Unsupported authentication type: " + principal.getClass().getName());
+    }
+
+
+    public OidcUserInfo toOidcUserInfo(UserInfo userInfo) {
+        return OidcUserInfo.builder()
+                .subject(userInfo.userId().id())
+                .name(userInfo.username())
+                .build();
+    }
+
+    public OidcUserInfo toOidcUserInfo(OauthUserInfo userInfo) {
+        return OidcUserInfo.builder()
+                .subject(userInfo.oauthUserId().id())
+                .name(userInfo.name())
+                .givenName(userInfo.givenName())
+                .familyName(userInfo.familyName())
+                .middleName(userInfo.middleName())
+                .nickname(userInfo.nickname())
+                .preferredUsername(userInfo.preferredUsername())
+                .profile(userInfo.profile())
+                .picture(userInfo.picture())
+                .website(userInfo.website())
+                .email(userInfo.email())
+                .emailVerified(userInfo.emailVerified())
+                .gender(userInfo.gender())
+                .birthdate(userInfo.birthdate())
+                .zoneinfo(userInfo.zoneinfo())
+                .locale(userInfo.locale())
+                .phoneNumber(userInfo.phoneNumber())
+                .phoneNumberVerified(userInfo.phoneNumberVerified())
+                .build();
     }
 
     @Override
     public void customize(JwtEncodingContext context) {
-        log.info("context: {}", context);
-        if (OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
-            final Map<String, Object> map = userInfoRepository.findByUsername(context.getPrincipal().getName());
-            context.getClaims().claims(claims -> claims.putAll(map));
+        final Authentication principal = context.getPrincipal();
+        log.debug("context.principal: {}, name: {}", principal, principal.getName());
+
+        final var formLogin = this.formLogin(principal);
+        final var oauthLogin = this.oauthLogin(principal);
+
+        log.debug("context.principal: {}, name: {}, formLogin: {}, oauthLogin: {}", principal, principal.getName(), formLogin, oauthLogin);
+
+        if (!OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
+            return;
         }
+
+        if (Objects.nonNull(formLogin)) {
+            OidcUserInfo oidcUserInfo = toOidcUserInfo(userApplicationService.findByUsername(principal.getName()));
+            context.getClaims().claims(claims -> claims.putAll(oidcUserInfo.getClaims()));
+            return;
+        }
+
+        if (Objects.nonNull(oauthLogin)) {
+            //第三方用户信息
+//            Map<String, Object> thirdPartyClaims = extractClaims(principal);
+//            context.getClaims().claims(existingClaims -> {
+//                // Remove conflicting claims set by this authorization server
+//                existingClaims.keySet().forEach(thirdPartyClaims::remove);
+//
+//                // Remove standard id_token claims that could cause problems with clients
+//                ID_TOKEN_CLAIMS.forEach(thirdPartyClaims::remove);
+//
+//                // Add all other claims directly to id_token
+//                existingClaims.putAll(thirdPartyClaims);
+//            });
+
+            //本业务系统的用户信息
+            final OidcUserInfo oidcUserInfo = toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new ClientRegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
+            context.getClaims().claims(claims -> claims.putAll(oidcUserInfo.getClaims()));
+            return;
+        }
+
+        throw new IllegalArgumentException("Unsupported authentication type: " + principal.getClass().getName());
+    }
+
+    private Map<String, Object> extractClaims(Authentication principal) {
+        Map<String, Object> claims = Collections.emptyMap();
+        if (principal.getPrincipal() instanceof OidcUser oidcUser) {
+            OidcIdToken idToken = oidcUser.getIdToken();
+            claims = idToken.getClaims();
+        } else if (principal.getPrincipal() instanceof OAuth2User oauth2User) {
+            claims = oauth2User.getAttributes();
+        }
+
+        return new HashMap<>(claims);
     }
 
 
-    static class UserInfoRepository {
-
-        private final Map<String, Map<String, Object>> userInfo = new HashMap<>();
-
-        public UserInfoRepository() {
-            this.userInfo.put("admin", createUser("user-iokays"));
-            this.userInfo.put("user1", createUser("user1"));
-            this.userInfo.put("user2", createUser("user2"));
+    private UsernamePasswordAuthenticationToken formLogin(Object authentication) {
+        if (authentication instanceof UsernamePasswordAuthenticationToken target) {
+            return target;
         }
+        return null;
+    }
 
-        private static Map<String, Object> createUser(String username) {
-            return OidcUserInfo.builder()
-                    .subject(username)
-                    .name("First Last")
-                    .givenName("First")
-                    .familyName("Last")
-                    .middleName("Middle")
-                    .nickname("User")
-                    .preferredUsername(username)
-                    .profile("https://example.com/" + username)
-                    .picture("https://example.com/" + username + ".jpg")
-                    .website("https://example.com")
-                    .email(username + "@example.com")
-                    .emailVerified(true)
-                    .gender("female")
-                    .birthdate("1970-01-01")
-                    .zoneinfo("Europe/Paris")
-                    .locale("en-US")
-                    .phoneNumber("+1 (604) 555-1234;ext=5678")
-                    .phoneNumberVerified(false)
-                    .claim("address", Collections.singletonMap("formatted", "Champ de Mars\n5 Av. Anatole France\n75007 Paris\nFrance"))
-                    .updatedAt("1970-01-01T00:00:00Z")
-                    .build()
-                    .getClaims();
+    private OAuth2AuthenticationToken oauthLogin(Object authentication) {
+        if (authentication instanceof OAuth2AuthenticationToken target) {
+            return target;
         }
-
-        public Map<String, Object> findByUsername(String username) {
-            return this.userInfo.get(username);
-        }
+        return null;
     }
 
 

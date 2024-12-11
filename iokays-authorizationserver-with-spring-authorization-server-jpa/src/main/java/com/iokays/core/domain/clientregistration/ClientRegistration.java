@@ -61,7 +61,7 @@ public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration
     }
 
     public ClientRegistration(CreateClientRegistration command) {
-        this.clientRegistrationId = ClientRegistrationId.makeClientRegistrationId();
+        this.clientRegistrationId = ClientRegistrationId.makeClientRegistrationId(command.clientRegistrationType());
         this.clientRegistrationType = command.clientRegistrationType();
         this.clientId = command.clientId();
         this.clientName = command.clientName();

@@ -16,7 +16,10 @@ public class ClientRegistrationId extends AbstractId {
         super(id);
     }
 
-    public static ClientRegistrationId makeClientRegistrationId() {
+    public static ClientRegistrationId makeClientRegistrationId(final ClientRegistrationType type) {
+        if (null != type) {
+            return new ClientRegistrationId(type.name());
+        }
         return new ClientRegistrationId(UUID.randomUUID().toString().replace("-", ""));
     }
 

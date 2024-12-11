@@ -18,7 +18,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "t_clients")
+@Table(name = "t_oauth2_registered_client")
 public class RegisteredClient extends AbstractAggregateRoot<RegisteredClient> {
 
     @Column(length = 1000, unique = true, nullable = false)
