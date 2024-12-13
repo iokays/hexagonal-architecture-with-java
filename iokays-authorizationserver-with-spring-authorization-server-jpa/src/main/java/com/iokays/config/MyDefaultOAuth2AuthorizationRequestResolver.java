@@ -1,6 +1,6 @@
 package com.iokays.config;
 
-import com.iokays.config.adapter.client.MyClientRegistrationRepositoryAdapter;
+import com.iokays.config.adapter.persistence.MyClientRegistrationRepositoryAdapter;
 import com.iokays.core.application.service.ClientRegistrationApplicationService;
 import com.iokays.core.domain.clientregistration.ClientRegistrationType;
 import jakarta.servlet.http.HttpServletRequest;

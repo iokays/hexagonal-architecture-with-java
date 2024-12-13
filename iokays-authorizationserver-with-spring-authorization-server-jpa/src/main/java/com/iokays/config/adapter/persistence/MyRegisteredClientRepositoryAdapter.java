@@ -1,4 +1,4 @@
-package com.iokays.config.adapter.server;
+package com.iokays.config.adapter.persistence;
 
 import com.iokays.common.core.command.CommandId;
 import com.iokays.core.application.service.RegisteredClientApplicationService;

@@ -46,9 +46,9 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
             final var clientRegistration = new CreateClientRegistration(
                     CommandId.generate(),
                     ClientRegistrationType.WORK_WEIXIN,
-                    "YYYYYYYYYYYYYYYY",
+                    "ww0e7aacb3278b8196",
                     "企微登录",
-                    "NNNNNNNNNNNNNNNNNNNNNNNNNNNN",
+                    "18ZsZYZX4F7g6Atgm_6nZC_SyyHzli9GKZ7MC9OuE7k",
                     "client_secret_basic",
                     "authorization_code",
                     "{baseUrl}/login/oauth2/code/{registrationId}",

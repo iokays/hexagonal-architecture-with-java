@@ -1,4 +1,4 @@
-package com.iokays.config.adapter.server;
+package com.iokays.config.adapter.persistence;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -34,7 +34,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.function.Consumer;
 
-import static com.iokays.config.adapter.server.MyRegisteredClientRepositoryAdapter.build;
+import static com.iokays.config.adapter.persistence.MyRegisteredClientRepositoryAdapter.build;
 
 @Slf4j
 @Component

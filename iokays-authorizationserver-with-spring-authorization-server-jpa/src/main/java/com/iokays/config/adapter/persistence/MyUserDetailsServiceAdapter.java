@@ -1,4 +1,4 @@
-package com.iokays.config.adapter.client;
+package com.iokays.config.adapter.persistence;
 
 import com.iokays.core.application.service.UserApplicationService;
 import lombok.AllArgsConstructor;

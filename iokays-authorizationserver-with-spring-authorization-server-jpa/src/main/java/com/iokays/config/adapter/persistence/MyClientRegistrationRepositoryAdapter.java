@@ -1,4 +1,4 @@
-package com.iokays.config.adapter.client;
+package com.iokays.config.adapter.persistence;
 
 import com.google.common.collect.Sets;
 import com.iokays.core.application.service.ClientRegistrationApplicationService;

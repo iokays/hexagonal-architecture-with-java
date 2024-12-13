@@ -1,4 +1,4 @@
-package com.iokays.config.adapter.server;
+package com.iokays.config.adapter.persistence;
 
 import com.iokays.core.application.service.OauthUserApplicationService;
 import com.iokays.core.application.service.UserApplicationService;

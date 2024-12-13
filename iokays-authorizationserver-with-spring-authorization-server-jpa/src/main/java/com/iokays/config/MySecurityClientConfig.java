@@ -1,6 +1,6 @@
 package com.iokays.config;
 
-import com.iokays.config.adapter.client.MyClientRegistrationRepositoryAdapter;
+import com.iokays.config.adapter.persistence.MyClientRegistrationRepositoryAdapter;
 import com.iokays.config.handler.FederatedIdentityAuthenticationSuccessHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +42,14 @@ public class MyCreateRegisteredClientRunner implements CommandLineRunner {
                 .clientSecret("{noop}openid-connect")
                 .clientIdIssuedAt(Instant.now())
                 .clientSecretExpiresAt(Instant.MAX)
-                .clientAuthenticationMethods(List.of("client_secret_basic"))
-                .authorizationGrantTypes(List.of("authorization_code", "device_code", "refresh_token"))
+                .clientAuthenticationMethods(List.of(
+                        ClientAuthenticationMethod.CLIENT_SECRET_BASIC.getValue(),
+                        ClientAuthenticationMethod.NONE.getValue()))
+                .authorizationGrantTypes(List.of(
+                        AuthorizationGrantType.AUTHORIZATION_CODE.getValue(),
+                        AuthorizationGrantType.DEVICE_CODE.getValue(),
+                        AuthorizationGrantType.REFRESH_TOKEN.getValue()
+                ))
                 .redirectUris(List.of("https://www.iokays.com", "http://localhost:8082/login/oauth2/code/local"))
                 .scopes(List.of(OidcScopes.OPENID, OidcScopes.PROFILE))
                 .clientSettings(StringUtils.EMPTY)

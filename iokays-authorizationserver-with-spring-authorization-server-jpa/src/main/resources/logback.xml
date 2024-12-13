@@ -12,5 +12,6 @@
     </root>
 
     <logger name="com.iokays" level="DEBUG"/>
+    <logger name="org.springframework.security.oauth2.server.authorization" level="TRACE" />
 
 </configuration>
