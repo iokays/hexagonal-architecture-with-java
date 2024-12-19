@@ -79,6 +79,10 @@ public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration
         this.andEvent(new ClientRegistrationCreated(EventId.generate(), this.clientName, LocalDateTime.now()));
     }
 
+    public ClientRegistrationId clientRegistrationId() {
+        return this.clientRegistrationId;
+    }
+
     @Override
     public boolean sameIdentityAs(ClientRegistration other) {
         return false;

@@ -22,7 +22,7 @@ public interface AuthorizationRepository {
 
     Optional<Authorization> findByDeviceCodeValue(String deviceCode);
 
-    Optional<Authorization> findByStateOrAuthorizationCodeValueOrAccessTokenValueOrRefreshTokenValueOrOidcIdTokenValueOrUserCodeValueOrDeviceCodeValue(String token);
+    Optional<AuthorizationId> findByStateOrAuthorizationCodeValueOrAccessTokenValueOrRefreshTokenValueOrOidcIdTokenValueOrUserCodeValueOrDeviceCodeValue(String token);
 
     void deleteByAuthorizationId(AuthorizationId authorizationId);
 

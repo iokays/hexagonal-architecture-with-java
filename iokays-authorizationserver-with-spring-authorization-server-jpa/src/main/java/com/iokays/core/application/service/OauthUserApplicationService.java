@@ -7,6 +7,8 @@ import com.iokays.core.domain.oauth2user.OauthUserRepository;
 import com.iokays.core.domain.oauth2user.command.SaveOauthUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class OauthUserApplicationService {
 
     private final OauthUserRepository oauthUserRepository;
 
+    @CacheEvict(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#command.subject + '_' + #command.clientRegistrationId")
     public void save(SaveOauthUser command) {
         log.debug("command: {}", command);
         oauthUserRepository.findBySubjectAndClientRegistrationId(command.subject(), command.clientRegistrationId())
@@ -28,6 +31,7 @@ public class OauthUserApplicationService {
                 );
     }
 
+    @Cacheable(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#subject + '_' + #clientRegistrationId")
     public OauthUserInfo findBySubjectAndClientRegistrationId(String subject, ClientRegistrationId clientRegistrationId) {
         return oauthUserRepository
                 .findBySubjectAndClientRegistrationId(subject, clientRegistrationId)

@@ -1,8 +1,8 @@
 # Hexagonal Architecture with Java
 
-This is a simple example of Hexagonal Architecture with Java 21.
+This is a simple example of Hexagonal Architecture with Java 23.
 
-这是一个基于Java 21 的 六边形架构与领域驱动设计的一个通用项目，并且结合现有的最新版本技术架构实现了 领域驱动设计模式和六边形架构模式组件定义.
+这是一个基于Java 23 的 六边形架构与领域驱动设计的一个通用项目，并且结合现有的最新版本技术架构实现了 领域驱动设计模式和六边形架构模式组件定义.
 并且结合微服务,介绍了领域层,领域事件,资源库,分布式锁,序列化,安全认证,日志等,并提供了实现功能.
 
 == 详细介绍的章节:

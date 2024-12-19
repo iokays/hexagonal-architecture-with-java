@@ -2,6 +2,7 @@ package com.iokays.core.adapter.persistence.jpa;
 
 import com.iokays.common.core.adapter.DrivenAdapter;
 import com.iokays.core.domain.authorization.Authorization;
+import com.iokays.core.domain.authorization.AuthorizationId;
 import com.iokays.core.domain.authorization.AuthorizationRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @DrivenAdapter
 public interface AuthorizationJpaRepository extends AuthorizationRepository, JpaRepository<Authorization, Long> {
 
-    @Query("select a from Authorization a where a.state = :token" +
+    @Query("select a.authorizationId from Authorization a where a.state = :token" +
             " or a.authorizationCodeValue = :token" +
             " or a.accessTokenValue = :token" +
             " or a.refreshTokenValue = :token" +
@@ -22,7 +23,7 @@ public interface AuthorizationJpaRepository extends AuthorizationRepository, Jpa
             " or a.userCodeValue = :token" +
             " or a.deviceCodeValue = :token"
     )
-    Optional<Authorization> findByStateOrAuthorizationCodeValueOrAccessTokenValueOrRefreshTokenValueOrOidcIdTokenValueOrUserCodeValueOrDeviceCodeValue(@Param("token") String token);
+    Optional<AuthorizationId> findByStateOrAuthorizationCodeValueOrAccessTokenValueOrRefreshTokenValueOrOidcIdTokenValueOrUserCodeValueOrDeviceCodeValue(@Param("token") String token);
 
 
 }

@@ -1,6 +1,5 @@
 package com.iokays;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,62 +10,49 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Base64;
-
-/**
- * 这不是测试类(一个严格且具有断言，可重复执行测试用例的类)，只是使用@Test 来方便运行方法。
- */
 @Slf4j
-class TokenSample {
+class DeviceCodeSample {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    /**
-     * <a href="http://localhost:8080/oauth2/token"/>
-     * client_secret_basic, authorization_code
-     */
     @Test
-    @DisplayName("获取令牌")
-    void testToken() {
-        final var code = ConfigProperties.value("code");
-
-        // 设置请求头 (因为client-authentication-method配置的是： client_secret_basic)
+    @DisplayName("设备授权")
+    void testDeviceAuthorization() {
+        //请求头
         final var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add(HttpHeaders.AUTHORIZATION, "Basic " + Base64.getEncoder().encodeToString(("login-client:openid-connect").getBytes()));
 
         // 设置请求参数
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("grant_type", "authorization_code");
-        map.add("code", code);
-        map.add("redirect_uri", "https://www.iokays.com");
+        map.add("response_type", "device_code");
+        map.add("client_id", "login-client");
         map.add("scope", "profile");
 
         final var requestEntity = new HttpEntity<>(map, headers);
-        final String url = "http://localhost:8080/oauth2/token";
+        final String url = "http://localhost:8080/oauth2/device_authorization";
+
         final var response = restTemplate.postForObject(url, requestEntity, String.class);
         log.info("response: {}", response);
     }
 
     @Test
-    @DisplayName("刷新令牌, 和获取令牌的接口具有相同的返回结构")
-    void testRefreshToken() {
-        // 设置请求头 (因为client-authentication-method配置的是： client_secret_basic)
+    void testToken() {
+        //请求头
         final var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add(HttpHeaders.AUTHORIZATION, "Basic " + Base64.getEncoder().encodeToString(("login-client:openid-connect").getBytes()));
 
         // 设置请求参数
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("grant_type", "refresh_token");
-        map.add("refresh_token", ConfigProperties.value("refresh_token"));
+        map.add("client_id", "login-client");
+        map.add("device_code", "oUx3dhN-i9VCLGrdwAL91UEupenxQe1gAOi5PGOeUuWwWqJeGBeBK0v5caTgjWkfSBG1xOx7G21xvq8N2t_BSv_4NlYJGv_ZwrJlZtf7EbxrsQkS_q01MSTjdgqMWaHQ");
+        map.add("grant_type", "urn:ietf:params:oauth:grant-type:device_code");
 
         final var requestEntity = new HttpEntity<>(map, headers);
         final String url = "http://localhost:8080/oauth2/token";
+
         final var response = restTemplate.postForObject(url, requestEntity, String.class);
         log.info("response: {}", response);
+
     }
 
 }

@@ -91,8 +91,9 @@ public class MyOAuth2AuthorizationServiceAdapter implements OAuth2AuthorizationS
 
     @Override
     public OAuth2Authorization findByToken(String token, OAuth2TokenType tokenType) {
-        final var info = authorizationApplicationService.findByToken(token, Objects.requireNonNull(tokenType).getValue());
-        return toOAuth2Authorization(info);
+        return Optional.ofNullable(authorizationApplicationService.findByToken(token))
+                .map(this::toOAuth2Authorization)
+                .orElse(null);
     }
 
     private OAuth2Authorization toOAuth2Authorization(AuthorizationInfo info) {

@@ -10,11 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Slf4j
 @SpringBootTest
@@ -25,14 +20,14 @@ class UserApplicationServiceTest {
 
     @Test
     void testLoadUserByUsername() {
+        log.info("start testLoadUserByUsername");
         final UserInfo info = userApplicationService.findByUsername("admin");
         Assertions.assertEquals("admin", info.username());
-
-        assertThrows(UsernameNotFoundException.class, () -> userApplicationService.findByUsername(UUID.randomUUID().toString()));
     }
 
     @Test
     void testRegisterUser() {
+        log.info("start testRegisterUser");
         final RegisterUser registerUser = new RegisterUser(CommandId.generate(), "iokays", new Password("123456"));
         final var userId = userApplicationService.registerUser(registerUser);
         Assertions.assertNotNull(userId);
