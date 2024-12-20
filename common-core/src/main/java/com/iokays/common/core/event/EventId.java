@@ -10,7 +10,7 @@ import static org.apache.commons.lang3.Validate.notNull;
  *
  * @param id {@link UUID} 事件唯一标识ID
  */
-public record EventId(UUID id) implements Serializable {
+public record EventId(String id) implements Serializable {
 
     public EventId {
         notNull(id, "事件ID不能为空");
@@ -23,7 +23,7 @@ public record EventId(UUID id) implements Serializable {
      * @return 事件ID {@link EventId}
      */
     public static EventId form(final String value) {
-        return new EventId(UUID.fromString(value));
+        return new EventId(UUID.fromString(value).toString());
     }
 
     /**
@@ -32,6 +32,6 @@ public record EventId(UUID id) implements Serializable {
      * @return 事件ID {@link EventId}
      */
     public static EventId generate() {
-        return new EventId(UUID.randomUUID());
+        return new EventId(UUID.randomUUID().toString());
     }
 }

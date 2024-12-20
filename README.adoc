@@ -7,28 +7,4 @@ This is a simple example of Hexagonal Architecture with Java 23.
 
 == 详细介绍的章节:
 
-https://www.iokays.com/hexagonal-architecture-with-java/A0.html[A0.领域驱动设计之开篇与六边形架构融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A1.html[A1.领域驱动设计之领域层与SpringDataJpa融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A2.html[A2.领域驱动设计(DDD)之领域事件与Spring Integration JDBC融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A3.html[A3.微服务分布式锁与Spring Integration融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A4.html[A4.领域驱动设计之领域层序列化与Jackson融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A5.html[A5.微服务分布式日志与Open Telemetry融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A6.html[A6.微服务分布式ID与雪花算法(Snowflake)融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A7.html[A7.Sysbench和Spring JdbcTemplate 插入性能测试实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A8.html[A8.Spring Security简明教程与微服务的融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A9.html[A9.Spring Security OAuth2 Authorization Server简明教程与微服务的融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A10.html[A10.领域驱动设计(DDD)之领域层与Spring Data MongoDB融合实践.]
-
-https://www.iokays.com/hexagonal-architecture-with-java/A11.html[A11.Kotlin与Java项目架构的融合实践.]
-
-
+https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture with Java 系列]

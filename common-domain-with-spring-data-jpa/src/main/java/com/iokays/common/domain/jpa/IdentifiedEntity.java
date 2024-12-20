@@ -5,6 +5,8 @@ import com.iokays.common.core.domain.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,6 +17,9 @@ import java.time.LocalDateTime;
 /**
  * 领域对象 实体
  */
+
+@DynamicInsert
+@DynamicUpdate
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class IdentifiedEntity<T> extends IdentifiedDomainObject implements Entity<T> {

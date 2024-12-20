@@ -90,12 +90,12 @@ public class Authorization extends AbstractAggregateRoot<Authorization> {
     public Authorization(SaveAuthorization command) {
         this();
         this.set(command);
-        this.registerEvent(AuthorizationCreated.builder().id(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
+        this.registerEvent(AuthorizationCreated.builder().eventId(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
     }
 
     public void update(SaveAuthorization command) {
         this.set(command);
-        this.registerEvent(AuthorizationUpdated.builder().id(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
+        this.registerEvent(AuthorizationUpdated.builder().eventId(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
     }
 
     private void set(SaveAuthorization command) {

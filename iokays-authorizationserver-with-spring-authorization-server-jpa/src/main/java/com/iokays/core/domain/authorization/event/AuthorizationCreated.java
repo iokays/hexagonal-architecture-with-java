@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @Builder
 public record AuthorizationCreated(
-        EventId id,
+        EventId eventId,
         AuthorizationId authorizationId,
         Instant createdAt
 ) implements DomainEvent<AuthorizationCreated> {

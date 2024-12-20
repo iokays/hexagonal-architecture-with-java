@@ -20,7 +20,7 @@ public class MyCreateAdminUserRunner implements CommandLineRunner {
     private final UserApplicationService userApplicationService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         final var username = "admin";
         UserInfo info = userApplicationService.findByUsername(username);
         if (info != null) {

@@ -5,7 +5,7 @@ import com.iokays.core.domain.user.UserId;
 
 import java.time.LocalDateTime;
 
-public record UserRegistered(EventId id,
+public record UserRegistered(EventId eventId,
                              UserId userId,
                              String username,
                              Boolean enabled,

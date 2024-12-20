@@ -1,4 +1,4 @@
-package com.iokays.core.adapter.listener;
+package com.iokays.core.adapter.messaging.listener;
 
 import com.iokays.common.core.adapter.DrivenAdapter;
 import com.iokays.common.core.event.ApplicationEvent;

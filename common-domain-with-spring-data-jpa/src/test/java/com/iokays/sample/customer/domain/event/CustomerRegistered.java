@@ -11,11 +11,11 @@ import java.util.Objects;
 /**
  * 客户已注册的领域事件
  *
- * @param id           {@link EventId} 事件标识
+ * @param eventId           {@link EventId} 事件标识
  * @param registeredAt {@link Instant} 事件发生时间
  * @param customerId   {@link CustomerId} 客户标识
  */
-public record CustomerRegistered(EventId id, CustomerId customerId,
+public record CustomerRegistered(EventId eventId, CustomerId customerId,
                                  LocalDateTime registeredAt) implements DomainEvent<CustomerRegistered> {
 
     /**
@@ -31,6 +31,6 @@ public record CustomerRegistered(EventId id, CustomerId customerId,
     @Override
     public boolean sameEventAs(CustomerRegistered other) {
         // 通过判断事件标识是否相等来判断事件是否相等
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.eventId, other.eventId);
     }
 }

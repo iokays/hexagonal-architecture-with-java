@@ -39,7 +39,8 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
                     "sub",
                     "https://www.googleapis.com/oauth2/v3/certs"
             );
-            clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+            final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+            log.info("clientRegistrationId: {}", clientRegistrationId);
         }
 
         {
@@ -59,7 +60,8 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
                     "sub",
                     "https://www.googleapis.com/oauth2/v3/certs"
             );
-            clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+            final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+            log.info("clientRegistrationId: {}", clientRegistrationId);
         }
 
     }

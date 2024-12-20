@@ -7,6 +7,7 @@ dependencies {
 
     implementation(project(":common-core"))
     implementation(project(":common-domain-with-spring-data-jpa"))
+    implementation(project(":common-domain-event-with-spring-integration-jpa"))
 
     implementation("commons-validator:commons-validator:1.9.0")
 
@@ -20,6 +21,7 @@ dependencies {
 
     implementation("org.springframework.integration:spring-integration-event")
     implementation("org.springframework.integration:spring-integration-jpa")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.1")
 
     implementation("org.bitbucket.b_c:jose4j:0.9.6")
 

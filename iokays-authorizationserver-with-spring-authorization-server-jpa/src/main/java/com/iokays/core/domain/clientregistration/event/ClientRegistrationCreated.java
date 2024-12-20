@@ -5,11 +5,11 @@ import com.iokays.common.core.event.EventId;
 
 import java.time.LocalDateTime;
 
-public record ClientRegistrationCreated(EventId id,
+public record ClientRegistrationCreated(EventId eventId,
                                         String clientName,
                                         LocalDateTime createdAt) implements DomainEvent<ClientRegistrationCreated> {
     @Override
     public boolean sameEventAs(ClientRegistrationCreated other) {
-        return this.id.equals(other.id);
+        return this.eventId.equals(other.eventId);
     }
 }

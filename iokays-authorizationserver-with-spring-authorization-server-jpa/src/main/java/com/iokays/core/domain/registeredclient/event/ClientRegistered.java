@@ -6,7 +6,7 @@ import com.iokays.core.domain.registeredclient.RegisteredClientId;
 
 import java.time.Instant;
 
-public record ClientRegistered(EventId id,
+public record ClientRegistered(EventId eventId,
                                RegisteredClientId registeredClientId,
                                String clientId,
                                String clientName,
