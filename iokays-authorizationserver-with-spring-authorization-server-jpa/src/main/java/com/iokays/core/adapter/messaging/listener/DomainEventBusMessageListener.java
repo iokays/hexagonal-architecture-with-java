@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 class DomainEventBusMessageListener {
 
 
-
-
     @EventListener
     public void handle(final DomainEvent<?> evt) {
         //消息发布[入库], 分布式事务本地消息表的持久化的位置

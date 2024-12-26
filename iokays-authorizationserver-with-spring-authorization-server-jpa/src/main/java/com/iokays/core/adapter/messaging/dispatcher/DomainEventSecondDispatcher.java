@@ -1,6 +1,7 @@
 package com.iokays.core.adapter.messaging.dispatcher;
 
 import com.iokays.common.domain.localmessage.LocalMessage;
+import com.iokays.core.domain.user.UserLocalMessage;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,8 @@ public class DomainEventSecondDispatcher {
     private final EntityManagerFactory entityManagerFactory;
 
     /**
-     * 将LocalMessage 发送到 MQ.
+     * 将默认的LocalMessage 发送到 MQ.
+     *
      * @return
      */
     @Bean
@@ -32,14 +34,33 @@ public class DomainEventSecondDispatcher {
         return IntegrationFlow
                 .from(Jpa.inboundAdapter(this.entityManagerFactory)
                                 .entityClass(LocalMessage.class)
-//                                .maxResults(1000) //如果指定了返回行，需要在查询指定排序的列
-//                                .jpaQuery("FROM LocalMessage ORDER BY id")
+                                .jpaQuery("FROM LocalMessage ORDER BY id")
                                 .expectSingleResult(false)
                                 .deleteAfterPoll(true)
                                 .deleteInBatch(true)
                         ,
-                        e -> e.poller(Pollers.fixedRate(1000).transactional()))
-                .handle(v -> log.info("发送到MQ的消息: {}", v)) //排序后[不要依赖数据库的排序]，按顺序发送到 配置的 Spring Integration MQ.
+                        e -> e.poller(Pollers.fixedRate(10000).transactional()))
+                .handle(v -> log.info("发送到MQ的消息: {}", v))
+                .get();
+    }
+
+    /**
+     * 非默认的localMessage 发送到 MQ.
+     *
+     * @return
+     */
+    @Bean
+    public IntegrationFlow userDomainEventSecondFlow() {
+        return IntegrationFlow
+                .from(Jpa.inboundAdapter(this.entityManagerFactory)
+                                .entityClass(UserLocalMessage.class)
+                                .jpaQuery("FROM UserLocalMessage ORDER BY id")
+                                .expectSingleResult(false)
+                                .deleteAfterPoll(true)
+                                .deleteInBatch(true)
+                        ,
+                        e -> e.poller(Pollers.fixedRate(10000).transactional()))
+                .handle(v -> log.info("发送到MQ的消息: {}", v))
                 .get();
     }
 

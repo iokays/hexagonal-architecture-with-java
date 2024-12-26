@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * <p>
  * 该标识非业务标识，是数据库持久化的唯一标识
  */
-public abstract class IdentifiedDomainEvent<T> extends IdentifiedDomainObject implements DomainEvent<T> {
+public abstract class IdentifiedDomainEvent<T extends IdentifiedDomainEvent<?>> extends IdentifiedDomainObject implements DomainEvent<T> {
 
     @Serial
     private static final long serialVersionUID = 1L;

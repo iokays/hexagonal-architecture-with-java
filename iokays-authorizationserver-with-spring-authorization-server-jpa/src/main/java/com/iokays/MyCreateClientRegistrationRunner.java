@@ -4,6 +4,7 @@ import com.iokays.common.core.command.CommandId;
 import com.iokays.core.application.service.ClientRegistrationApplicationService;
 import com.iokays.core.domain.clientregistration.ClientRegistrationType;
 import com.iokays.core.domain.clientregistration.command.CreateClientRegistration;
+import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -39,8 +40,10 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
                     "sub",
                     "https://www.googleapis.com/oauth2/v3/certs"
             );
-            final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
-            log.info("clientRegistrationId: {}", clientRegistrationId);
+            Try.run(() -> {
+                final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+                log.info("clientRegistrationId: {}", clientRegistrationId);
+            });
         }
 
         {
@@ -60,8 +63,10 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
                     "sub",
                     "https://www.googleapis.com/oauth2/v3/certs"
             );
-            final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
-            log.info("clientRegistrationId: {}", clientRegistrationId);
+            Try.run(() -> {
+                final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+                log.info("clientRegistrationId: {}", clientRegistrationId);
+            });
         }
 
     }
