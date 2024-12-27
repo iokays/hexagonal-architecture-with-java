@@ -34,23 +34,20 @@ public class MySecurityClientConfig {
     ) throws Exception {
 
         http
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
-                .oauth2Login(v -> v.successHandler(federatedIdentityAuthenticationSuccessHandler))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/assets/**", DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(v -> v
+                        .loginPage(DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL)
+                )
+                .oauth2Login(v -> v
+                        .loginPage(DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL)
+                        .successHandler(federatedIdentityAuthenticationSuccessHandler))
                 .sessionManagement(v -> v.maximumSessions(1))
         ;
 
-        final SecurityFilterChain securityFilterChain = http.build();
-
-        //这种方式不可取，应该在build之前配置。
-        for (var filter : securityFilterChain.getFilters()) {
-            if (filter instanceof DefaultLoginPageGeneratingFilter targetFile) {
-                log.info("更新默认登录页的Oauth2登录选项为动态实现: ");
-                targetFile.setOauth2AuthenticationUrlToClientName(clientRegistrationRepositoryAdapter.loginUrlToClientName());
-            }
-        }
-
-        return securityFilterChain;
+        return http.build();
     }
 
     @Bean

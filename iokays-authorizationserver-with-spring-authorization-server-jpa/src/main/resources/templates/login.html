@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- Iokays icon -->
+    <link rel="icon" href="https://www.iokays.com/_/img/favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="https://www.iokays.com/MDB5/css/mdb.min.css" />
+  </head>
+  <body>
+    <!-- Start your project here-->
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+        <div class="text-center">
+          <img
+            class="mb-4"
+            src="https://www.iokays.com/_/img/iokays_icon.png"
+            style="width: 250px; height: 90px"
+          />
+
+          <form th:if="${formLoginEnabled}" method="post" th:action="${loginUrl}">
+
+            <!-- Username -->
+            <div class="form-outline mb-4" data-mdb-input-init>
+              <input type="text" id="username" th:name="${usernameParameter}"  class="form-control"/>
+              <label class="form-label" for="username">用户名</label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4" data-mdb-input-init>
+              <input type="password" id="password" th:name="${passwordParameter}" class="form-control" />
+              <label class="form-label" for="password">密码</label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block" data-mdb-ripple-init>登录</button>
+          </form>
+
+           <div th:if="${oauth2LoginEnabled}">
+
+           </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- End your project here-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://www.iokays.com/MDB5/js/mdb.umd.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+  </body>
+</html>

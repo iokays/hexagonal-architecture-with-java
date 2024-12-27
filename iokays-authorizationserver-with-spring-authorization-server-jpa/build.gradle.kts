@@ -37,7 +37,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-tracing-bridge-otel:1.4.1")
     // 配置 zipkin.
-    implementation("io.opentelemetry:opentelemetry-exporter-zipkin:1.45.0")
+//    implementation("io.opentelemetry:opentelemetry-exporter-zipkin:1.45.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
