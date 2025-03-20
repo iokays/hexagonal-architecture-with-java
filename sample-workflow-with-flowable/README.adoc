@@ -1,6 +1,0 @@
-= Iokays Authorization With Spring Authorization Server Jpa
-
-该模块基于JPA实现的一个完整的授权服务器.
-
-
-

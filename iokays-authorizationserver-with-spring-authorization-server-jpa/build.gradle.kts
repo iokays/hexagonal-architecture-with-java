@@ -18,6 +18,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.security:spring-security-oauth2-authorization-server")
+    implementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
+    implementation("org.springframework.session:spring-session-jdbc")
 
     implementation("org.springframework.integration:spring-integration-event")
     implementation("org.springframework.integration:spring-integration-jpa")
@@ -25,13 +27,13 @@ dependencies {
 
     implementation("org.bitbucket.b_c:jose4j:0.9.6")
 
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.1")
-
-    implementation("org.mapstruct:mapstruct:1.6.3")
-    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
+
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 
     // 追踪
     implementation("org.springframework.boot:spring-boot-starter-actuator")

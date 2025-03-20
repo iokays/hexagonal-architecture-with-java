@@ -47,4 +47,13 @@ public abstract class IdentifiedEntity<T> extends IdentifiedDomainObject impleme
     protected IdentifiedEntity() {
         super();
     }
+
+    protected LocalDateTime getCreatedDate() {
+        return this.createdDate;
+    }
+
+    protected LocalDateTime getLastModifiedDate() {
+        return this.lastModifiedDate;
+    }
+
 }

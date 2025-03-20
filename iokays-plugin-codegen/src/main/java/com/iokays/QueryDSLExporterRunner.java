@@ -21,21 +21,24 @@ public class QueryDSLExporterRunner implements CommandLineRunner, Serializable {
 
     private final DataSource dataSource;
 
-    private final String modelName = "iokays-authorizationserver-with-spring-authorization-server-jpa";
-    private final String packageName = "com.iokays.core.application.service.table";
+    private final String modelName = "iokays-job-with-quartz";
+    private final String packageName = "com.iokays.job.core.adapter.persistence.quartz.table";
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("开始生成实体");
         try (final var connection = dataSource.getConnection()) {
             final var exporter = new MetaDataExporter();
             exporter.setExportViews(false);
-            exporter.setTableNamePattern("T_%");
+            exporter.setTableNamePattern("QRTZ_%");
             exporter.setPackageName(packageName);
             final var javaTypeMappings = new JavaTypeMappings();
             exporter.setTypeMappings(javaTypeMappings);
             exporter.setBeanSerializer(new BeanSerializer()); //生成Bean 类
             exporter.setTargetFolder(new File("%s/src/main/java".formatted(modelName)));
             exporter.export(connection.getMetaData());
+        } catch (Exception e) {
+            log.error("生成异常: ", e);
         }
     }
 }

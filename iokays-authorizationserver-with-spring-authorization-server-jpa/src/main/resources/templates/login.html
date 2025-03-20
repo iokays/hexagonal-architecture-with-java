@@ -1,66 +1,274 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
-    <!-- Iokays icon -->
-    <link rel="icon" href="https://www.iokays.com/_/img/favicon.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link rel="stylesheet" href="https://www.iokays.com/MDB5/css/mdb.min.css" />
-  </head>
-  <body>
-    <!-- Start your project here-->
-    <div class="container">
-      <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
-        <div class="text-center">
-          <img
-            class="mb-4"
-            src="https://www.iokays.com/_/img/iokays_icon.png"
-            style="width: 250px; height: 90px"
-          />
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>统一登录平台</title>
 
-          <form th:if="${formLoginEnabled}" method="post" th:action="${loginUrl}">
+    <!-- Material Components Web 样式 -->
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
 
-            <!-- Username -->
-            <div class="form-outline mb-4" data-mdb-input-init>
-              <input type="text" id="username" th:name="${usernameParameter}"  class="form-control"/>
-              <label class="form-label" for="username">用户名</label>
-            </div>
+    <!-- Google 字体 & 图标 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-            <!-- Password input -->
-            <div class="form-outline mb-4" data-mdb-input-init>
-              <input type="password" id="password" th:name="${passwordParameter}" class="form-control" />
-              <label class="form-label" for="password">密码</label>
-            </div>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
 
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block" data-mdb-ripple-init>登录</button>
-          </form>
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #1f1f1f;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+        }
 
-           <div th:if="${oauth2LoginEnabled}">
+        .login-container img {
+            display: block;
+            margin: 0 auto 1.5rem;
+            width: 250px;
+            height: 90px;
+        }
 
-           </div>
+        h2 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
 
-        </div>
-      </div>
+        /* 输入框整体样式 */
+        .mdc-text-field--outlined {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 输入框文字 */
+        .mdc-text-field__input {
+            color: #ffffff !important;
+            caret-color: #ffffff;
+        }
+
+        /* label 默认颜色 */
+        .mdc-floating-label {
+            color: #aaaaaa !important;
+        }
+
+        /* label 激活或聚焦时颜色 */
+        .mdc-floating-label--float-above {
+            color: #ffffff !important;
+        }
+
+        /* 边框颜色（默认） */
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+            border-color: #888888 !important;
+        }
+
+        /* 激活状态下的边框 */
+        .mdc-text-field--focused .mdc-notched-outline__leading,
+        .mdc-text-field--focused .mdc-notched-outline__notch,
+        .mdc-text-field--focused .mdc-notched-outline__trailing {
+            border-color: #ffffff !important;
+        }
+
+        /* 按钮样式 */
+        .mdc-button--raised {
+            background-color: #333333;
+            color: #ffffff !important;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .mdc-button--raised:hover {
+            background-color: #555555;
+        }
+
+        .mdc-button__label {
+            color: #ffffff !important;
+        }
+
+        .oauth-button {
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .table-dark {
+            background-color: #333333;
+        }
+
+        /* 覆盖禁用状态 */
+        .mdc-text-field--disabled .mdc-text-field__input {
+            color: #aaaaaa !important;
+        }
+
+        .mdc-text-field--disabled .mdc-notched-outline__leading,
+        .mdc-text-field--disabled .mdc-notched-outline__notch,
+        .mdc-text-field--disabled .mdc-notched-outline__trailing {
+            border-color: #555555 !important;
+        }
+
+        /* 自动填充样式修复 */
+        .mdc-text-field__input:-webkit-autofill,
+        .mdc-text-field__input:-webkit-autofill:hover,
+        .mdc-text-field__input:-webkit-autofill:focus,
+        .mdc-text-field__input:-webkit-autofill:active {
+            -webkit-text-fill-color: #ffffff !important;
+            -webkit-box-shadow: 0 0 0 1000px #1f1f1f inset !important;
+            box-shadow: 0 0 0 1000px #1f1f1f inset !important;
+            caret-color: #ffffff !important;
+            background-color: #1f1f1f !important;
+        }
+
+        /* 自动填充时强制标签上浮并设置颜色 */
+        .mdc-text-field__input:-webkit-autofill + .mdc-notched-outline .mdc-floating-label {
+            transform: translateY(-100%) scale(0.75) !important; /* 强制上浮 */
+            color: #ffffff !important; /* 与手动输入一致的颜色 */
+        }
+
+        /* 自动填充时的边框样式 */
+        .mdc-text-field__input:-webkit-autofill + .mdc-notched-outline .mdc-notched-outline__leading,
+        .mdc-text-field__input:-webkit-autofill + .mdc-notched-outline .mdc-notched-outline__notch,
+        .mdc-text-field__input:-webkit-autofill + .mdc-notched-outline .mdc-notched-outline__trailing {
+            border-color: #ffffff !important; /* 与聚焦时一致的边框颜色 */
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <!-- Logo -->
+    <img alt="Logo" src="/assets/img/logo.png"/>
+
+    <!-- 登录表单 -->
+    <form method="post" th:action="${loginUrl}" th:if="${formLoginEnabled}">
+        <h2>表单登录</h2>
+
+        <!-- Username -->
+        <label class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="username" required th:name="${usernameParameter}" type="text"/>
+            <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+          <span class="mdc-floating-label" id="username-label">用户名</span>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>
+        </label>
+
+        <!-- Password -->
+        <label class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="password" required th:name="${passwordParameter}" type="password"/>
+            <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+          <span class="mdc-floating-label" id="password-label">密码</span>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>
+        </label>
+
+        <input name="targetUrl" th:value="${targetUrl}" type="hidden"/>
+
+        <!-- 登录按钮 -->
+        <button class="mdc-button mdc-button--raised" type="submit">
+            <span class="mdc-button__label">登录</span>
+        </button>
+    </form>
+
+    <!-- 一次性 Token 表单 -->
+    <form method="post" style="margin-top: 2rem;" th:action="${generateOneTimeTokenUrl}"
+          th:if="${generateOneTimeTokenUrl}">
+        <h2>申请一次性 Token</h2>
+
+        <label class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="ott-username" required th:name="${usernameParameter}" type="text"/>
+            <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+          <span class="mdc-floating-label" id="ott-username-label">用户名</span>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>
+        </label>
+
+        <button class="mdc-button mdc-button--raised" type="submit">
+            <span class="mdc-button__label">提交 Token</span>
+        </button>
+    </form>
+
+    <!-- OAuth 登录 -->
+    <div style="margin-top: 2rem;" th:if="${oauth2LoginEnabled}">
+        <h2>OAuth 2.0 登录</h2>
+
+        <table>
+            <tr>
+                <td th:each="entry : ${oauth2Rows}">
+                    <a class="mdc-button mdc-button--raised oauth-button" th:href="${entry.key}">
+                        <span class="mdc-button__label" th:text="${entry.value}">Google</span>
+                    </a>
+                </td>
+            </tr>
+        </table>
     </div>
-    <!-- End your project here-->
 
-    <!-- MDB -->
-    <script type="text/javascript" src="https://www.iokays.com/MDB5/js/mdb.umd.min.js"></script>
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
-  </body>
+</div>
+
+<!-- MDC JS -->
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const textFields = document.querySelectorAll('.mdc-text-field');
+
+        textFields.forEach((textField) => {
+            const mdcTextField = new mdc.textField.MDCTextField(textField);
+            const input = textField.querySelector('.mdc-text-field__input');
+
+            function checkAndActivate() {
+                if (input.value) {
+                    mdcTextField.foundation.activateFocus();
+                } else {
+                    mdcTextField.foundation.deactivateFocus();
+                }
+            }
+
+            checkAndActivate();
+            input.addEventListener('input', checkAndActivate);
+
+            setTimeout(checkAndActivate, 500);
+            setTimeout(checkAndActivate, 1000);
+        });
+
+        // 自动填充监听（更通用的方式）
+        document.addEventListener('animationstart', (e) => {
+            if (e.animationName === 'autofill-start') {
+                const input = e.target;
+                const textField = input.closest('.mdc-text-field');
+                if (textField) {
+                    const mdcTextField = mdc.textField.MDCTextField.attachTo(textField);
+                    mdcTextField.foundation.activateFocus();
+                }
+            }
+        });
+    });
+
+
+</script>
+
+</body>
 </html>

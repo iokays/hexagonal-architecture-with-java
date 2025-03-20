@@ -1,10 +1,10 @@
 // Root Project中build.gradle
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "2.1.0-RC2" apply (false)
-    id("org.jetbrains.kotlin.plugin.spring") version "2.1.0-RC2" apply (false)
-    id("org.springframework.boot") version "3.4.0" apply (false)
-    id("io.spring.dependency-management") version "1.1.6" apply (false)
+    id("org.jetbrains.kotlin.jvm") version "2.1.20" apply (false)
+    id("org.jetbrains.kotlin.plugin.spring") version "2.1.20" apply (false)
+    id("org.springframework.boot") version "3.4.3" apply (false)
+    id("io.spring.dependency-management") version "1.1.7" apply (false)
 }
 
 allprojects {
@@ -32,7 +32,7 @@ allprojects {
 
     dependencies {
 
-        implementation(platform("com.fasterxml.jackson:jackson-bom:2.18.1"))
+        implementation(platform("com.fasterxml.jackson:jackson-bom:2.18.2"))
         implementation(platform("com.google.guava:guava-bom:33.3.1-jre"))
         implementation(platform("org.slf4j:slf4j-bom:2.1.0-alpha1"))
 

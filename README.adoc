@@ -8,3 +8,8 @@ This is a simple example of Hexagonal Architecture with Java 23.
 == 详细介绍的章节:
 
 https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture with Java 系列]
+
+== TODO (待办事项)
+
+* 任务的页面操作
+* 事件的页面操作

@@ -1,10 +1,10 @@
 package com.iokays;
 
+import com.iokays.authorization.core.application.service.UserApplicationService;
+import com.iokays.authorization.core.domain.user.Password;
+import com.iokays.authorization.core.domain.user.UserInfo;
+import com.iokays.authorization.core.domain.user.command.RegisterUser;
 import com.iokays.common.core.command.CommandId;
-import com.iokays.core.application.service.UserApplicationService;
-import com.iokays.core.domain.user.Password;
-import com.iokays.core.domain.user.UserInfo;
-import com.iokays.core.domain.user.command.RegisterUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

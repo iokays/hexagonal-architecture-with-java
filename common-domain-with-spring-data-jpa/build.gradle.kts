@@ -6,7 +6,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     //h2
-    implementation("com.h2database:h2:2.2.224")
+    implementation("com.h2database:h2:2.3.232")
 
     implementation("commons-validator:commons-validator:1.8.0")
 

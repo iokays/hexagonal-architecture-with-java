@@ -1,107 +1,242 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Custom consent page - Consent required</title>
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
-    <script>
-        function cancelConsent() {
-            document.consent_form.reset();
-            document.consent_form.submit();
-        }
-    </script>
-</head>
-<body>
-<div class="container">
-    <div class="row py-5">
-        <h1 class="text-center text-primary">App permissions</h1>
-    </div>
-    <div class="row">
-        <div class="col text-center">
-            <p>
-                The application
-                <span class="fw-bold text-primary" th:text="${clientId}"></span>
-                wants to access your account
-                <span class="fw-bold" th:text="${principalName}"></span>
-            </p>
-        </div>
-    </div>
-    <div class="row" th:if="${userCode}">
-        <div class="col text-center">
-            <p class="alert alert-warning">
-                You have provided the code
-                <span class="fw-bold" th:text="${userCode}"></span>.
-                Verify that this code matches what is shown on your device.
-            </p>
-        </div>
-    </div>
-    <div class="row pb-3">
-        <div class="col text-center">
-            <p>
-                The following permissions are requested by the above app.<br/>
-                Please review these and consent if you approve.
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-center">
-            <form method="post" name="consent_form" th:action="${requestURI}">
-                <input name="client_id" th:value="${clientId}" type="hidden">
-                <input name="state" th:value="${state}" type="hidden">
-                <input name="user_code" th:if="${userCode}" th:value="${userCode}" type="hidden">
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>权限申请 - 同意授权</title>
 
-                <div class="form-check py-1" th:each="scope: ${scopes}">
-                    <input class="form-check-input"
+    <!-- Material Components Web 样式 -->
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+
+    <!-- Google 字体 & 图标 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .consent-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #1f1f1f;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            color: #cccccc;
+            text-align: center;
+        }
+
+        .fw-bold {
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .text-primary {
+            color: #64b5f6;
+        }
+
+        .alert-warning {
+            background-color: #ff9800;
+            color: #000000;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .mdc-checkbox {
+            margin-right: 0.5rem;
+        }
+
+        .permission-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: #333333;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .permission-description {
+            color: #64b5f6;
+            margin-left: 2.5rem;
+            margin-top: -1rem;
+            font-size: 0.9rem;
+        }
+
+        .mdc-button--raised {
+            background-color: #333333;
+            color: #ffffff !important;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .mdc-button--raised:hover {
+            background-color: #555555;
+        }
+
+        .mdc-button__label {
+            color: #ffffff !important;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #888888;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="consent-container">
+
+    <h1 class="text-primary">应用权限申请</h1>
+
+    <p>
+        应用
+        <span class="fw-bold text-primary" th:text="${clientId}">AppName</span>
+        请求访问您的账户
+        <span class="fw-bold" th:text="${principalName}">User</span>
+    </p>
+
+    <!-- 显示用户代码（可选） -->
+    <div th:if="${userCode}">
+        <p class="alert-warning">
+            您输入的代码为
+            <span class="fw-bold" th:text="${userCode}">ABC123</span>，
+            请确认该代码与您的设备显示一致。
+        </p>
+    </div>
+
+    <p>
+        该应用请求以下权限，请您审核并同意：
+    </p>
+
+    <!-- 权限申请表单 -->
+    <form method="post" name="consent_form" th:action="${requestURI}">
+
+        <input name="client_id" th:value="${clientId}" type="hidden">
+        <input name="state" th:value="${state}" type="hidden">
+        <input name="user_code" th:if="${userCode}" th:value="${userCode}" type="hidden">
+
+        <!-- 待同意的权限 -->
+        <div class="permission-item" th:each="scope: ${scopes}">
+            <div class="mdc-form-field">
+                <div class="mdc-checkbox">
+                    <input class="mdc-checkbox__native-control"
                            name="scope"
-                           style="float: none"
                            th:id="${scope.scope}"
                            th:value="${scope.scope}"
-                           type="checkbox">
-                    <label class="form-check-label fw-bold px-2" th:for="${scope.scope}"
-                           th:text="${scope.scope}"></label>
-                    <p class="text-primary" th:text="${scope.description}"></p>
+                           type="checkbox"/>
+                    <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path"
+                                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                                  fill="none"
+                                  stroke="white"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                    </div>
+                    <div class="mdc-checkbox__ripple"></div>
                 </div>
-
-                <p th:if="${not #lists.isEmpty(previouslyApprovedScopes)}">
-                    You have already granted the following permissions to the above app:
-                </p>
-                <div class="form-check py-1" th:each="scope: ${previouslyApprovedScopes}">
-                    <input checked
-                           class="form-check-input"
-                           disabled
-                           style="float: none"
-                           th:id="${scope.scope}"
-                           type="checkbox">
-                    <label class="form-check-label fw-bold px-2" th:for="${scope.scope}"
-                           th:text="${scope.scope}"></label>
-                    <p class="text-primary" th:text="${scope.description}"></p>
-                </div>
-
-                <div class="pt-3">
-                    <button class="btn btn-primary btn-lg" id="submit-consent" type="submit">
-                        Submit Consent
-                    </button>
-                </div>
-                <div class="pt-3">
-                    <button class="btn btn-link regular" id="cancel-consent" onclick="cancelConsent();" type="button">
-                        Cancel
-                    </button>
-                </div>
-            </form>
+                <label class="fw-bold" th:for="${scope.scope}" th:text="${scope.scope}"></label>
+            </div>
         </div>
-    </div>
-    <div class="row pt-4">
-        <div class="col text-center">
-            <p>
-                <small>
-                    Your consent to provide access is required.<br/>
-                    If you do not approve, click Cancel, in which case no information will be shared with the app.
-                </small>
-            </p>
+
+        <!-- 权限描述 -->
+        <div class="permission-description" th:each="scope: ${scopes}" th:text="${scope.description}"></div>
+
+        <!-- 已授权的权限 -->
+        <div th:if="${not #lists.isEmpty(previouslyApprovedScopes)}">
+            <p>您已授权以下权限：</p>
+
+            <div class="permission-item" th:each="scope: ${previouslyApprovedScopes}">
+                <div class="mdc-form-field">
+                    <div class="mdc-checkbox">
+                        <input checked
+                               class="mdc-checkbox__native-control"
+                               disabled
+                               th:id="${scope.scope}"
+                               type="checkbox"/>
+                        <div class="mdc-checkbox__background">
+                            <svg class="mdc-checkbox__checkmark"
+                                 viewBox="0 0 24 24">
+                                <path class="mdc-checkbox__checkmark-path"
+                                      d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                                      fill="none"
+                                      stroke="white"/>
+                            </svg>
+                            <div class="mdc-checkbox__mixedmark"></div>
+                        </div>
+                        <div class="mdc-checkbox__ripple"></div>
+                    </div>
+                    <label class="fw-bold" th:for="${scope.scope}" th:text="${scope.scope}"></label>
+                </div>
+            </div>
+
+            <div class="permission-description" th:each="scope: ${previouslyApprovedScopes}"
+                 th:text="${scope.description}"></div>
         </div>
+
+        <!-- 提交按钮 -->
+        <button class="mdc-button mdc-button--raised" type="submit">
+            <span class="mdc-button__label">同意授权</span>
+        </button>
+
+        <!-- 取消按钮 -->
+        <button class="mdc-button mdc-button--raised" onclick="cancelConsent();" type="button">
+            <span class="mdc-button__label">取消</span>
+        </button>
+    </form>
+
+    <div class="footer-note">
+        您的授权是应用访问权限的必要条件。<br/>
+        若您不同意，请点击“取消”，应用将无法访问您的信息。
     </div>
+
 </div>
+
+<!-- MDC JS -->
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.mdc-checkbox');
+        checkboxes.forEach((checkboxEl) => {
+            mdc.checkbox.MDCCheckbox.attachTo(checkboxEl);
+        });
+
+        const buttons = document.querySelectorAll('.mdc-button');
+        buttons.forEach((buttonEl) => {
+            mdc.ripple.MDCRipple.attachTo(buttonEl);
+        });
+    });
+
+    function cancelConsent() {
+        document.consent_form.reset();
+        document.consent_form.submit();
+    }
+</script>
+
 </body>
 </html>

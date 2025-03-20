@@ -3,15 +3,28 @@ server:
 spring:
   application:
     name: iokays-authoriazationserver
-  datasource:
-    url: jdbc:h2:D:/Data/h2/db-iokays-authoriazationserver;AUTO_SERVER=TRUE;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    platform: h2
-
+  datasource: # 因为多数据源，所以自定义配置, 并设置为默认
+    authorization:
+      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-authoriazationserver;MODE=MySQL
+      driver-class-name: org.h2.Driver
+      auto-commit: true
+      minimum-idle: 4
+      maximum-pool-size: 8
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+  session:
+    jdbc:
+      initialize-schema: always
+    datasource: # 因为多数据源，所以自定义配置
+      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-session;MODE=MySQL
+      driver-class-name: org.h2.Driver
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 management:
   tracing:
