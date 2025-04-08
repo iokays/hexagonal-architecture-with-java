@@ -1,5 +1,6 @@
 package com.iokays.dispatch.core.adapter.job;
 
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 
@@ -10,7 +11,7 @@ public class SampleJob implements Job {
 
     // 编写任务内容
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         // 获取JobDetail
         JobDetail jobDetail = context.getJobDetail();
 
@@ -23,7 +24,7 @@ public class SampleJob implements Job {
 
         // 还可以通过JobDataMap存储数据
         JobDataMap jobDataMap = jobDetail.getJobDataMap();
-        int count = jobDataMap.getInt("count");
+        int count = Try.of(() -> jobDataMap.getInt("count")).getOrElse(0);
         // 或者：Integer count1 = (Integer) jobDataMap.get("count");
         log.info("第{}次执行", count);
         // 更新共享数据

@@ -10,6 +10,8 @@ import org.quartz.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Slf4j
@@ -35,13 +37,24 @@ public class JobApplicationService implements ApplicationService {
                 // 唯一表示
                 .withIdentity(command.name() + "-trigger", command.group())
                 // 绑定JobDetail
-                .forJob(job)
-                .withSchedule(CronScheduleBuilder.cronSchedule(command.cron()))
-                .build();
+                .forJob(job.getKey())
+                .withSchedule(CronScheduleBuilder.cronSchedule(command.cronExpression()));
 
-        Try.run(() -> scheduler.scheduleJob(job, trigger)).onFailure(throwable -> log.error("创建任务失败", throwable));
+        if (Objects.nonNull(command.startAt())) {
+            trigger.startNow();
+        }
+
+        if (Objects.nonNull(command.endAt())) {
+            trigger.endAt(toDate(command.endAt()));
+        }
+
+        Try.run(() -> scheduler.scheduleJob(job, trigger.build())).onFailure(throwable -> log.error("创建任务失败", throwable));
 
         log.info("创建任务成功");
+    }
+
+    private Date toDate(final LocalDateTime dateTime) {
+        return java.sql.Timestamp.valueOf(Objects.requireNonNull(dateTime, "时间不能为空"));
     }
 
     public void pauseJob(final String name, final String group) {

@@ -1,22 +1,19 @@
-package com.iokays.dispatch.core.application.service.command;
+package com.iokays.dispatch.core.adapter.web.model;
 
-import com.iokays.common.core.command.Command;
-import com.iokays.common.core.command.CommandId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.iokays.dispatch.core.adapter.job.JobClass;
-import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@Builder
-public record CreateJob(
-        CommandId id,
+public record CreateJobModel(
         String name,
         String group,
         String cronExpression,
+        @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
         LocalDateTime startAt,
+        @JsonFormat ( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
         LocalDateTime endAt,
         JobClass jobClass,
         Map<?, ?> jobData
-) implements Command {
-}
+) {}

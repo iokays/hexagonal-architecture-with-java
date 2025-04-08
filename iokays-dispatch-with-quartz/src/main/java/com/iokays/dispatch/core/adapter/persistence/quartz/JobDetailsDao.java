@@ -1,8 +1,12 @@
 package com.iokays.dispatch.core.adapter.persistence.quartz;
 
+import com.iokays.dispatch.core.adapter.persistence.quartz.model.JobListModel;
+import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzCronTriggers;
 import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzJobDetails;
+import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzTriggers;
 import com.iokays.dispatch.core.adapter.persistence.quartz.table.QrtzJobDetails;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.sql.SQLQueryFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +15,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Component
 @AllArgsConstructor
@@ -18,16 +24,33 @@ public class JobDetailsDao {
 
     private final SQLQueryFactory sqlQueryFactory;
 
-    public Page<QrtzJobDetails> page(Pageable pageable) {
-        final var t = QQrtzJobDetails.qrtzJobDetails;
+    public Page<JobListModel> page(Pageable pageable) {
+        final var jobDetails = QQrtzJobDetails.qrtzJobDetails;
+        final QQrtzTriggers triggers = QQrtzTriggers.qrtzTriggers;
+        final QQrtzCronTriggers cronTriggers = QQrtzCronTriggers.qrtzCronTriggers;
 
         //总数
-        final var total = sqlQueryFactory.from(t).fetchCount();
+        final var total = sqlQueryFactory.from(jobDetails).fetchCount();
 
         //列表
         final var q = sqlQueryFactory
-                .select(Projections.bean(QrtzJobDetails.class, t.schedName, t.jobName, t.jobGroup, t.description, t.jobClassName, t.isDurable, t.isNonconcurrent, t.isUpdateData, t.requestsRecovery))
-                .from(t);
+                .select(Projections.bean(JobListModel.class,
+                        jobDetails.schedName,
+                        jobDetails.jobName,
+                        jobDetails.jobGroup,
+                        jobDetails.description,
+                        jobDetails.jobClassName,
+                        jobDetails.isDurable,
+                        jobDetails.isNonconcurrent,
+                        jobDetails.isUpdateData,
+                        jobDetails.requestsRecovery,
+                        triggers.startTime,
+                        triggers.endTime,
+                        cronTriggers.cronExpression
+                ))
+                .from(jobDetails)
+                .innerJoin(triggers).on(jobDetails.schedName.eq(triggers.schedName).and(jobDetails.jobName.eq(triggers.jobName).and(jobDetails.jobGroup.eq(triggers.jobGroup))))
+                .leftJoin(cronTriggers).on(triggers.triggerGroup.eq(cronTriggers.triggerGroup).and(triggers.triggerName.eq(cronTriggers.triggerName)));
 
         if (pageable.isPaged()) {
             q.offset(pageable.getOffset()).limit(pageable.getPageSize());

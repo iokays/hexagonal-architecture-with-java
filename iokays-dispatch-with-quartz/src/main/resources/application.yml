@@ -25,6 +25,10 @@ spring:
       jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-session;MODE=MySQL
       driver-class-name: org.h2.Driver
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
   # quartz配置
   quartz:
     # quartz任务存储类型：jdbc或memory

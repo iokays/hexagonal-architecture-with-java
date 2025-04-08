@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Slf4j
@@ -24,8 +25,10 @@ public class MyCreateSampleJobRunner implements CommandLineRunner {
         jobApplicationService.scheduleJob(CreateJob.builder()
                 .name("sampleJob")
                 .group("sampleJobGroup")
+                .startAt(LocalDateTime.now())
+                .endAt(LocalDateTime.now().plusMinutes(1))
                 .jobClass(JobClass.SAMPLE)
-                .cron("0/5 * * * * ?")
+                .cronExpression("0/5 * * * * ?")
                 .jobData(Map.of("count", 1))
                 .build());
 

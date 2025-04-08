@@ -1,5 +1,7 @@
 package com.iokays.authorization.core.adapter.web.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -17,6 +19,7 @@ public record PageUserModel(
         /**
          * 创建时间，表示记录的创建时间戳。
          */
+        @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
         Timestamp createdDate,
 
         /**
@@ -27,6 +30,7 @@ public record PageUserModel(
         /**
          * 最后修改时间，表示记录的最后修改时间戳。
          */
+        @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
         Timestamp lastModifiedDate,
 
         /**

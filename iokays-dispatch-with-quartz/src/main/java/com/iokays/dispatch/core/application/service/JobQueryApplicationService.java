@@ -2,6 +2,7 @@ package com.iokays.dispatch.core.application.service;
 
 import com.iokays.common.core.service.ApplicationService;
 import com.iokays.dispatch.core.adapter.persistence.quartz.JobDetailsDao;
+import com.iokays.dispatch.core.adapter.persistence.quartz.model.JobListModel;
 import com.iokays.dispatch.core.adapter.persistence.quartz.table.QrtzJobDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public class JobQueryApplicationService implements ApplicationService {
 
     private final JobDetailsDao jobDetailsDao;
 
-    public Page<QrtzJobDetails> page(Pageable pageable) {
+    public Page<JobListModel> page(Pageable pageable) {
         return jobDetailsDao.page(pageable);
     }
 
