@@ -1,5 +1,6 @@
 server:
   port: 7777
+  forward-headers-strategy: native  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
 spring:
   application:
     name: iokays-job-with-quartz

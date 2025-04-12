@@ -18,10 +18,12 @@ import java.util.Set;
 public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration> {
 
     @AttributeOverride(name = "id", column = @Column(name = "client_registration_id", length = 40, nullable = false))
-    private ClientRegistrationId clientRegistrationId;
+    @Embedded
+    private RegistrationId registrationId;
 
     @Enumerated(value = EnumType.STRING)
     private ClientRegistrationType clientRegistrationType;
+
 
     @Column(nullable = false)
     private String clientId;
@@ -61,7 +63,7 @@ public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration
     }
 
     public ClientRegistration(CreateClientRegistration command) {
-        this.clientRegistrationId = ClientRegistrationId.makeClientRegistrationId(command.clientRegistrationType());
+        this.registrationId = command.registrationId();
         this.clientRegistrationType = command.clientRegistrationType();
         this.clientId = command.clientId();
         this.clientName = command.clientName();
@@ -79,8 +81,8 @@ public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration
         this.andEvent(new ClientRegistrationCreated(EventId.generate(), this.clientName, LocalDateTime.now()));
     }
 
-    public ClientRegistrationId clientRegistrationId() {
-        return this.clientRegistrationId;
+    public RegistrationId clientRegistrationId() {
+        return this.registrationId;
     }
 
     @Override
@@ -90,7 +92,7 @@ public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration
 
     public ClientRegistrationInfo info() {
         return ClientRegistrationInfo.builder()
-                .clientRegistrationId(this.clientRegistrationId)
+                .registrationId(this.registrationId)
                 .clientRegistrationType(this.clientRegistrationType)
                 .clientId(this.clientId)
                 .clientName(this.clientName)

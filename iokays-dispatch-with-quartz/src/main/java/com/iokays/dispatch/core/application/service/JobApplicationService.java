@@ -1,7 +1,9 @@
 package com.iokays.dispatch.core.application.service;
 
+import com.iokays.common.core.error.ApplicationServiceUnKnowException;
 import com.iokays.common.core.service.ApplicationService;
 import com.iokays.dispatch.core.application.service.command.CreateJob;
+import com.iokays.dispatch.core.application.service.exception.JobAlreadyExistsApplicationServiceException;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +50,12 @@ public class JobApplicationService implements ApplicationService {
             trigger.endAt(toDate(command.endAt()));
         }
 
-        Try.run(() -> scheduler.scheduleJob(job, trigger.build())).onFailure(throwable -> log.error("创建任务失败", throwable));
+        Try.run(() -> scheduler.scheduleJob(job, trigger.build())).onFailure(e -> {
+            if (e instanceof ObjectAlreadyExistsException) {
+                throw new JobAlreadyExistsApplicationServiceException(job);
+            }
+            throw new ApplicationServiceUnKnowException("创建任务失败", e);
+        });
 
         log.info("创建任务成功");
     }

@@ -3,6 +3,7 @@ package com.iokays;
 import com.iokays.dispatch.core.adapter.job.JobClass;
 import com.iokays.dispatch.core.application.service.JobApplicationService;
 import com.iokays.dispatch.core.application.service.command.CreateJob;
+import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +23,7 @@ public class MyCreateSampleJobRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        jobApplicationService.scheduleJob(CreateJob.builder()
+        Try.run(() -> jobApplicationService.scheduleJob(CreateJob.builder()
                 .name("sampleJob")
                 .group("sampleJobGroup")
                 .startAt(LocalDateTime.now())
@@ -30,7 +31,6 @@ public class MyCreateSampleJobRunner implements CommandLineRunner {
                 .jobClass(JobClass.SAMPLE)
                 .cronExpression("0/5 * * * * ?")
                 .jobData(Map.of("count", 1))
-                .build());
-
+                .build())).onFailure(e -> log.error("创建任务失败", e));
     }
 }

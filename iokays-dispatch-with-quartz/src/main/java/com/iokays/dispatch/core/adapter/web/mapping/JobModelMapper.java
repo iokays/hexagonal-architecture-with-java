@@ -1,6 +1,7 @@
 package com.iokays.dispatch.core.adapter.web.mapping;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.iokays.common.core.command.CommandId;
 import com.iokays.dispatch.core.adapter.job.JobClass;
 import com.iokays.dispatch.core.adapter.persistence.quartz.model.JobListModel;
@@ -13,6 +14,7 @@ import org.mapstruct.Named;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -33,8 +35,8 @@ public interface JobModelMapper extends LocalDateTimeMapper{
     }
 
     @Named("toActions")
-    default List<String> toActions(JobListModel jobListModel) {
-        final List<String> actions = Lists.newArrayList("delete");
+    default Set<String> toActions(JobListModel jobListModel) {
+        final Set<String> actions = Sets.newHashSet("delete");
         if (jobListModel.getRequestsRecovery()) {
             actions.add("resume");
         } else {

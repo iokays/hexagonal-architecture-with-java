@@ -2,7 +2,7 @@ package com.iokays.authorization.config.security.adapter.persistence;
 
 import com.iokays.authorization.core.application.service.OauthUserApplicationService;
 import com.iokays.authorization.core.application.service.UserApplicationService;
-import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import com.iokays.authorization.core.domain.oauth2user.OauthUserInfo;
 import com.iokays.authorization.core.domain.user.UserInfo;
 import lombok.AllArgsConstructor;
@@ -70,7 +70,7 @@ public class MyUserInfoMapperAdapter implements Function<OidcUserInfoAuthenticat
 
         if (Objects.nonNull(oauthLogin)) {
             //本业务系统的用户信息
-            return toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new ClientRegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
+            return toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new RegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
 
             //第三方的用户信息
 //            Map<String, Object> thirdPartyClaims = extractClaims(oauthLogin);
@@ -146,7 +146,7 @@ public class MyUserInfoMapperAdapter implements Function<OidcUserInfoAuthenticat
 //            });
 
             //本业务系统的用户信息
-            final OidcUserInfo oidcUserInfo = toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new ClientRegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
+            final OidcUserInfo oidcUserInfo = toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new RegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
             context.getClaims().claims(claims -> claims.putAll(oidcUserInfo.getClaims()));
             return;
         }

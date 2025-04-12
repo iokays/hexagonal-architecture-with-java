@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.application.service;
 
-import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import com.iokays.authorization.core.domain.oauth2user.OauthUser;
 import com.iokays.authorization.core.domain.oauth2user.OauthUserInfo;
 import com.iokays.authorization.core.domain.oauth2user.OauthUserRepository;
@@ -25,7 +25,7 @@ public class OauthUserApplicationService implements ApplicationService {
     @CacheEvict(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#command.subject + '_' + #command.clientRegistrationId")
     public void save(SaveOauthUser command) {
         log.debug("command: {}", command);
-        oauthUserRepository.findBySubjectAndClientRegistrationId(command.subject(), command.clientRegistrationId())
+        oauthUserRepository.findBySubjectAndRegistrationId(command.subject(), command.registrationId())
                 .ifPresentOrElse(
                         v -> v.update(command),
                         () -> oauthUserRepository.save(new OauthUser(command))
@@ -33,9 +33,9 @@ public class OauthUserApplicationService implements ApplicationService {
     }
 
     @Cacheable(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#subject + '_' + #clientRegistrationId")
-    public OauthUserInfo findBySubjectAndClientRegistrationId(String subject, ClientRegistrationId clientRegistrationId) {
+    public OauthUserInfo findBySubjectAndClientRegistrationId(String subject, RegistrationId registrationId) {
         return oauthUserRepository
-                .findBySubjectAndClientRegistrationId(subject, clientRegistrationId)
+                .findBySubjectAndRegistrationId(subject, registrationId)
                 .map(OauthUser::info)
                 .orElseThrow(() -> new IllegalArgumentException("not found %s".formatted(subject)));
     }

@@ -17,7 +17,7 @@ public record PageOauthUserModel(
          * 客户端注册 ID。
          * 标识用户注册的客户端应用。
          */
-        String clientRegistrationId,
+        String registrationId,
 
         /**
          * 用户唯一标识符（Subject）。

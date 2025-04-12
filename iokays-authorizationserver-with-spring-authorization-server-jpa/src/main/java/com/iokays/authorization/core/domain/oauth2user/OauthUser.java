@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.oauth2user;
 
-import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import com.iokays.authorization.core.domain.oauth2user.command.SaveOauthUser;
 import com.iokays.common.domain.jpa.ConcurrencySafeEntity;
 import jakarta.persistence.*;
@@ -21,7 +21,7 @@ public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "client_registration_id", length = 40, nullable = false))
-    private ClientRegistrationId clientRegistrationId;
+    private RegistrationId registrationId;
 
     @Column(nullable = false)
     private String subject;
@@ -93,7 +93,7 @@ public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
     public OauthUser(final SaveOauthUser command) {
         this();
         this.oauthUserId = OauthUserId.makeUserId();
-        this.clientRegistrationId = command.clientRegistrationId();
+        this.registrationId = command.registrationId();
         this.set(command);
     }
 
@@ -130,7 +130,7 @@ public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
     public OauthUserInfo info() {
         return OauthUserInfo.builder()
                 .oauthUserId(this.oauthUserId)
-                .clientRegistrationId(this.clientRegistrationId)
+                .registrationId(this.registrationId)
                 .subject(this.subject)
                 .name(this.name)
                 .givenName(this.givenName)

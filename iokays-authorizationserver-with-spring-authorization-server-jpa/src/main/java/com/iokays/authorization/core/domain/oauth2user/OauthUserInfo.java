@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.oauth2user;
 
-import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import lombok.Builder;
 
 /**
@@ -8,7 +8,7 @@ import lombok.Builder;
  * 如果系统同时支持表单和Oauth2登录， 并且表单用户为系统的核心用户模块，Oauth2作为登录授权的一种方式，将该部分放到user领域层，并建立一对多的关系。
  */
 @Builder
-public record OauthUserInfo(OauthUserId oauthUserId, ClientRegistrationId clientRegistrationId,
+public record OauthUserInfo(OauthUserId oauthUserId, RegistrationId registrationId,
                             String subject, String name, String givenName, String familyName, String middleName,
                             String nickname, String preferredUsername, String profile, String picture, String website,
                             String email, Boolean emailVerified, String gender, String birthdate, String zoneinfo,

@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class PageJobModel implements Serializable {
@@ -39,5 +40,5 @@ public class PageJobModel implements Serializable {
 
     private String cronExpression;
 
-    private List<String> actions;
+    private Set<String> actions;
 }

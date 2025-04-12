@@ -32,7 +32,7 @@ public class MyClientRegistrationRepositoryAdapter implements ClientRegistration
     private ClientRegistration toClientRegistration(ClientRegistrationInfo source) {
         log.debug("source: {}", source);
         return ClientRegistration
-                .withRegistrationId(source.clientRegistrationId().id())
+                .withRegistrationId(source.registrationId().id())
                 .clientName(source.clientName())
                 .clientId(source.clientId())
                 .clientSecret(source.clientSecret())
@@ -55,7 +55,7 @@ public class MyClientRegistrationRepositoryAdapter implements ClientRegistration
                 final Set<Entry<String, String>> result = Sets.newHashSet();
 
                 clientRegistrationApplicationService.findAll().forEach(v -> {
-                    String authorizationRequestUri = "/oauth2/authorization/" + v.clientRegistrationId().id();
+                    String authorizationRequestUri = "/oauth2/authorization/" + v.registrationId().id();
                     result.add(new SimpleEntry<>(authorizationRequestUri, v.clientName()));
                 });
                 return result;

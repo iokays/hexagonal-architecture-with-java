@@ -2,6 +2,7 @@ package com.iokays;
 
 import com.iokays.authorization.core.application.service.ClientRegistrationApplicationService;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationType;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import com.iokays.authorization.core.domain.clientregistration.command.CreateClientRegistration;
 import com.iokays.common.core.command.CommandId;
 import io.vavr.control.Try;
@@ -25,50 +26,46 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         {
-            final var clientRegistration = new CreateClientRegistration(
-                    CommandId.generate(),
-                    ClientRegistrationType.GOOGLE,
-                    customProperties.getGoogleClientId(),
-                    "Google",
-                    customProperties.getGoogleClientSecret(),
-                    "client_secret_basic",
-                    "authorization_code",
-                    "{baseUrl}/login/oauth2/code/{registrationId}",
-                    Set.of("openid", "profile", "email", "address", "phone"),
-                    "https://accounts.google.com/o/oauth2/v2/auth",
-                    "https://www.googleapis.com/oauth2/v4/token",
-                    "https://www.googleapis.com/oauth2/v3/userinfo",
-                    "sub",
-                    "https://www.googleapis.com/oauth2/v3/certs"
-            );
+            final var clientRegistration = CreateClientRegistration.builder()
+                    .id(CommandId.generate())
+                    .registrationId(new RegistrationId("GOOGLE"))
+                    .clientRegistrationType(ClientRegistrationType.GOOGLE)
+                    .clientId(customProperties.getGoogleClientId())
+                    .clientName("Google")
+                    .clientSecret(customProperties.getGoogleClientSecret())
+                    .clientAuthenticationMethod("client_secret_basic")
+                    .authorizationGrantType("authorization_code")
+                    .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+                    .scopes(Set.of("openid", "profile", "email", "address", "phone"))
+                    .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+                    .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+                    .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+                    .userNameAttributeName("sub")
+                    .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+                    .build();
             Try.run(() -> {
                 final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
                 log.info("clientRegistrationId: {}", clientRegistrationId);
             });
         }
 
-        {
-            final var clientRegistration = new CreateClientRegistration(
-                    CommandId.generate(),
-                    ClientRegistrationType.WORK_WEIXIN,
-                    customProperties.getWorkWinXinClientId(),
-                    "企微登录",
-                    customProperties.getGoogleClientSecret(),
-                    "client_secret_basic",
-                    "authorization_code",
-                    "{baseUrl}/login/oauth2/code/{registrationId}",
-                    Set.of("snsapi_privateinfo"),
-                    "https://open.weixin.qq.com/connect/oauth2/authorize",
-                    "https://www.googleapis.com/oauth2/v4/token",
-                    "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo",
-                    "sub",
-                    "https://www.googleapis.com/oauth2/v3/certs"
-            );
-            Try.run(() -> {
-                final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
-                log.info("clientRegistrationId: {}", clientRegistrationId);
-            });
-        }
+        final var clientRegistration = CreateClientRegistration.builder()
+                .id(CommandId.generate())
+                .clientRegistrationType(ClientRegistrationType.WORK_WEIXIN)
+                .registrationId(new RegistrationId("WORK_WEIXIN"))
+                .clientId(customProperties.getWorkWinXinClientId())
+                .clientName("企微登录")
+                .clientSecret(customProperties.getGoogleClientSecret())
+                .clientAuthenticationMethod("client_secret_basic")
+                .authorizationGrantType("authorization_code")
+                .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+                .scopes(Set.of("snsapi_privateinfo"))
+                .authorizationUri("https://open.weixin.qq.com/connect/oauth2/authorize")
+                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+                .userInfoUri("https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo")
+                .userNameAttributeName("sub")
+                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+                .build();
 
     }
 }

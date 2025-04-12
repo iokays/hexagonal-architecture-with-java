@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.oauth2user;
 
-import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 
 import java.util.Optional;
 
@@ -10,6 +10,6 @@ public interface OauthUserRepository {
 
     Optional<OauthUser> findByOauthUserId(OauthUserId oauthUserId);
 
-    Optional<OauthUser> findBySubjectAndClientRegistrationId(String subject, ClientRegistrationId clientRegistrationId);
+    Optional<OauthUser> findBySubjectAndRegistrationId(String subject, RegistrationId registrationId);
 
 }

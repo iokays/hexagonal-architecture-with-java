@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.*;
@@ -48,6 +49,7 @@ public class MySecurityClientConfig {
                     handler.setTargetUrlParameter("targetUrl");
                     v.successHandler(handler);
                 })
+                .csrf(AbstractHttpConfigurer::disable) // 禁用 CSRF 保护 [如果不是统一访问(代理)入口，需要禁用]
                 .oauth2Login(v -> v
                         .loginPage(DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL)
                         .successHandler(federatedIdentityAuthenticationSuccessHandler))

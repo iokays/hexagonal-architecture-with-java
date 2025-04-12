@@ -1,5 +1,7 @@
 package com.iokays.authorization.core.adapter.web.mapping;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.iokays.authorization.core.adapter.web.model.CreateClientRegistrationModel;
 import com.iokays.authorization.core.adapter.web.model.PageClientRegistrationModel;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationInfo;
@@ -7,6 +9,10 @@ import com.iokays.authorization.core.domain.clientregistration.command.CreateCli
 import com.iokays.common.core.command.CommandId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+
+import java.util.List;
+import java.util.Set;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -18,9 +24,16 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 public interface ClientRegistrationModelMapper {
 
     @Mapping(target = "id", expression = "java( CommandId.generate() )")
+    @Mapping(target = "redirectUri", constant = "{baseUrl}/login/oauth2/code/{registrationId}")
     CreateClientRegistration toCreateClientRegistration(CreateClientRegistrationModel model);
 
+    @Mapping(target = "actions", source = "info", qualifiedByName = "toActions")
     PageClientRegistrationModel toPageClientRegistration(ClientRegistrationInfo info);
+
+    @Named("toActions")
+    default Set<String> toActions(ClientRegistrationInfo info) {
+        return Set.of("delete");
+    }
 
 }
 

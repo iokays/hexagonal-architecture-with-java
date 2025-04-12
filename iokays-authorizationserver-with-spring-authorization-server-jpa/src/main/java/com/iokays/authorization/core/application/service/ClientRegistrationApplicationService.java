@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistration;
-import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationInfo;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationRepository;
 import com.iokays.authorization.core.domain.clientregistration.command.CreateClientRegistration;
@@ -29,7 +29,7 @@ public class ClientRegistrationApplicationService implements ApplicationService 
 
     @NotNull
     @Transactional(readOnly = true)
-    @Cacheable(value = "ClientRegistrationByAll")
+//    @Cacheable(value = "ClientRegistrationByAll")
     public List<ClientRegistrationInfo> findAll() {
         return clientRegistrationRepository.findAll().stream().map(ClientRegistration::info).toList();
     }
@@ -38,7 +38,7 @@ public class ClientRegistrationApplicationService implements ApplicationService 
     @Cacheable(value = "ClientRegistrationById", key = "#registrationId")
     public ClientRegistrationInfo findByRegistrationId(String registrationId) {
         log.info("registrationId: {}", registrationId);
-        final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByClientRegistrationId(new ClientRegistrationId(registrationId)));
+        final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByRegistrationId(new RegistrationId(registrationId)));
         return clientRegistration.info();
     }
 
@@ -47,10 +47,21 @@ public class ClientRegistrationApplicationService implements ApplicationService 
                     @CacheEvict(value = "ClientRegistrationByAll"),
                     @CacheEvict(value = "ClientRegistrationById", key = "#result.id")
             })
-    public ClientRegistrationId createClientRegistration(CreateClientRegistration command) {
+    public RegistrationId createClientRegistration(CreateClientRegistration command) {
         Validate.isTrue(!this.checkClientNameExist(command.clientName()), "ClientName: " + command.clientName() + " 已经存在");
         log.info("创建客户端:{}", command.clientName());
         return clientRegistrationRepository.save(new ClientRegistration(command)).clientRegistrationId();
+    }
+
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "ClientRegistrationByAll"),
+                    @CacheEvict(value = "ClientRegistrationById", key = "#registrationId")
+            })
+    public void deleteRegistrationId(String registrationId) {
+        log.info("registrationId: {}", registrationId);
+        final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByRegistrationId(new RegistrationId(registrationId)));
+        clientRegistrationRepository.delete(clientRegistration);
     }
 
     private boolean checkClientNameExist(final String clientName) {
