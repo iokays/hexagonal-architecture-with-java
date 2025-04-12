@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.adapter.web.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.nimbusds.openid.connect.sdk.federation.registration.ClientRegistrationType;
+import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationType;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -12,7 +12,8 @@ import java.util.Set;
  * 通常用于在分页查询中返回客户端注册的详细信息。
  */
 public record PageClientRegistrationModel(
-        String clientRegistrationId, // 客户端注册的唯一标识符，用于唯一标识一个客户端注册
+        String registrationId, // 客户端注册的唯一标识符，用于唯一标识一个客户端注册
+        ClientRegistrationType clientRegistrationType,
         String clientId, // 客户端的唯一标识符，用于在授权服务器中识别客户端
         String clientName, // 客户端的名称，用于展示或管理
         String clientSecret, // 客户端的密钥，用于客户端认证

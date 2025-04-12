@@ -67,5 +67,10 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
                 .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
                 .build();
 
+        Try.run(() -> {
+            final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+            log.info("clientRegistrationId: {}", clientRegistrationId);
+        });
+
     }
 }
