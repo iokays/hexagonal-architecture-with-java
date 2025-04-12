@@ -13,4 +13,6 @@ public interface RegisteredClientRepository extends Repository {
 
     Optional<RegisteredClient> findByClientId(String clientId);
 
+    void delete(RegisteredClient registeredClient);
+
 }

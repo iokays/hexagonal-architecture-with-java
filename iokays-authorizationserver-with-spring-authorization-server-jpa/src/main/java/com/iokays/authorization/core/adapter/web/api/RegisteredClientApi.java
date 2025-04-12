@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/registered/clients")
 public interface RegisteredClientApi {
 
-    @PostMapping("/create")
+    @PostMapping
     ResponseEntity<String> create(@RequestBody final CreateRegisteredClientModel model);
 
 }

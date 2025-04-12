@@ -119,7 +119,7 @@ public class RegisteredClient extends AbstractAggregateRoot<RegisteredClient> {
     }
 
     private void setClientId(String clientId) {
-        Validate.isTrue(Objects.requireNonNull(clientId).matches("^[a-zA-Z][a-zA-Z]*-[a-zA-Z]+$"), "长度为10-15字符串，含有多个字母开头与结尾, 并且最多一个-符号");
+        Validate.notNull(clientId);
         this.clientId = clientId;
     }
 

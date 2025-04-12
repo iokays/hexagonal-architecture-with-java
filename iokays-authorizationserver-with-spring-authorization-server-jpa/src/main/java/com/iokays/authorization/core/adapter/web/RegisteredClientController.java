@@ -6,13 +6,16 @@ import com.iokays.authorization.core.adapter.web.model.CreateRegisteredClientMod
 import com.iokays.authorization.core.adapter.web.model.PageRegisteredClientModel;
 import com.iokays.authorization.core.application.service.RegisteredClientApplicationService;
 import com.iokays.authorization.core.application.service.RegisteredClientQueryApplicationService;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.adapter.DriverAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @DriverAdapter
@@ -39,6 +42,11 @@ public class RegisteredClientController implements RegisteredClientApi {
                 registeredClientQueryApplicationService.page(pageable),
                 registeredClientModelMapper::toPageRegisteredClientModel
         );
+    }
+
+    @DeleteMapping("/{registrationId}")
+    public void delete(@PathVariable String registrationId) {
+        applicationService.delete(new RegisteredClientId(registrationId));
     }
 
 }

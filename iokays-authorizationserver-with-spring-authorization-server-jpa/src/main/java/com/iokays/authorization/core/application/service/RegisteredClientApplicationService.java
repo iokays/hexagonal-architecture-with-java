@@ -42,4 +42,12 @@ public class RegisteredClientApplicationService implements ApplicationService {
         return registeredClientRepository.findByClientId(clientId).map(RegisteredClient::info).orElse(null);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "ClientRegistrationById", key = "#id.id")
+    })
+    public void delete(final RegisteredClientId id) {
+        final var entity = registeredClientRepository.findByRegisteredClientId(id);
+        registeredClientRepository.delete(entity);
+    }
+
 }

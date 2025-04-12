@@ -7,6 +7,7 @@ import java.util.List;
  * 已注册客户端模型记录类
  */
 public record CreateRegisteredClientModel(
+        String registeredClientId, // 注册客户端ID
         String clientId, // 客户端唯一标识符
         Instant clientIdIssuedAt, // 客户端ID颁发时间
         String clientSecret, // 客户端密钥

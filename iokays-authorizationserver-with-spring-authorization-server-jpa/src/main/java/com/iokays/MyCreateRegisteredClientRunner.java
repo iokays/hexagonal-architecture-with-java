@@ -3,6 +3,7 @@ package com.iokays;
 import com.iokays.authorization.core.application.service.RegisteredClientApplicationService;
 import com.iokays.authorization.core.domain.registeredclient.commond.RegisterClient;
 import com.iokays.common.core.command.CommandId;
+import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -28,12 +29,6 @@ public class MyCreateRegisteredClientRunner implements CommandLineRunner {
     public void run(String... args) {
         {
             final var clientId = "login-code";
-
-            if (null != registeredClientApplicationService.findByClientId(clientId)) {
-                log.info("clientId: {}, 已存在", clientId);
-                return;
-            }
-
             log.info("创建 clientId: {}", clientId);
 
             final var command = RegisterClient.builder()
@@ -51,25 +46,17 @@ public class MyCreateRegisteredClientRunner implements CommandLineRunner {
                             AuthorizationGrantType.DEVICE_CODE.getValue(),
                             AuthorizationGrantType.REFRESH_TOKEN.getValue()
                     ))
-                    .redirectUris(List.of("https://www.iokays.com", "http://localhost:8082/login/oauth2/code/local"))
+                    .redirectUris(List.of("https://www.iokays.com/login/oauth2/code/IOKAYS", "http://localhost:3000/login/oauth2/code/IOKAYS"))
                     .scopes(List.of(OidcScopes.OPENID, OidcScopes.PROFILE))
                     .clientSettings(StringUtils.EMPTY)
                     .tokenSettings(StringUtils.EMPTY)
                     .build();
 
-            registeredClientApplicationService.save(command);
+            Try.run(() -> registeredClientApplicationService.save(command));
         }
 
         {
             final var clientId = "login-client";
-
-            if (null != registeredClientApplicationService.findByClientId(clientId)) {
-                log.info("clientId: {}, 已存在", clientId);
-                return;
-            }
-
-            log.info("创建 clientId: {}", clientId);
-
             final var command = RegisterClient.builder()
                     .id(CommandId.generate())
                     .clientName("内部微服务之间认证")
@@ -89,8 +76,7 @@ public class MyCreateRegisteredClientRunner implements CommandLineRunner {
                     .tokenSettings(StringUtils.EMPTY)
                     .build();
 
-            registeredClientApplicationService.save(command);
-
+            Try.run(() -> registeredClientApplicationService.save(command));
         }
 
 
