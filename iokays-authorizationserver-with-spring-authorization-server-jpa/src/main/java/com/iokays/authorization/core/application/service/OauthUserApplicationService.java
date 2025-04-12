@@ -22,7 +22,7 @@ public class OauthUserApplicationService implements ApplicationService {
 
     private final OauthUserRepository oauthUserRepository;
 
-    @CacheEvict(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#command.subject + '_' + #command.clientRegistrationId")
+    @CacheEvict(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#command.subject + '_' + #command.registrationId")
     public void save(SaveOauthUser command) {
         log.debug("command: {}", command);
         oauthUserRepository.findBySubjectAndRegistrationId(command.subject(), command.registrationId())
@@ -32,7 +32,7 @@ public class OauthUserApplicationService implements ApplicationService {
                 );
     }
 
-    @Cacheable(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#subject + '_' + #clientRegistrationId")
+    @Cacheable(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#subject + '_' + #registrationId")
     public OauthUserInfo findBySubjectAndClientRegistrationId(String subject, RegistrationId registrationId) {
         return oauthUserRepository
                 .findBySubjectAndRegistrationId(subject, registrationId)
