@@ -38,7 +38,7 @@ public class MySecurityClientConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/assets/**", "favicon.ico", ".well-known/jwks.json", DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL).permitAll()
+                        .requestMatchers("/statics/**", "favicon.ico", ".well-known/jwks.json", DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(v -> {

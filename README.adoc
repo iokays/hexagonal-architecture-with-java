@@ -9,7 +9,21 @@ This is a simple example of Hexagonal Architecture with Java 23.
 
 https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture with Java 系列]
 
+
+== 启动脚本:
+nohup java -jar iokays-plugin-h2.jar > h2.log 2>&1 &
+nohup java -jar iokays-authorizationserver-with-spring-authorization-server-jpa.jar > authorizationserver.log 2>&1 &
+nohup java -jar iokays-dispatch-with-quartz.jar > quartz.log 2>&1 &
+
+
+nohup java -jar your-application.jar >
+
+iokays-authorizationserver-with-spring-authorization-server-jpa.jar
+
+iokays-authorizationserver-with-spring-authorization-server-jpa.jar
+
 == TODO (待办事项)
 
 * 任务的页面操作
 * 事件的页面操作
+
