@@ -5,7 +5,6 @@ import com.iokays.authorization.core.adapter.web.model.CreateClientRegistrationM
 import com.iokays.authorization.core.adapter.web.model.PageClientRegistrationModel;
 import com.iokays.authorization.core.application.service.ClientRegistrationApplicationService;
 import com.iokays.authorization.core.application.service.ClientRegistrationQueryApplicationService;
-import com.iokays.authorization.core.domain.clientregistration.command.CreateClientRegistration;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.adapter.DriverAdapter;
 import lombok.AllArgsConstructor;
@@ -32,6 +31,7 @@ public class ClientRegistrationController {
                 clientRegistrationModelMapper::toPageClientRegistration
         );
     }
+
     @PostMapping
     public void create(@RequestBody CreateClientRegistrationModel model) {
         final var createClientRegistration = clientRegistrationModelMapper.toCreateClientRegistration(model);

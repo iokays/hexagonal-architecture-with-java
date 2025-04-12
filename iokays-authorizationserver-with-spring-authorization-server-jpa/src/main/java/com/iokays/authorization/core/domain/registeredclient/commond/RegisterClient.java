@@ -1,4 +1,3 @@
-
 package com.iokays.authorization.core.domain.registeredclient.commond;
 
 import com.iokays.common.core.command.Command;
@@ -28,4 +27,5 @@ public record RegisterClient(
         List<String> scopes, // 客户端请求的权限范围列表，例如：openid, profile, email等
         String clientSettings, // 客户端设置，通常为JSON格式字符串，包含客户端特定的配置选项
         String tokenSettings // 令牌设置，通常为JSON格式字符串，包含令牌相关的配置选项
-) implements Command { }
+) implements Command {
+}

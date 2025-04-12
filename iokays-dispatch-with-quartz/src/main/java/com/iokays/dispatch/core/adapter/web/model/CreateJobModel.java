@@ -10,10 +10,11 @@ public record CreateJobModel(
         String name,
         String group,
         String cronExpression,
-        @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         LocalDateTime startAt,
-        @JsonFormat ( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         LocalDateTime endAt,
         JobClass jobClass,
         Map<?, ?> jobData
-) {}
+) {
+}

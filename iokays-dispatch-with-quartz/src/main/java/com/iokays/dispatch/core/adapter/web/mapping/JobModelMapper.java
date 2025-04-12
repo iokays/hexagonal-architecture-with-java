@@ -1,6 +1,5 @@
 package com.iokays.dispatch.core.adapter.web.mapping;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.iokays.common.core.command.CommandId;
 import com.iokays.dispatch.core.adapter.job.JobClass;
@@ -12,8 +11,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
@@ -22,7 +19,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
         componentModel = SPRING,
         imports = {CommandId.class, JobClass.class}
 )
-public interface JobModelMapper extends LocalDateTimeMapper{
+public interface JobModelMapper extends LocalDateTimeMapper {
 
     @Mapping(target = "id", expression = "java( CommandId.generate() )")
     CreateJob toCreateJob(CreateJobModel model);

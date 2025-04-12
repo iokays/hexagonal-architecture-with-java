@@ -1,7 +1,5 @@
 package com.iokays.authorization.core.adapter.web.mapping;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.iokays.authorization.core.adapter.web.model.CreateClientRegistrationModel;
 import com.iokays.authorization.core.adapter.web.model.PageClientRegistrationModel;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationInfo;
@@ -11,7 +9,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;

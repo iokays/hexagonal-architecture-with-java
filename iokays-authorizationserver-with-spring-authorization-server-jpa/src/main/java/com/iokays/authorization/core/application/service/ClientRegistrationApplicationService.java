@@ -1,9 +1,9 @@
 package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistration;
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationInfo;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationRepository;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
 import com.iokays.authorization.core.domain.clientregistration.command.CreateClientRegistration;
 import com.iokays.common.core.service.ApplicationService;
 import lombok.AllArgsConstructor;

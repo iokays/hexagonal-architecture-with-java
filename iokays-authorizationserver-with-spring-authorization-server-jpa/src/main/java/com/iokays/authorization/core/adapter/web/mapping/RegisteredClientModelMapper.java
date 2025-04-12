@@ -2,7 +2,6 @@ package com.iokays.authorization.core.adapter.web.mapping;
 
 import com.iokays.authorization.core.adapter.web.model.CreateRegisteredClientModel;
 import com.iokays.authorization.core.adapter.web.model.PageRegisteredClientModel;
-import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationInfo;
 import com.iokays.authorization.core.domain.registeredclient.RegisteredClientInfo;
 import com.iokays.authorization.core.domain.registeredclient.commond.RegisterClient;
 import com.iokays.common.core.command.CommandId;

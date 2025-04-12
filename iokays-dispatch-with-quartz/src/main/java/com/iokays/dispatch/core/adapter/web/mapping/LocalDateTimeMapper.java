@@ -1,7 +1,5 @@
 package com.iokays.dispatch.core.adapter.web.mapping;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

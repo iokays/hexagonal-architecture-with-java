@@ -4,9 +4,7 @@ import com.iokays.dispatch.core.adapter.persistence.quartz.model.JobListModel;
 import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzCronTriggers;
 import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzJobDetails;
 import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzTriggers;
-import com.iokays.dispatch.core.adapter.persistence.quartz.table.QrtzJobDetails;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.sql.SQLQueryFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 @Component

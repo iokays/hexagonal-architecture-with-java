@@ -1,12 +1,9 @@
 package com.iokays.dispatch.core.adapter.web;
 
 import com.iokays.common.core.adapter.DriverAdapter;
-import com.iokays.dispatch.core.adapter.persistence.quartz.model.JobListModel;
-import com.iokays.dispatch.core.adapter.persistence.quartz.table.QrtzJobDetails;
 import com.iokays.dispatch.core.adapter.utils.Pages;
 import com.iokays.dispatch.core.adapter.web.mapping.JobModelMapper;
 import com.iokays.dispatch.core.adapter.web.model.CreateJobModel;
-import com.iokays.dispatch.core.adapter.web.model.DeleteJobDetailsModel;
 import com.iokays.dispatch.core.adapter.web.model.PageJobModel;
 import com.iokays.dispatch.core.application.service.JobApplicationService;
 import com.iokays.dispatch.core.application.service.JobQueryApplicationService;

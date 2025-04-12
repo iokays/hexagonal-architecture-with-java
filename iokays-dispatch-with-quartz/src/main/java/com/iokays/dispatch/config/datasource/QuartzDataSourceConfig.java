@@ -1,11 +1,9 @@
 package com.iokays.dispatch.config.datasource;
 
-import com.iokays.dispatch.config.quartz.AutowiringSpringBeanJobFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
 import org.springframework.boot.autoconfigure.quartz.QuartzTransactionManager;
-import org.springframework.boot.autoconfigure.quartz.SchedulerFactoryBeanCustomizer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;

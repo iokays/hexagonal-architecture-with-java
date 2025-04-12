@@ -21,9 +21,9 @@ public record PageRegisteredClientModel(
         List<String> scopes, // 客户端请求的权限范围列表，例如：openid, profile, email等
         String clientSettings, // 客户端设置，通常为JSON格式字符串，包含客户端特定的配置选项
         String tokenSettings, // 令牌设置，通常为JSON格式字符串，包含令牌相关的配置选项
-        @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         LocalDateTime createdDate, // 创建时间
-        @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8" )
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         LocalDateTime lastModifiedDate, // 最后更新时间
         Set<String> actions // 可执行的操作，例如"update"、"delete"等
 ) {
