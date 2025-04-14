@@ -2,6 +2,7 @@ package com.iokays.dispatch.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,10 +21,8 @@ public class MySecurityClientConfig {
                         .requestMatchers("/public/**").permitAll() // 公开访问的路径
                         .anyRequest().authenticated() // 其他路径需要认证
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> {
-                        }) // 启用 JWT 验证
-                );
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())) // 启用 JWT 验证
+        ;
         return http.build();
     }
 

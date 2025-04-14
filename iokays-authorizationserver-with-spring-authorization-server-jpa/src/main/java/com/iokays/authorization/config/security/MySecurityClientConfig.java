@@ -10,6 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -56,7 +57,7 @@ public class MySecurityClientConfig {
                 .exceptionHandling(
                         v -> v.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .sessionManagement(v -> v.maximumSessions(1))
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(v -> v.jwkSetUri("http://localhost:8888/oauth2/jwks")))
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())) // 启用 JWT 验证 [认证服务器,本身不用配置jwk-set-uri]
         ;
 
         return http.build();

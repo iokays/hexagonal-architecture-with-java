@@ -37,8 +37,8 @@ public class ClientTest {
             map.add("scope", "read");
 
             final var requestEntity = new HttpEntity<>(map, headers);
-            final String url = "http://localhost:8888/oauth2/token";
-//            final String url = "https://www.iokays.com/oauth2/token";
+            String url = "http://localhost:8888/oauth2/token";
+//            url = "https://www.iokays.com/oauth2/token";
             final var response = restTemplate.postForObject(url, requestEntity, String.class);
             log.info("response: {}", response);
 
@@ -51,8 +51,9 @@ public class ClientTest {
         {
             final var headers = new HttpHeaders();
             headers.setBearerAuth(accessToken);
-            final String url = "http://localhost:8888/users";
-//            final String url = "https://www.iokays.com/api/users";
+            String url = "http://localhost:8888/users";
+//            url = "https://www.iokays.com/api/users";
+//            url = "https://www.iokays.com/dispatchApi/schedule/jobs";
             final var response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
             log.info("response: {}", response);
         }
