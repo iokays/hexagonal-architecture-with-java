@@ -11,19 +11,17 @@ https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture w
 
 
 == 启动脚本:
-nohup java -jar iokays-plugin-h2.jar > h2.log 2>&1 &
-nohup java -jar iokays-authorizationserver-with-spring-authorization-server-jpa.jar > authorizationserver.log 2>&1 &
-nohup java -jar iokays-dispatch-with-quartz.jar > quartz.log 2>&1 &
 
+ cd /home/ftpuser/iokays-project
 
-nohup java -jar your-application.jar >
+ pkill -f "iokays-plugin-h2.jar"
+ nohup java -jar iokays-plugin-h2.jar > h2.log 2>&1 &
 
-iokays-authorizationserver-with-spring-authorization-server-jpa.jar
+ pkill -f "iokays-authorizationserver-with-spring-authorization-server-jpa.jar"
+ nohup java -jar iokays-authorizationserver-with-spring-authorization-server-jpa.jar > authorizationserver.log 2>&1 &
 
-iokays-authorizationserver-with-spring-authorization-server-jpa.jar
+ pkill -f "iokays-dispatch-with-quartz.jar"
+ nohup java -jar iokays-dispatch-with-quartz.jar > quartz.log 2>&1 &
 
 == TODO (待办事项)
-
-* 任务的页面操作
-* 事件的页面操作
 

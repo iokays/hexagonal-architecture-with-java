@@ -56,6 +56,7 @@ public class MySecurityClientConfig {
                 .exceptionHandling(
                         v -> v.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .sessionManagement(v -> v.maximumSessions(1))
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(v -> v.jwkSetUri("http://localhost:8888/oauth2/jwks")))
         ;
 
         return http.build();

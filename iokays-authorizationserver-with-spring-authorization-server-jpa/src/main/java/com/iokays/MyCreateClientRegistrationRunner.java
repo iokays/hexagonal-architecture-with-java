@@ -49,28 +49,56 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
             });
         }
 
-        final var clientRegistration = CreateClientRegistration.builder()
-                .id(CommandId.generate())
-                .clientRegistrationType(ClientRegistrationType.WORK_WEIXIN)
-                .registrationId(new RegistrationId("WORK_WEIXIN"))
-                .clientId(customProperties.getWorkWinXinClientId())
-                .clientName("企微登录")
-                .clientSecret(customProperties.getGoogleClientSecret())
-                .clientAuthenticationMethod("client_secret_basic")
-                .authorizationGrantType("authorization_code")
-                .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
-                .scopes(Set.of("snsapi_privateinfo"))
-                .authorizationUri("https://open.weixin.qq.com/connect/oauth2/authorize")
-                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
-                .userInfoUri("https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo")
-                .userNameAttributeName("sub")
-                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
-                .build();
+//        {
+//            final var clientRegistration = CreateClientRegistration.builder()
+//                    .id(CommandId.generate())
+//                    .clientRegistrationType(ClientRegistrationType.WORK_WEIXIN)
+//                    .registrationId(new RegistrationId("WORK_WEIXIN"))
+//                    .clientId(customProperties.getWorkWinXinClientId())
+//                    .clientName("企微登录")
+//                    .clientSecret(customProperties.getGoogleClientSecret())
+//                    .clientAuthenticationMethod("client_secret_basic")
+//                    .authorizationGrantType("authorization_code")
+//                    .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+//                    .scopes(Set.of("snsapi_privateinfo"))
+//                    .authorizationUri("https://open.weixin.qq.com/connect/oauth2/authorize")
+//                    .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+//                    .userInfoUri("https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo")
+//                    .userNameAttributeName("sub")
+//                    .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+//                    .build();
+//
+//            Try.run(() -> {
+//                final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+//                log.info("clientRegistrationId: {}", clientRegistrationId);
+//            });
+//        }
 
-        Try.run(() -> {
-            final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
-            log.info("clientRegistrationId: {}", clientRegistrationId);
-        });
+        {
+            final var clientRegistration = CreateClientRegistration.builder()
+                    .id(CommandId.generate())
+                    .clientRegistrationType(ClientRegistrationType.IOKAYS)
+                    .registrationId(new RegistrationId("IOKAYS"))
+                    .clientName("IOKAYS登录")
+                    .clientId("login-code")
+                    .clientSecret("openid-connect")
+                    .clientAuthenticationMethod("client_secret_basic")
+                    .authorizationGrantType("authorization_code")
+                    .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+                    .scopes(Set.of("profile"))
+                    .authorizationUri("https://www.iokays.com/oauth2/authorize")
+                    .tokenUri("https://www.iokays.com/oauth2/token")
+                    .userInfoUri("https://www.iokays.com/userinfo")
+                    .userNameAttributeName("sub")
+                    .jwkSetUri("https://www.iokays.com/oauth2/jwks")
+                    .build();
+
+            Try.run(() -> {
+                final var clientRegistrationId = clientRegistrationApplicationService.createClientRegistration(clientRegistration);
+                log.info("clientRegistrationId: {}", clientRegistrationId);
+            });
+        }
+
 
     }
 }

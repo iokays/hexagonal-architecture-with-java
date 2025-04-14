@@ -42,5 +42,6 @@ dependencies {
 //    implementation("io.opentelemetry:opentelemetry-exporter-zipkin:1.45.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.jayway.jsonpath:json-path:2.9.0")
 
 }

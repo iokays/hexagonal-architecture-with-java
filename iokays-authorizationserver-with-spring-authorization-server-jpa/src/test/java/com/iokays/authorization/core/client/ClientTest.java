@@ -1,10 +1,14 @@
 package com.iokays.authorization.core.client;
 
+import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -20,19 +24,42 @@ public class ClientTest {
     @Test
     @DisplayName("获取客户端令牌")
     void testToken() {
-        // 设置请求头 (因为client-authentication-method配置的是： client_secret_basic)
-        final var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add(HttpHeaders.AUTHORIZATION, "Basic " + Base64.getEncoder().encodeToString(("login-client:secret").getBytes()));
+        String accessToken = "";
+        {
+            // 设置请求头 (因为client-authentication-method配置的是： client_secret_basic)
+            final var headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.add(HttpHeaders.AUTHORIZATION, "Basic " + Base64.getEncoder().encodeToString(("login-client:secret").getBytes()));
 
-        // 设置请求参数
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("grant_type", "client_credentials");
-        map.add("scope", "read");
+            // 设置请求参数
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+            map.add("grant_type", "client_credentials");
+            map.add("scope", "read");
 
-        final var requestEntity = new HttpEntity<>(map, headers);
-        final String url = "http://localhost:8888/oauth2/token";
-        final var response = restTemplate.postForObject(url, requestEntity, String.class);
-        log.info("response: {}", response);
+            final var requestEntity = new HttpEntity<>(map, headers);
+            final String url = "http://localhost:8888/oauth2/token";
+//            final String url = "https://www.iokays.com/oauth2/token";
+            final var response = restTemplate.postForObject(url, requestEntity, String.class);
+            log.info("response: {}", response);
+
+            accessToken = JsonPath.parse(response).read("$.access_token");
+            Assertions.assertTrue(StringUtils.isNotBlank(accessToken));
+            log.info("accessToken: {}", accessToken);
+
+        }
+
+        {
+            final var headers = new HttpHeaders();
+            headers.setBearerAuth(accessToken);
+            final String url = "http://localhost:8888/users";
+//            final String url = "https://www.iokays.com/api/users";
+            final var response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+            log.info("response: {}", response);
+        }
+
     }
 }
+
+
+
+
