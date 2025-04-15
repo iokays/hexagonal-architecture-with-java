@@ -47,7 +47,6 @@ public class MyCreateRegisteredClientRunner implements CommandLineRunner {
                             AuthorizationGrantType.REFRESH_TOKEN.getValue()
                     ))
                     .redirectUris(List.of(
-                            "https://www.iokays.com/login/oauth2/code/IOKAYS",
                             "http://localhost:3000/login/oauth2/code/IOKAYS",
                             "http://localhost:8888/login/oauth2/code/IOKAYS"
                     ))

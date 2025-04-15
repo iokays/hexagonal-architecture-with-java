@@ -1,6 +1,6 @@
 server:
   port: 7777
-  forward-headers-strategy: native  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
+  forward-headers-strategy: framework  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
 spring:
   application:
     name: iokays-job-with-quartz
@@ -12,10 +12,23 @@ spring:
 
   security:
     oauth2:
+      client:
+        registration:
+          my-client:
+            client-id: login-client
+            client-secret: secret
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+            provider: my-provider
+        provider:
+          my-provider:
+            token-uri: https://www.iokays.com/oauth2/token
       resourceserver:
         jwt:
           # 设置JWT解码的公钥位置
-          jwk-set-uri: http://localhost:8888/oauth2/jwks
+          jwk-set-uri: https://www.iokays.com/oauth2/jwks
           # 如果你有特定的JWT解析配置，可以继续配置
   #          issuer-uri: https://example.com/issuer
 
