@@ -47,9 +47,8 @@ public class MyCreateRegisteredClientRunner implements CommandLineRunner {
                             AuthorizationGrantType.REFRESH_TOKEN.getValue()
                     ))
                     .redirectUris(List.of(
-                            "http://localhost:3000/login/oauth2/code/IOKAYS",
-                            "http://localhost:7777/login/oauth2/code/IOKAYS",
-                            "http://localhost:8888/login/oauth2/code/IOKAYS"
+                            "http://127.0.0.1:3000/login/oauth2/code/IOKAYS",
+                            "http://127.0.0.1:8888/login/oauth2/code/IOKAYS"
                     ))
                     .scopes(List.of(OidcScopes.OPENID, OidcScopes.PROFILE))
                     .clientSettings(StringUtils.EMPTY)
