@@ -7,7 +7,6 @@ dependencies {
 
     implementation("commons-validator:commons-validator:1.9.0")
 
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("io.netty:netty-resolver-dns-native-macos:4.2.0.Final:osx-aarch_64")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")

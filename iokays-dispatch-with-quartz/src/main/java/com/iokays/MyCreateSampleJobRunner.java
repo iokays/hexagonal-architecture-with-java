@@ -31,6 +31,6 @@ public class MyCreateSampleJobRunner implements CommandLineRunner {
                 .jobClass(JobClass.SAMPLE)
                 .cronExpression("0/5 * * * * ?")
                 .jobData(Map.of("count", 1))
-                .build())).onFailure(e -> log.error("创建任务失败", e));
+                .build())).isSuccess();
     }
 }

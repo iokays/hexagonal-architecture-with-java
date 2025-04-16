@@ -5,12 +5,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.oauth2.client.*;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
 
 @Configuration
 @EnableJdbcHttpSession(tableName = "SPRING_SESSION", maxInactiveIntervalInSeconds = 1800)
@@ -32,29 +37,44 @@ public class MySecurityClientConfig {
     }
 
     @Bean
-    public WebClient webClient(ClientRegistrationRepository clients,
-                               OAuth2AuthorizedClientRepository authClients) {
-        ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 =
-                new ServletOAuth2AuthorizedClientExchangeFilterFunction(clients, authClients);
-        oauth2.setDefaultClientRegistrationId("my-client"); // 对应配置中的 registration ID
+    public OAuth2AuthorizedClientManager authorizedClientManager(
+            ClientRegistrationRepository clientRegistrationRepository,
+            OAuth2AuthorizedClientService authorizedClientService) {
 
-        return WebClient.builder()
-                .apply(oauth2.oauth2Configuration())
-                .build();
+        OAuth2AuthorizedClientProvider authorizedClientProvider =
+                OAuth2AuthorizedClientProviderBuilder.builder()
+                        .clientCredentials()
+                        .build();
+
+        AuthorizedClientServiceOAuth2AuthorizedClientManager authorizedClientManager =
+                new AuthorizedClientServiceOAuth2AuthorizedClientManager(
+                        clientRegistrationRepository, authorizedClientService);
+        authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
+
+        return authorizedClientManager;
     }
 
+    @Bean
+    public RestTemplate restTemplate(OAuth2AuthorizedClientManager authorizedClientManager) {
+        RestTemplate restTemplate = new RestTemplate();
 
-    // 配置 CORS 规则（允许前端域名）
-//    @Bean
-//    public CorsFilter corsFilter() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowCredentials(true); // 允许跨域 Cookie
-//        config.addAllowedOrigin("http://localhost:3000"); // Vue 前端地址
-//        config.addAllowedHeader("*");
-//        config.addAllowedMethod("*");
-//        source.registerCorsConfiguration("/**", config);
-//        return new CorsFilter(source);
-//    }
+        restTemplate.setInterceptors(Collections.singletonList((request, body, execution) -> {
+            OAuth2AuthorizeRequest authorizeRequest = OAuth2AuthorizeRequest
+                    .withClientRegistrationId("my-client") // 配置中的 client id key
+                    .principal("rest-client") // 必须要一个 principal，随便写一个标识即可
+                    .build();
+
+            OAuth2AuthorizedClient authorizedClient = authorizedClientManager.authorize(authorizeRequest);
+
+            if (authorizedClient != null) {
+                OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
+                request.getHeaders().setBearerAuth(accessToken.getTokenValue());
+            }
+
+            return execution.execute(request, body);
+        }));
+
+        return restTemplate;
+    }
 
 }
