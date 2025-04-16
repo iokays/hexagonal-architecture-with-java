@@ -33,6 +33,8 @@ management:
       probability: 1.0
 
 logging:
+  level:
+    org.springframework.security: trace
   pattern:
     correlation: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] "
   include-application-name: false

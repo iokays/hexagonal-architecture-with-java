@@ -48,6 +48,7 @@ public class MyCreateRegisteredClientRunner implements CommandLineRunner {
                     ))
                     .redirectUris(List.of(
                             "http://localhost:3000/login/oauth2/code/IOKAYS",
+                            "http://localhost:7777/login/oauth2/code/IOKAYS",
                             "http://localhost:8888/login/oauth2/code/IOKAYS"
                     ))
                     .scopes(List.of(OidcScopes.OPENID, OidcScopes.PROFILE))

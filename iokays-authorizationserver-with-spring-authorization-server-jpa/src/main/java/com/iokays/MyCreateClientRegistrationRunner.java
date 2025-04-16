@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -85,7 +86,7 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
                     .clientAuthenticationMethod("client_secret_basic")
                     .authorizationGrantType("authorization_code")
                     .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
-                    .scopes(Set.of("profile"))
+                    .scopes(Set.of(OidcScopes.OPENID, OidcScopes.PROFILE))
                     .authorizationUri("https://www.iokays.com/oauth2/authorize")
                     .tokenUri("https://www.iokays.com/oauth2/token")
                     .userInfoUri("https://www.iokays.com/userinfo")

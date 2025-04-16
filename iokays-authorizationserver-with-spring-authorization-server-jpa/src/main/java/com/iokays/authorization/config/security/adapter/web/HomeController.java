@@ -3,6 +3,7 @@ package com.iokays.authorization.config.security.adapter.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.IntStream;
@@ -22,6 +23,14 @@ public class HomeController {
         });
 
         return "Hello World!";
+    }
+
+    /**
+     * 302跳转
+     */
+    @GetMapping(value = "/302")
+    public String redirect(@RequestParam(required = false) String url) {
+        return "redirect:" + url;
     }
 
 }
