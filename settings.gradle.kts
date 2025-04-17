@@ -12,6 +12,7 @@ include("common-serialization-with-jackson")
 include("iokays-ai") //AI
 include("iokays-authorizationserver") //鉴权
 include("iokays-dispatch") //任务
+include("iokays-deeplearning") //深度学习
 
 // 插件模块
 include("iokays-plugin-codegen")

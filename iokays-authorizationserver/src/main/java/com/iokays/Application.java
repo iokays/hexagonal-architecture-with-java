@@ -20,10 +20,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(exposeProxy = true) // 通过 AopContext.currentProxy() 获取当前代理对象
-public class AuthorizationApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthorizationApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }
