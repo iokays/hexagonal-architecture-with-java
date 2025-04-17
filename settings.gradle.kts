@@ -9,9 +9,9 @@ include("common-distributed-id-with-snowflake")
 include("common-serialization-with-jackson")
 
 // 项目模块
-include("iokays-authorizationserver-with-spring-authorization-server-jpa") //鉴权
-include("iokays-dispatch-with-quartz") //任务
-include("iokays-ai-with-spring-ai") //深度学习
+include("iokays-ai") //AI
+include("iokays-authorizationserver") //鉴权
+include("iokays-dispatch") //任务
 
 // 插件模块
 include("iokays-plugin-codegen")

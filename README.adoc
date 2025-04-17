@@ -17,11 +17,11 @@ https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture w
  pkill -f "iokays-plugin-h2.jar"
  nohup java -jar iokays-plugin-h2.jar > h2.log 2>&1 &
 
- pkill -f "iokays-authorizationserver-with-spring-authorization-server-jpa.jar"
- nohup java -jar iokays-authorizationserver-with-spring-authorization-server-jpa.jar > authorizationserver.log 2>&1 &
+ pkill -f "iokays-authorizationserver.jar"
+ nohup java -jar iokays-authorizationserver.jar > authorizationserver.log 2>&1 &
 
- pkill -f "iokays-dispatch-with-quartz.jar"
- nohup java -jar iokays-dispatch-with-quartz.jar > quartz.log 2>&1 &
+ pkill -f "iokays-dispatch.jar"
+ nohup java -jar iokays-dispatch.jar > quartz.log 2>&1 &
 
 == TODO (待办事项)
 
