@@ -3,6 +3,7 @@ package com.iokays;
 import com.querydsl.codegen.BeanSerializer;
 import com.querydsl.codegen.JavaTypeMappings;
 import com.querydsl.sql.codegen.MetaDataExporter;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -19,15 +20,22 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class QueryDSLExporterRunner implements CommandLineRunner, Serializable {
 
-    private final DataSource dataSource;
+    @Resource(name = "messageDataSource")
+    private final DataSource messageDataSource;
 
-    private final String modelName = "iokays-job-with-quartz";
-    private final String packageName = "com.iokays.job.core.adapter.persistence.quartz.table";
+    @Resource(name = "qrtzDataSource")
+    private final DataSource qrtzDataSource;
 
     @Override
     public void run(String... args) throws Exception {
+        this.genMessage();
+    }
+
+    private void genQrtz() {
+        final String modelName = "iokays-dispatch";
+        final String packageName = "com.iokays.dispatch.core.adapter.persistence.quartz.table";
         log.info("开始生成实体");
-        try (final var connection = dataSource.getConnection()) {
+        try (final var connection = qrtzDataSource.getConnection()) {
             final var exporter = new MetaDataExporter();
             exporter.setExportViews(false);
             exporter.setTableNamePattern("QRTZ_%");
@@ -41,4 +49,24 @@ public class QueryDSLExporterRunner implements CommandLineRunner, Serializable {
             log.error("生成异常: ", e);
         }
     }
+
+    private void genMessage() {
+        final String modelName = "iokays-dispatch";
+        final String packageName = "com.iokays.dispatch.core.adapter.persistence.message.table";
+        log.info("开始生成实体");
+        try (final var connection = messageDataSource.getConnection()) {
+            final var exporter = new MetaDataExporter();
+            exporter.setExportViews(false);
+            exporter.setTableNamePattern("T_LOCAL%");
+            exporter.setPackageName(packageName);
+            final var javaTypeMappings = new JavaTypeMappings();
+            exporter.setTypeMappings(javaTypeMappings);
+            exporter.setBeanSerializer(new BeanSerializer()); //生成Bean 类
+            exporter.setTargetFolder(new File("%s/src/main/java".formatted(modelName)));
+            exporter.export(connection.getMetaData());
+        } catch (Exception e) {
+            log.error("生成异常: ", e);
+        }
+    }
+
 }
