@@ -14,18 +14,19 @@ import javax.sql.DataSource;
 @Configuration
 public class MyQueryDSLConfig {
 
-    @Bean
-    public SQLTemplates sqlTemplates() {
-        return new H2Templates();
+    @Bean(name = "quartzSQLQueryFactory")
+    public SQLQueryFactory quartzSqlQueryFactory(
+            @Qualifier("quartzDataSource") final DataSource dataSource
+    ) {
+        final var configuration = new com.querydsl.sql.Configuration(new H2Templates());
+        return new SQLQueryFactory(configuration, new SpringConnectionProvider(dataSource));
     }
 
-    @Bean
-    public SQLQueryFactory sqlQueryFactory(
-            @Qualifier("quartzDataSource") final DataSource dataSource,
-            @Qualifier("quartzTransactionManager") final TransactionManager transactionManager,
-            final SQLTemplates sqlTemplates
+    @Bean(name = "localMessageSQLQueryFactory")
+    public SQLQueryFactory localMessagesqlQueryFactory(
+            @Qualifier("localMessageDataSource") final DataSource dataSource
     ) {
-        final var configuration = new com.querydsl.sql.Configuration(sqlTemplates);
+        final var configuration = new com.querydsl.sql.Configuration(new H2Templates());
         return new SQLQueryFactory(configuration, new SpringConnectionProvider(dataSource));
     }
 

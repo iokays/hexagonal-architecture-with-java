@@ -27,8 +27,12 @@ import java.util.Objects;
 @SoftDelete(columnName = "deleted", converter = TrueFalseConverter.class)
 public abstract class AbstractLocalMessage<T extends AbstractLocalMessage<?>> extends IdentifiedDomainObject implements Entity<T> {
 
-    @AttributeOverride(name = "id", column = @Column(name = "message_id", length = 40, nullable = false, updatable = false))
+    @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "message_id", length = 64, nullable = false, updatable = false))
     private LocalMessageId messageId;
+
+
+    private String messageType;
 
     /**
      * 消息内容 json格式字符串的字节数组
@@ -59,6 +63,7 @@ public abstract class AbstractLocalMessage<T extends AbstractLocalMessage<?>> ex
         this.messageId = new LocalMessageId(Objects.requireNonNull(message.getHeaders().getId()).toString());
 
         final Object payload = message.getPayload();
+        this.messageType = payload.getClass().getSimpleName();
         this.validateMessageBytes(payload);
         this.messageBytes = LocalMessageMapper.toBytes(payload);
     }

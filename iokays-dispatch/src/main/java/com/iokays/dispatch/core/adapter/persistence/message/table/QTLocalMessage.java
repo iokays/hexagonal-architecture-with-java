@@ -34,7 +34,9 @@ public class QTLocalMessage extends com.querydsl.sql.RelationalPathBase<TLocalMe
 
     public final SimplePath<byte[]> messageBytes = createSimple("messageBytes", byte[].class);
 
-    public final SimplePath<byte[]> messageId = createSimple("messageId", byte[].class);
+    public final StringPath messageId = createString("messageId");
+
+    public final StringPath messageType = createString("messageType");
 
     public final com.querydsl.sql.PrimaryKey<TLocalMessage> constraint6f = createPrimaryKey(id);
 
@@ -65,11 +67,12 @@ public class QTLocalMessage extends com.querydsl.sql.RelationalPathBase<TLocalMe
 
     public void addMetadata() {
         addMetadata(createdDate, ColumnMetadata.named("CREATED_DATE").withIndex(2).ofType(Types.TIMESTAMP).withSize(26).withDigits(6).notNull());
-        addMetadata(deleted, ColumnMetadata.named("DELETED").withIndex(6).ofType(Types.CHAR).withSize(1).notNull());
+        addMetadata(deleted, ColumnMetadata.named("DELETED").withIndex(7).ofType(Types.CHAR).withSize(1).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(64).notNull());
         addMetadata(lastModifiedDate, ColumnMetadata.named("LAST_MODIFIED_DATE").withIndex(3).ofType(Types.TIMESTAMP).withSize(26).withDigits(6).notNull());
         addMetadata(messageBytes, ColumnMetadata.named("MESSAGE_BYTES").withIndex(4).ofType(Types.VARBINARY).withSize(255).notNull());
-        addMetadata(messageId, ColumnMetadata.named("MESSAGE_ID").withIndex(5).ofType(Types.VARBINARY).withSize(255));
+        addMetadata(messageId, ColumnMetadata.named("MESSAGE_ID").withIndex(5).ofType(Types.VARCHAR).withSize(64).notNull());
+        addMetadata(messageType, ColumnMetadata.named("MESSAGE_TYPE").withIndex(6).ofType(Types.VARCHAR).withSize(255));
     }
 
 }

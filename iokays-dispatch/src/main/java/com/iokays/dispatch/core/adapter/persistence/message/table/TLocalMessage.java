@@ -18,7 +18,9 @@ public class TLocalMessage {
 
     private byte[] messageBytes;
 
-    private byte[] messageId;
+    private String messageId;
+
+    private String messageType;
 
     public java.sql.Timestamp getCreatedDate() {
         return createdDate;
@@ -60,12 +62,20 @@ public class TLocalMessage {
         this.messageBytes = messageBytes;
     }
 
-    public byte[] getMessageId() {
+    public String getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(byte[] messageId) {
+    public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 
 }
