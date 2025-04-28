@@ -5,4 +5,5 @@ build
 gradlew
 gradlew.bat
 **/custom.properties
+**/commom-config.yml
 LICENSE

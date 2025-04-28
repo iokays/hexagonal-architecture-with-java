@@ -7,7 +7,7 @@ dependencies {
 
     implementation("commons-validator:commons-validator:1.9.0")
 
-    implementation("org.springframework.ai:spring-ai:1.0.0-M6")
+    implementation("org.springframework.ai:spring-ai-starter-model-openai:1.0.0-M7")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-webflux")

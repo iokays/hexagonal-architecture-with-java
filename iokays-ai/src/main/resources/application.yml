@@ -1,0 +1,30 @@
+# 该配置已经列出全部参数名, 只是有些有些私人参数的值放在了 common-config.yml 中.
+server:
+  port: 7777
+  forward-headers-strategy: framework  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
+
+spring:
+  config:
+    import:
+      - classpath:common-config.yml
+  ai:
+    chat:
+      client:
+        enabled: true
+    openai:
+      api-key: "${deepseek.api-key}"
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
+      # The DeepSeek API doesn't support embeddings, so we need to disable it.
+      embedding:
+        enabled: false
+
+logging:
+  pattern:
+    correlation: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] "
+  include-application-name: false
+  level:
+    com.iokays: INFO

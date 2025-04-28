@@ -3,7 +3,7 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "2.1.20" apply (false)
     id("org.jetbrains.kotlin.plugin.spring") version "2.1.20" apply (false)
-    id("org.springframework.boot") version "3.4.3" apply (false)
+    id("org.springframework.boot") version "3.4.4" apply (false)
     id("io.spring.dependency-management") version "1.1.7" apply (false)
 }
 
@@ -43,8 +43,8 @@ allprojects {
         implementation("commons-codec:commons-codec:1.16.0")
         implementation("org.jasypt:jasypt:1.9.3")
         implementation("org.slf4j:slf4j-api")
-        implementation("ch.qos.logback:logback-core:1.5.11")
-        implementation("ch.qos.logback:logback-classic:1.5.11")
+        implementation("ch.qos.logback:logback-core:1.5.13")
+        implementation("ch.qos.logback:logback-classic:1.5.13")
         implementation("io.swagger.core.v3:swagger-annotations:2.2.21")
 
         testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
