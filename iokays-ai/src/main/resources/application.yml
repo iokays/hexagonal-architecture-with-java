@@ -4,6 +4,8 @@ server:
   forward-headers-strategy: framework  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
 
 spring:
+  application:
+    name: iokays-ai
   config:
     import:
       - classpath:common-config.yml
@@ -21,6 +23,22 @@ spring:
       # The DeepSeek API doesn't support embeddings, so we need to disable it.
       embedding:
         enabled: false
+  jpa:
+    datasource: # 因为多数据源，所以自定义配置, 并设置为默认
+      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-ai;MODE=MySQL
+      driver-class-name: org.h2.Driver
+      auto-commit: true
+      minimum-idle: 4
+      maximum-pool-size: 8
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  session:
+    jdbc:
+      initialize-schema: never
+    datasource: # 因为多数据源，所以自定义配置
+      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-session;MODE=MySQL
+      driver-class-name: org.h2.Driver
 
 logging:
   pattern:

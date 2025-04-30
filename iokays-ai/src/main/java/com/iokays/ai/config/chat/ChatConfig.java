@@ -1,4 +1,4 @@
-package com.iokays.ai.config;
+package com.iokays.ai.config.chat;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;
