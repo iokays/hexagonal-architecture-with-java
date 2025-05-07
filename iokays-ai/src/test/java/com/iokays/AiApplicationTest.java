@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Slf4j
 @SpringBootTest
-class ApplicationTest {
+class AiApplicationTest {
 
     @Resource
     private ChatClient chatClient;

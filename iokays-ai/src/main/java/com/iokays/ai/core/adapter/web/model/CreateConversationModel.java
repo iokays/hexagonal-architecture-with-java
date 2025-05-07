@@ -1,4 +1,3 @@
-
 package com.iokays.ai.core.adapter.web.model;
 
 import lombok.Builder;
@@ -7,4 +6,5 @@ import lombok.Builder;
 public record CreateConversationModel(
         String act,
         String prompt
-) { }
+) {
+}

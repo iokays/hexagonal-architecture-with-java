@@ -5,7 +5,6 @@ import com.iokays.dispatch.core.adapter.utils.Pages;
 import com.iokays.dispatch.core.adapter.web.mapping.JobModelMapper;
 import com.iokays.dispatch.core.adapter.web.model.CreateJobModel;
 import com.iokays.dispatch.core.adapter.web.model.PageJobModel;
-import com.iokays.dispatch.core.adapter.web.model.QueryMessageModel;
 import com.iokays.dispatch.core.application.service.JobApplicationService;
 import com.iokays.dispatch.core.application.service.JobQueryApplicationService;
 import lombok.AllArgsConstructor;

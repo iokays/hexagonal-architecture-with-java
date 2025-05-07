@@ -6,10 +6,7 @@ import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzJobDetails
 import com.iokays.dispatch.core.adapter.persistence.quartz.table.QQrtzTriggers;
 import com.querydsl.core.types.Projections;
 import com.querydsl.sql.SQLQueryFactory;
-import jakarta.annotation.Resource;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

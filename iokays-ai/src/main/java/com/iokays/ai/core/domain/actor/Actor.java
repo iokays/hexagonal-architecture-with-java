@@ -1,21 +1,20 @@
 package com.iokays.ai.core.domain.actor;
 
-import com.iokays.common.domain.jpa.IdentifiedValueObject;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.iokays.common.core.domain.Entity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 
-import java.util.Objects;
+public class Actor implements Entity<Actor> {
 
-@Entity
-@Table(name = "t_actor")
-public class Actor extends IdentifiedValueObject<Actor> {
-
+    @Id
+    private Long id;
     private String act;
     private String prompt;
+    @Version
+    private Long version;
 
     @Override
-    public boolean sameValueAs(Actor other) {
-        return Objects.equals(act, other.act)
-                && Objects.equals(prompt, other.prompt);
+    public boolean sameIdentityAs(Actor other) {
+        return false;
     }
 }

@@ -9,7 +9,6 @@ This is a simple example of Hexagonal Architecture with Java 23.
 
 https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture with Java 系列]
 
-
 == 启动脚本:
 
  cd /home/ftpuser/iokays-project

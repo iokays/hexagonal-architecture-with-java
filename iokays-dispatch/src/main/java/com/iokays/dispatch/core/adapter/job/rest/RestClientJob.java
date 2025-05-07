@@ -21,8 +21,8 @@ import java.util.Optional;
 @DisallowConcurrentExecution
 public class RestClientJob implements Job {
 
-    private final RestTemplate restTemplate;
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final RestTemplate restTemplate;
 
     // 编写任务内容
     @Override

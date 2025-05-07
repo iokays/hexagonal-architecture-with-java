@@ -2,20 +2,17 @@ package com.iokays.dispatch.core.adapter.web;
 
 import com.iokays.common.core.adapter.DriverAdapter;
 import com.iokays.dispatch.core.adapter.utils.Pages;
-import com.iokays.dispatch.core.adapter.web.mapping.JobModelMapper;
 import com.iokays.dispatch.core.adapter.web.mapping.MessageModelMapper;
-import com.iokays.dispatch.core.adapter.web.model.CreateJobModel;
-import com.iokays.dispatch.core.adapter.web.model.PageJobModel;
 import com.iokays.dispatch.core.adapter.web.model.PageMessageModel;
 import com.iokays.dispatch.core.adapter.web.model.QueryMessageModel;
-import com.iokays.dispatch.core.application.service.JobApplicationService;
-import com.iokays.dispatch.core.application.service.JobQueryApplicationService;
 import com.iokays.dispatch.core.application.service.MessageQueryApplicationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @DriverAdapter

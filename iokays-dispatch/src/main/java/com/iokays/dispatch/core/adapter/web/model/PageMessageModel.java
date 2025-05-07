@@ -1,12 +1,10 @@
 package com.iokays.dispatch.core.adapter.web.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.iokays.dispatch.core.adapter.job.JobClass;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
 public class PageMessageModel implements Serializable {

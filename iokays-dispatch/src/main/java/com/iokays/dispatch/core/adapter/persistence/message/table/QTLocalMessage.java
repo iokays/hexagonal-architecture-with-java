@@ -1,17 +1,17 @@
 package com.iokays.dispatch.core.adapter.persistence.message.table;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.DateTimePath;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.SimplePath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.processing.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -20,10 +20,8 @@ import java.sql.Types;
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
 public class QTLocalMessage extends com.querydsl.sql.RelationalPathBase<TLocalMessage> {
 
-    private static final long serialVersionUID = -2141387339;
-
     public static final QTLocalMessage tLocalMessage = new QTLocalMessage("T_LOCAL_MESSAGE");
-
+    private static final long serialVersionUID = -2141387339;
     public final DateTimePath<java.sql.Timestamp> createdDate = createDateTime("createdDate", java.sql.Timestamp.class);
 
     public final StringPath deleted = createString("deleted");

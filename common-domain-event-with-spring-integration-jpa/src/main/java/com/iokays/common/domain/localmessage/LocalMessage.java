@@ -1,7 +1,6 @@
 package com.iokays.common.domain.localmessage;
 
 import com.iokays.common.core.event.DomainEvent;
-import com.iokays.common.domain.jpa.AbstractId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.apache.commons.lang3.Validate;

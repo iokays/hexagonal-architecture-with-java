@@ -1,4 +1,3 @@
-
 apply(plugin = "org.springframework.boot")
 apply(plugin = "io.spring.dependency-management")
 
@@ -7,15 +6,14 @@ dependencies {
     implementation(project(":common-core"))
     implementation("commons-validator:commons-validator:1.9.0")
 
-    implementation(project(":common-domain-with-spring-data-jpa"))
-    implementation(project(":common-domain-event-with-spring-integration-jpa"))
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
-    implementation("org.springframework.ai:spring-ai-starter-model-openai:1.0.0-M7")
-    implementation("org.springframework.ai:spring-ai-starter-mcp-server-webflux:1.0.0-M7")
+    implementation("org.springframework.data:spring-data-commons")
 
-    implementation ("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.session:spring-session-jdbc")
+    implementation("org.springframework.ai:spring-ai-starter-model-openai:1.0.0-M8")
+    implementation("org.springframework.ai:spring-ai-starter-mcp-server:1.0.0-M8")
+    implementation("org.springframework.ai:spring-ai-starter-model-chat-memory-jdbc:1.0.0-M8")
+    implementation("com.h2database:h2:2.3.232")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 

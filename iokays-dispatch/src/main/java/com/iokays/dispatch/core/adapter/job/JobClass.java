@@ -9,8 +9,7 @@ import java.util.Arrays;
 @Getter
 public enum JobClass {
 
-    SAMPLE(SampleJob.class)
-    ,REST_CLIENT(RestClientJob.class);
+    SAMPLE(SampleJob.class), REST_CLIENT(RestClientJob.class);
 
     private final Class<? extends Job> clazz;
 
