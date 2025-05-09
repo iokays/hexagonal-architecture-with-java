@@ -2,7 +2,6 @@ package com.iokays.webflux.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.session.ReactiveSessionRegistry;
@@ -21,18 +20,18 @@ public class MySecurityClientConfig {
     ) throws Exception {
         http
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
-                .oauth2Login(ServerHttpSecurity.OAuth2LoginSpec::disable)
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .csrf(ServerHttpSecurity.CsrfSpec::disable) // 禁用 CSRF 保护
                 .authorizeExchange(auth -> auth
                         .pathMatchers("/public/**").permitAll() // 公开访问的路径
                         .pathMatchers("/session/**").permitAll()
-                        .anyExchange().authenticated() // 其他路径需要认证
+                        .anyExchange().permitAll()
                 )
                 .sessionManagement(session ->
                         session
                                 .concurrentSessions(concurrent -> concurrent
                                         .maximumSessions(SessionLimit.UNLIMITED)
-//                                        .sessionRegistry(new SpringSessionBackedReactiveSessionRegistry<>(sessionRepository, indexedSessionRepository))
+                                        .sessionRegistry(new SpringSessionBackedReactiveSessionRegistry<>(sessionRepository, indexedSessionRepository))
                                 )
 
                 )
