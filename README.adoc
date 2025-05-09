@@ -7,7 +7,7 @@ This is a simple example of Hexagonal Architecture with Java 23.
 
 == 详细介绍的章节:
 
-https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture with Java 系列]
+https://www.iokays.com/docs/hexagonal-architecture-with-java[Hexagonal Architecture with Java 系列]
 
 == 启动脚本:
 
@@ -22,5 +22,6 @@ https://www.iokays.com/hexagonal-architecture-with-java[Hexagonal Architecture w
  pkill -f "iokays-dispatch.jar"
  nohup java -jar iokays-dispatch.jar > quartz.log 2>&1 &
 
-== TODO (待办事项)
+ pkill -f "iokays-ai.jar"
+ nohup java -jar iokays-ai.jar > ai.log 2>&1 &
 
