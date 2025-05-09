@@ -1,13 +1,19 @@
+# 该配置已经列出全部参数名, 只是有些有些私人参数的值放在了 common-config.yml 中.
 server:
   port: 8888
   forward-headers-strategy: framework  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
 spring:
   application:
     name: iokays-authoriazationserver
+  config:
+    import:
+      - classpath:common-config.yml
   datasource: # 因为多数据源，所以自定义配置, 并设置为默认
     authorization:
-      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-authoriazationserver;MODE=MySQL
-      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=authorization
+      username: ${postgresql.user}
+      password: ${postgresql.password}
+      driver-class-name: org.postgresql.Driver
       auto-commit: true
       minimum-idle: 4
       maximum-pool-size: 8
@@ -20,8 +26,10 @@ spring:
     jdbc:
       initialize-schema: always
     datasource: # 因为多数据源，所以自定义配置
-      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-session;MODE=MySQL
-      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=session
+      username: ${postgresql.user}
+      password: ${postgresql.password}
+      driver-class-name: org.postgresql.Driver
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss

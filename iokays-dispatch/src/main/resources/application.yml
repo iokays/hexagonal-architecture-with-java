@@ -4,11 +4,16 @@ server:
 spring:
   application:
     name: iokays-job-with-quartz
+  config:
+    import:
+      - classpath:common-config.yml
 
   datasource:
     localmessage:
-      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-authoriazationserver;MODE=MySQL
-      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=authorization
+      username: ${postgresql.user}
+      password: ${postgresql.password}
+      driver-class-name: org.postgresql.Driver
 
   security:
     oauth2:
@@ -36,8 +41,10 @@ spring:
     jdbc:
       initialize-schema: never
     datasource: # 因为多数据源，所以自定义配置
-      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-session;MODE=MySQL
-      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=session
+      username: ${postgresql.user}
+      password: ${postgresql.password}
+      driver-class-name: org.postgresql.Driver
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -48,8 +55,10 @@ spring:
     # quartz任务存储类型：jdbc或memory
     job-store-type: jdbc
     datasource:
-      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-quartz;MODE=MySQL
-      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=quartz
+      username: ${postgresql.user}
+      password: ${postgresql.password}
+      driver-class-name: org.postgresql.Driver
     # 是否等待任务执行完毕后，容器才会关闭
     wait-for-jobs-to-complete-on-shutdown: false
     # 配置的job是否覆盖已经存在的job信息

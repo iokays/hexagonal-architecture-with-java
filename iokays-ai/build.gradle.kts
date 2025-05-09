@@ -6,14 +6,14 @@ dependencies {
     implementation(project(":common-core"))
     implementation("commons-validator:commons-validator:1.9.0")
 
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     implementation("org.springframework.data:spring-data-commons")
 
     implementation("org.springframework.ai:spring-ai-starter-model-openai:1.0.0-M8")
     implementation("org.springframework.ai:spring-ai-starter-mcp-server:1.0.0-M8")
     implementation("org.springframework.ai:spring-ai-starter-model-chat-memory-jdbc:1.0.0-M8")
-    implementation("com.h2database:h2:2.3.232")
+    implementation("org.postgresql:postgresql:42.7.5")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 

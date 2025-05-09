@@ -11,8 +11,10 @@ spring:
       - classpath:common-config.yml
   datasource: # 因为多数据源，所以自定义配置, 并设置为默认
     ai:
-      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-ai;MODE=PostgreSQL
-      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=ai
+      username: ${postgresql.user}
+      password: ${postgresql.password}
+      driver-class-name: org.postgresql.Driver
       auto-commit: true
       minimum-idle: 4
       maximum-pool-size: 8

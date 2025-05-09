@@ -9,7 +9,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
-    implementation("com.h2database:h2:2.3.232")
+    implementation("org.postgresql:postgresql:42.7.5")
 
     // JPA的QueryDSL的查询类生成 [因为用到了其他模块使用的基类和接口，那么其他模块也要生成]
     // 生成依赖Entity实体

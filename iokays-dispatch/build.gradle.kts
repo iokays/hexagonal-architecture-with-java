@@ -23,7 +23,7 @@ dependencies {
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
-    implementation("com.h2database:h2:2.3.232")
+    implementation("org.postgresql:postgresql:42.7.5")
 
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")

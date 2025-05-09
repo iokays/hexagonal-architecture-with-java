@@ -25,6 +25,8 @@ dependencies {
     implementation("org.springframework.integration:spring-integration-jpa")
     implementation("com.querydsl:querydsl-sql-spring:5.1.0")
 
+    implementation("org.postgresql:postgresql:42.7.5")
+
     implementation("org.bitbucket.b_c:jose4j:0.9.6")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
