@@ -1,0 +1,21 @@
+server:
+  port: 5555
+  forward-headers-strategy: framework  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
+spring:
+  application:
+    name: iokays-flowable
+  config:
+    import:
+      - classpath:common-config.yml
+  datasource:
+    url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=flowable
+    username: ${postgresql.user}
+    password: ${postgresql.password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8

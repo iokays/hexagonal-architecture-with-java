@@ -13,7 +13,8 @@ include("iokays-ai") //AI
 include("iokays-authorizationserver") //鉴权
 include("iokays-dispatch") //任务
 include("iokays-deeplearning") //深度学习
-include("iokays-webflux")
+include("iokays-flowable") //工作流
+include("iokays-webflux") //WebFlux
 
 // 插件模块
 include("iokays-plugin-codegen")

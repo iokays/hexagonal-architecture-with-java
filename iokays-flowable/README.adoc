@@ -1,0 +1,14 @@
+= iokays-job-with-quartz
+
+== 消息与任务调度模块
+
+1. 事件消息的发送, 将消息发送到消息队列中。
+2. 定时任务的执行, 通过 Quartz 定时任务调度器执行任务调用各个模块的接口。
+3. 接口服务调用鉴权使用 Oauth2 的客户端模式.
+
+== 开源方案
+
+    Quartz Manager：Java 定时任务管理的开源解决方案.
+    https://github.com/fabioformosa/quartz-manager[]
+
+
