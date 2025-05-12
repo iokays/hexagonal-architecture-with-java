@@ -9,6 +9,10 @@ spring:
   config:
     import:
       - classpath:common-config.yml
+  r2dbc:
+    url: r2dbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=session
+    username: ${postgresql.user}
+    password: ${postgresql.password}
   ai:
     chat:
       client:

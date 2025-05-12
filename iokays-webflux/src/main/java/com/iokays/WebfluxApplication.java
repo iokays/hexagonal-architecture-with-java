@@ -22,4 +22,9 @@ public class WebfluxApplication {
         return "Hello, Webflux!";
     }
 
+    @GetMapping("/")
+    public String hello2() {
+        return "Hello, Webflux!";
+    }
+
 }

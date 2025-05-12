@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static io.vavr.API.println;
 
-public final class DefaultJSonMapper implements Serializable {
+public final class DefaultJsonMapper implements Serializable {
 
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -31,7 +31,7 @@ public final class DefaultJSonMapper implements Serializable {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    private DefaultJSonMapper() {
+    private DefaultJsonMapper() {
     }
 
     public static String toJson(Object x) {

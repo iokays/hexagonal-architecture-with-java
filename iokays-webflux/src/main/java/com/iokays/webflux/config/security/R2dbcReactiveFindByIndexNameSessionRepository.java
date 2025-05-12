@@ -1,6 +1,7 @@
 package com.iokays.webflux.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.session.MapSession;
@@ -16,6 +17,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class R2dbcReactiveFindByIndexNameSessionRepository implements ReactiveFindByIndexNameSessionRepository<MapSession> {
 
@@ -33,6 +35,8 @@ public class R2dbcReactiveFindByIndexNameSessionRepository implements ReactiveFi
         if (!PRINCIPAL_NAME_INDEX_NAME.equals(indexName)) {
             return Mono.empty();
         }
+
+        log.info("findByIndexNameAndIndexValue: indexName={}, indexValue={}", indexName, indexValue);
 
         return databaseClient.sql("""
                         SELECT SESSION_ID, CREATION_TIME, LAST_ACCESS_TIME, 
@@ -75,6 +79,7 @@ public class R2dbcReactiveFindByIndexNameSessionRepository implements ReactiveFi
     }
 
     public Mono<MapSession> findById(String id) {
+        log.info("findById: id={}", id);
         // 查询主会话信息
         Mono<MapSession> sessionMono = databaseClient.sql("""
                         SELECT PRIMARY_ID, SESSION_ID, CREATION_TIME, LAST_ACCESS_TIME, 

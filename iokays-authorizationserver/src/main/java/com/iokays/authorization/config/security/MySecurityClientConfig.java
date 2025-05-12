@@ -22,12 +22,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
 import java.util.HashMap;
 
 @Slf4j
 @EnableWebSecurity
 @Configuration(proxyBeanMethods = false)
+@EnableJdbcHttpSession(tableName = "SPRING_SESSION", maxInactiveIntervalInSeconds = 1800)
 public class MySecurityClientConfig {
 
     @Bean

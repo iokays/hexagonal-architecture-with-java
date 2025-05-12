@@ -7,7 +7,7 @@ dependencies {
     implementation("commons-validator:commons-validator:1.9.0")
 
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("io.r2dbc:r2dbc-h2:1.0.0.RELEASE")
+    implementation("org.postgresql:r2dbc-postgresql:1.0.7.RELEASE")
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
