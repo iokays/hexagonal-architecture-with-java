@@ -79,7 +79,7 @@ spring:
             # 调度信息存储处理类
             class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
             # 使用完全兼容JDBC的驱动
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
             # quartz相关表前缀
             tablePrefix: qrtz_
             # 是否将JobDataMap中的属性转为字符串存储

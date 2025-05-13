@@ -1,6 +1,6 @@
 package com.iokays.dispatch.config.querydsl;
 
-import com.querydsl.sql.H2Templates;
+import com.querydsl.sql.PostgreSQLTemplates;
 import com.querydsl.sql.SQLQueryFactory;
 import com.querydsl.sql.spring.SpringConnectionProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,7 @@ public class MyQueryDSLConfig {
     public SQLQueryFactory quartzSqlQueryFactory(
             @Qualifier("quartzDataSource") final DataSource dataSource
     ) {
-        final var configuration = new com.querydsl.sql.Configuration(new H2Templates());
+        final var configuration = new com.querydsl.sql.Configuration(new PostgreSQLTemplates());
         return new SQLQueryFactory(configuration, new SpringConnectionProvider(dataSource));
     }
 
@@ -24,7 +24,7 @@ public class MyQueryDSLConfig {
     public SQLQueryFactory localMessagesqlQueryFactory(
             @Qualifier("localMessageDataSource") final DataSource dataSource
     ) {
-        final var configuration = new com.querydsl.sql.Configuration(new H2Templates());
+        final var configuration = new com.querydsl.sql.Configuration(new PostgreSQLTemplates());
         return new SQLQueryFactory(configuration, new SpringConnectionProvider(dataSource));
     }
 

@@ -1,6 +1,6 @@
 package com.iokays.authorization.config.querydsl;
 
-import com.querydsl.sql.H2Templates;
+import com.querydsl.sql.PostgreSQLTemplates;
 import com.querydsl.sql.SQLQueryFactory;
 import com.querydsl.sql.SQLTemplates;
 import com.querydsl.sql.spring.SpringConnectionProvider;
@@ -15,7 +15,7 @@ public class MyQueryDSLConfig {
 
     @Bean
     public SQLTemplates sqlTemplates() {
-        return new H2Templates();
+        return new PostgreSQLTemplates();
     }
 
     @Bean
