@@ -9,11 +9,10 @@ import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -33,6 +32,11 @@ public class ProcessTaskController {
         }
         final List<Task> list = taskQuery.list();
         return Pages.toNewPage(Pageable.ofSize((int)count), count, list, processTaskModelMapper::toProcessTaskModel);
+    }
+
+    @PutMapping("/{taskId}/complete")
+    public void complete(@PathVariable("taskId") final String taskId, @RequestBody Map<String, Object> map) {
+        taskService.complete(taskId, map);
     }
 
 }

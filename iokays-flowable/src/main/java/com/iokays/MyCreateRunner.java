@@ -18,7 +18,6 @@ public class MyCreateRunner implements CommandLineRunner {
 
     private final RuntimeService runtimeService;
     private final RepositoryService repositoryService;
-    private final ProcessDefinitionModelMapper processDefinitionModelMapper;
 
     @Override
     public void run(String... args) {
