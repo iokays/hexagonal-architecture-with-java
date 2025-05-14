@@ -1,0 +1,15 @@
+# 该配置已经列出全部参数名, 只是有些有些私人参数的值放在了 common-config.yml 中.
+server:
+  port: 2222
+  forward-headers-strategy: framework  # 启用头转发支持, 自动处理 X-Forwarded-Proto 头，正确地识别请求协议为 HTTPS
+
+spring:
+  application:
+    name: iokays-tool
+  config:
+    import:
+      - classpath:common-config.yml
+  r2dbc:
+    url: r2dbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=tools
+    username: ${postgresql.user}
+    password: ${postgresql.password}
