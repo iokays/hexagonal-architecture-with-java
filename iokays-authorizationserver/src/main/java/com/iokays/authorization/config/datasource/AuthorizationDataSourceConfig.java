@@ -33,11 +33,13 @@ public class AuthorizationDataSourceConfig {
             EntityManagerFactoryBuilder builder,
             @Qualifier("authorizationDataSource") DataSource dataSource) {
         log.info("Creating authorizationEntityManagerFactory");
-        return builder
+        final var result = builder
                 .dataSource(dataSource)
                 .packages("com.iokays.authorization.core.domain", "com.iokays.common.domain")
                 .persistenceUnit("authorization")
                 .build();
+        log.info("Created authorizationEntityManagerFactory");
+        return result;
     }
 
     @Primary

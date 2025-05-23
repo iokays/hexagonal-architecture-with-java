@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name = "t_oauth2_authorization")
@@ -183,7 +184,14 @@ public class Authorization extends AbstractAggregateRoot<Authorization> {
     }
 
     @Override
-    public boolean sameIdentityAs(Authorization other) {
-        return this.authorizationId.equals(other.authorizationId);
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        final Authorization that = (Authorization) o;
+        return Objects.equals(authorizationId, that.authorizationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(authorizationId, registeredClientId);
     }
 }

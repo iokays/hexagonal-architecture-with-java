@@ -1,4 +1,4 @@
-package com.iokays.authorization.core.adapter.domain.service.impl;
+package com.iokays.authorization.core.adapter.domain.service;
 
 import com.iokays.authorization.core.domain.user.PasswordService;
 import lombok.AllArgsConstructor;

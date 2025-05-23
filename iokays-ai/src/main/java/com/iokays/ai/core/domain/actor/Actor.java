@@ -4,6 +4,8 @@ import com.iokays.common.core.domain.Entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
+import java.util.Objects;
+
 public class Actor implements Entity<Actor> {
 
     @Id
@@ -14,7 +16,14 @@ public class Actor implements Entity<Actor> {
     private Long version;
 
     @Override
-    public boolean sameIdentityAs(Actor other) {
-        return false;
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        final Actor actor = (Actor) o;
+        return Objects.equals(id, actor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

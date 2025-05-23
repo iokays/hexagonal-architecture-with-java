@@ -16,16 +16,16 @@ public class MyUserDetailsServiceAdapter implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final var user = userApplicationService.findByUsername(username);
+        final var user = userApplicationService.findUserAuthInfoByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("用户没有找到");
         }
-
-        return User.withUsername(user.username())
+        return User.withUsername(user.username().id())
                 .password(user.password().getValue())
                 .roles("USER")
                 .disabled(!user.enabled())
+                .authorities(user.authorities().toArray(new String[]{}))
                 .build();
     }
 }

@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Objects;
+
 /**
  * Oauth2User: 设置为单独一个领域层，是为了简化 user层。 可能系统没有自己的用户体系。
  * 如果系统同时支持表单和Oauth2登录， 并且表单用户为系统的核心用户模块，Oauth2作为登录授权的一种方式，将该部分放到user领域层，并建立一对多的关系。
@@ -155,8 +157,14 @@ public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
 
 
     @Override
-    public boolean sameIdentityAs(OauthUser other) {
-        return false;
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        final OauthUser oauthUser = (OauthUser) o;
+        return Objects.equals(oauthUserId, oauthUser.oauthUserId);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(oauthUserId);
+    }
 }

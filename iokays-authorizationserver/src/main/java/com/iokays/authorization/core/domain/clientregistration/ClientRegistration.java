@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -85,11 +86,6 @@ public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration
         return this.registrationId;
     }
 
-    @Override
-    public boolean sameIdentityAs(ClientRegistration other) {
-        return false;
-    }
-
     public ClientRegistrationInfo info() {
         return ClientRegistrationInfo.builder()
                 .registrationId(this.registrationId)
@@ -111,5 +107,15 @@ public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration
                 .build();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        final ClientRegistration that = (ClientRegistration) o;
+        return Objects.equals(registrationId, that.registrationId);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(registrationId);
+    }
 }

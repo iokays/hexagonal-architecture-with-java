@@ -32,7 +32,6 @@ public class UserDao {
         //列表
         final var q = sqlQueryFactory
                 .select(Projections.bean(TUsers.class,
-                        tUser.userId,
                         tUser.username,
                         tUser.enabled,
                         tUser.concurrencyVersion,

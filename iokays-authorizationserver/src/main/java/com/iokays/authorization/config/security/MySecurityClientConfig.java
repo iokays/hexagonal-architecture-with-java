@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 
 @Slf4j
 @EnableWebSecurity
+@EnableMethodSecurity
 @Configuration(proxyBeanMethods = false)
 @EnableJdbcHttpSession(tableName = "SPRING_SESSION", maxInactiveIntervalInSeconds = 1800)
 public class MySecurityClientConfig {
@@ -41,7 +43,7 @@ public class MySecurityClientConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/statics/**", "favicon.ico", ".well-known/jwks.json", DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL).permitAll()
+                        .requestMatchers("/statics/**", "favicon.ico", "/error", DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(v -> {

@@ -13,6 +13,8 @@ public interface ValueObject<T> extends Serializable {
      * @param other 另一个值对象。
      * @return 如果给定的值对象和这个值对象的属性相同，则返回<code>true</code>。
      */
-    boolean sameValueAs(T other);
+    default boolean sameValueAs(T other) {
+        return this.equals(other);
+    }
 
 }

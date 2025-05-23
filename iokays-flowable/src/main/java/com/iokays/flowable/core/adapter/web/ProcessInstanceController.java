@@ -31,7 +31,7 @@ public class ProcessInstanceController {
             return Page.empty();
         }
         final List<ProcessInstance> list = processInstanceQuery.list();
-        return Pages.toNewPage(Pageable.ofSize((int)count), count, list, processInstanceModelMapper::toProcessInstanceModel);
+        return Pages.toNewPage(Pageable.ofSize((int) count), count, list, processInstanceModelMapper::toProcessInstanceModel);
     }
 
     @DeleteMapping("/{processInstanceId}")

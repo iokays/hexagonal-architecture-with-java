@@ -4,6 +4,5 @@ build
 .gradle
 gradlew
 gradlew.bat
-**/custom.properties
 **/common-config.yml
 LICENSE

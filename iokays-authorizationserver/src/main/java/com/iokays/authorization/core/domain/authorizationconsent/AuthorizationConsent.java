@@ -5,14 +5,19 @@ import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "t_oauth2_authorization_consent", uniqueConstraints = @UniqueConstraint(columnNames = {"registered_client_id", "principal_name"}))
 public class AuthorizationConsent extends AbstractAggregateRoot<AuthorizationConsent> {
 
+    @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "authorization_consent_id", unique = true, length = 40, nullable = false))
     private AuthorizationConsentId authorizationConsentId;
 
+    @Embedded
     @Column(nullable = false)
+    @AttributeOverride(name = "id", column = @Column(name = "registered_client_id", length = 40, unique = true, nullable = false))
     private RegisteredClientId registeredClientId;
 
     @Column(nullable = false)
@@ -51,7 +56,14 @@ public class AuthorizationConsent extends AbstractAggregateRoot<AuthorizationCon
     }
 
     @Override
-    public boolean sameIdentityAs(AuthorizationConsent other) {
-        return this.authorizationConsentId.equals(other.authorizationConsentId);
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        final AuthorizationConsent that = (AuthorizationConsent) o;
+        return Objects.equals(authorizationConsentId, that.authorizationConsentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(authorizationConsentId);
     }
 }

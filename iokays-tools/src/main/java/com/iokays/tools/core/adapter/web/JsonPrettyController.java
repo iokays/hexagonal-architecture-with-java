@@ -19,7 +19,7 @@ public class JsonPrettyController {
     private final ObjectMapper objectMapper;
 
     public JsonPrettyController() {
-        this.objectMapper =  new ObjectMapper();
+        this.objectMapper = new ObjectMapper();
         this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // 启用美化
     }
 
@@ -42,6 +42,7 @@ public class JsonPrettyController {
 
 
     @Builder
-    public record RequestModel(String content) implements Serializable { }
+    public record RequestModel(String content) implements Serializable {
+    }
 
 }

@@ -23,9 +23,9 @@ public class GlobalExceptionHandler {
         log.error("未处理异常 - URI: {}", requestUri, ex);
 
         // 获取堆栈跟踪信息
-        final var  sw = new StringWriter();
+        final var sw = new StringWriter();
         ex.printStackTrace(new PrintWriter(sw));
-        final var  stackTrace = sw.toString();
+        final var stackTrace = sw.toString();
 
         // 直接返回堆栈信息
         final var errorResponse = String.format("服务器内部错误: %s\n请求URI: %s\n堆栈跟踪:\n%s",

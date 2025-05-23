@@ -13,6 +13,8 @@ public interface Entity<T> extends Serializable {
      * @param other 另一个实体。
      * @return 如果标识相同，则返回true，而不管其他属性如何。
      */
-    boolean sameIdentityAs(T other);
+    default boolean sameIdentityAs(T other) {
+        return this.equals(other);
+    }
 
 }

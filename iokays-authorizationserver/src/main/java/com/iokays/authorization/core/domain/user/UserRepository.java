@@ -6,6 +6,6 @@ public interface UserRepository extends Repository {
 
     User save(User user);
 
-    User findByUsername(String username);
+    User findByUsername(Username username);
 
 }

@@ -1,5 +1,7 @@
-package com.iokays.authorization.core.domain.user;
+package com.iokays.authorization.core.domain;
 
+import com.iokays.authorization.core.domain.user.GroupDomainService;
+import com.iokays.authorization.core.domain.user.PasswordService;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -12,6 +14,10 @@ public class DomainRegistry implements ApplicationContextAware {
 
     public static PasswordService passwordService() {
         return applicationContext.getBean(PasswordService.class);
+    }
+
+    public static GroupDomainService groupDomainService() {
+        return applicationContext.getBean(GroupDomainService.class);
     }
 
     @Override

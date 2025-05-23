@@ -83,8 +83,8 @@ public class MyUserInfoMapperAdapter implements Function<OidcUserInfoAuthenticat
 
     public OidcUserInfo toOidcUserInfo(UserInfo userInfo) {
         return OidcUserInfo.builder()
-                .subject(userInfo.userId().id())
-                .name(userInfo.username())
+                .subject(userInfo.username().id())
+                .name(userInfo.username().id())
                 .build();
     }
 

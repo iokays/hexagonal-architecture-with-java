@@ -1,6 +1,5 @@
 package com.iokays.common.domain.jpa;
 
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
 import org.apache.commons.lang3.Validate;
 
@@ -10,7 +9,6 @@ import java.io.Serializable;
 /**
  * 业务主键
  */
-@Embeddable
 @MappedSuperclass
 public abstract class AbstractId implements Identity, Comparable<AbstractId>, Serializable {
 

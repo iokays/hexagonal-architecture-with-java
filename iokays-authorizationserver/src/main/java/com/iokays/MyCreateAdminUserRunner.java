@@ -11,8 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
-@Order
+@Order(Integer.MAX_VALUE)
 @Component
 @AllArgsConstructor
 public class MyCreateAdminUserRunner implements CommandLineRunner {
@@ -28,6 +30,11 @@ public class MyCreateAdminUserRunner implements CommandLineRunner {
             return;
         }
         log.warn("用户: {}, 不存在，创建用户", username);
-        userApplicationService.registerUser(new RegisterUser(CommandId.generate(), username, new Password("admin")));
+        userApplicationService.registerUser(new RegisterUser(
+                CommandId.generate(),
+                username,
+                new Password("admin"),
+                List.of("admin")
+        ));
     }
 }

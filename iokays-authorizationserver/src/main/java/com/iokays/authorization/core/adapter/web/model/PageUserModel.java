@@ -34,11 +34,6 @@ public record PageUserModel(
         Timestamp lastModifiedDate,
 
         /**
-         * 用户 ID，表示用户的唯一标识符。
-         */
-        String userId,
-
-        /**
          * 用户名，表示用户的登录名或显示名。
          */
         String username

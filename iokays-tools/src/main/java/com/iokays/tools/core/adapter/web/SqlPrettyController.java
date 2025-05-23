@@ -1,7 +1,7 @@
 package com.iokays.tools.core.adapter.web;
 
-import com.manticore.jsqlformatter.JSQLFormatter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.manticore.jsqlformatter.JSQLFormatter;
 import lombok.Builder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,5 +22,8 @@ public class SqlPrettyController {
     }
 
     @Builder
-    public record RequestModel(String sql) implements Serializable {};
+    public record RequestModel(String sql) implements Serializable {
+    }
+
+    ;
 }

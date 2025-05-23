@@ -4,9 +4,7 @@ import com.iokays.authorization.core.domain.registeredclient.commond.RegisterCli
 import com.iokays.authorization.core.domain.registeredclient.event.ClientRegistered;
 import com.iokays.common.core.event.EventId;
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -14,13 +12,15 @@ import org.apache.commons.lang3.Validate;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
 @Table(name = "t_oauth2_registered_client")
 public class RegisteredClient extends AbstractAggregateRoot<RegisteredClient> {
 
-    @Column(length = 1000, unique = true, nullable = false)
+    @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "registered_client_id", length = 40, unique = true, nullable = false))
     private RegisteredClientId registeredClientId;
 
     @Column(length = 1000, unique = true, nullable = false)
@@ -171,8 +171,14 @@ public class RegisteredClient extends AbstractAggregateRoot<RegisteredClient> {
     }
 
     @Override
-    public boolean sameIdentityAs(RegisteredClient other) {
-        return this.clientId.equals(other.clientId);
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        final RegisteredClient that = (RegisteredClient) o;
+        return Objects.equals(registeredClientId, that.registeredClientId);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(registeredClientId);
+    }
 }

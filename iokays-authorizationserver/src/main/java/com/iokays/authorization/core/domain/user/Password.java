@@ -1,5 +1,6 @@
 package com.iokays.authorization.core.domain.user;
 
+import com.iokays.authorization.core.domain.DomainRegistry;
 import com.iokays.common.core.domain.ValueObject;
 import jakarta.persistence.Embeddable;
 import org.apache.commons.lang3.Validate;

@@ -38,8 +38,8 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 
     // 追踪
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.micrometer:micrometer-tracing-bridge-otel:1.4.1")
+//    implementation("org.springframework.boot:spring-boot-starter-actuator")
+//    implementation("io.micrometer:micrometer-tracing-bridge-otel:1.4.1")
     // 配置 zipkin.
 //    implementation("io.opentelemetry:opentelemetry-exporter-zipkin:1.45.0")
 

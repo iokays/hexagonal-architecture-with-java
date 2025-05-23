@@ -31,7 +31,7 @@ public class ProcessTaskController {
             return Page.empty();
         }
         final List<Task> list = taskQuery.list();
-        return Pages.toNewPage(Pageable.ofSize((int)count), count, list, processTaskModelMapper::toProcessTaskModel);
+        return Pages.toNewPage(Pageable.ofSize((int) count), count, list, processTaskModelMapper::toProcessTaskModel);
     }
 
     @PutMapping("/{taskId}/complete")

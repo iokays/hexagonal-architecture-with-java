@@ -39,3 +39,11 @@ management:
   tracing:
     sampling:
       probability: 1.0
+
+account:
+  google:
+    clientId: ${google.clientId}
+    clientSecret: ${google.clientSecret}
+  workWinXin:
+    clientId: ${workWinXin.clientId}
+    clientSecret: ${workWinXin.clientSecret}

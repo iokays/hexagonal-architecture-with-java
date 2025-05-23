@@ -34,8 +34,6 @@ public class QTUsers extends com.querydsl.sql.RelationalPathBase<TUsers> {
 
     public final StringPath password = createString("password");
 
-    public final StringPath userId = createString("userId");
-
     public final StringPath username = createString("username");
 
     public final com.querydsl.sql.PrimaryKey<TUsers> constraint27 = createPrimaryKey(id);
@@ -72,7 +70,6 @@ public class QTUsers extends com.querydsl.sql.RelationalPathBase<TUsers> {
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(64).notNull());
         addMetadata(lastModifiedDate, ColumnMetadata.named("LAST_MODIFIED_DATE").withIndex(3).ofType(Types.TIMESTAMP).withSize(26).withDigits(6).notNull());
         addMetadata(password, ColumnMetadata.named("PASSWORD").withIndex(6).ofType(Types.VARCHAR).withSize(255));
-        addMetadata(userId, ColumnMetadata.named("USER_ID").withIndex(7).ofType(Types.VARCHAR).withSize(40).notNull());
         addMetadata(username, ColumnMetadata.named("USERNAME").withIndex(8).ofType(Types.VARCHAR).withSize(255).notNull());
     }
 
