@@ -1,4 +1,4 @@
-package com.iokays.sample.customer.domain;
+package com.iokays.sample.domain.customer;
 
 /**
  * 性别

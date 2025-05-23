@@ -1,8 +1,8 @@
-package com.iokays.sample.customer.domain;
+package com.iokays.sample.domain.customer;
 
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
-import com.iokays.sample.customer.domain.command.RegisterCustomer;
-import com.iokays.sample.customer.domain.event.CustomerRegistered;
+import com.iokays.sample.domain.customer.command.RegisterCustomer;
+import com.iokays.sample.domain.customer.event.CustomerRegistered;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.Validate;
 

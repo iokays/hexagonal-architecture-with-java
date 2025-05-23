@@ -1,4 +1,4 @@
-package com.iokays.sample.customer.adapter.publisher;
+package com.iokays.sample.adapter.publisher;
 
 import com.iokays.common.core.adapter.DrivenAdapter;
 import com.iokays.common.core.event.DomainEvent;

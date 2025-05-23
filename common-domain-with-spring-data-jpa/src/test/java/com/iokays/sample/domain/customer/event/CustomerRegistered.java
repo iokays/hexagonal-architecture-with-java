@@ -1,8 +1,8 @@
-package com.iokays.sample.customer.domain.event;
+package com.iokays.sample.domain.customer.event;
 
 import com.iokays.common.core.event.DomainEvent;
 import com.iokays.common.core.event.EventId;
-import com.iokays.sample.customer.domain.CustomerId;
+import com.iokays.sample.domain.customer.CustomerId;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

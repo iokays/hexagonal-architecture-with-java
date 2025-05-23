@@ -1,7 +1,7 @@
-package com.iokays.sample.customer.adapter.persistence.jpa;
+package com.iokays.sample.adapter.persistence.jpa;
 
-import com.iokays.sample.customer.domain.Customer;
-import com.iokays.sample.customer.domain.CustomerRepository;
+import com.iokays.sample.domain.customer.Customer;
+import com.iokays.sample.domain.customer.CustomerRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

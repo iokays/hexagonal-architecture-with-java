@@ -1,4 +1,4 @@
-package com.iokays.sample.customer.domain;
+package com.iokays.sample.domain.customer;
 
 import com.iokays.common.domain.jpa.AbstractId;
 import jakarta.persistence.Embeddable;

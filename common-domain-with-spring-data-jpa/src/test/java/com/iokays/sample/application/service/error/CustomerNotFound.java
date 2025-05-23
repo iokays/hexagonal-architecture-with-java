@@ -1,4 +1,4 @@
-package com.iokays.sample.customer.application.service.error;
+package com.iokays.sample.application.service.error;
 
 /**
  * 客户不存在异常

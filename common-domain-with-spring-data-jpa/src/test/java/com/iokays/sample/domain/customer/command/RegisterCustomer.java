@@ -1,10 +1,10 @@
-package com.iokays.sample.customer.domain.command;
+package com.iokays.sample.domain.customer.command;
 
 import com.iokays.common.core.command.Command;
 import com.iokays.common.core.command.CommandId;
-import com.iokays.sample.customer.domain.EmailAddress;
-import com.iokays.sample.customer.domain.FullName;
-import com.iokays.sample.customer.domain.Gender;
+import com.iokays.sample.domain.customer.EmailAddress;
+import com.iokays.sample.domain.customer.FullName;
+import com.iokays.sample.domain.customer.Gender;
 
 import java.time.Instant;
 

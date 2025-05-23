@@ -1,11 +1,11 @@
-package com.iokays.sample.customer.application.service;
+package com.iokays.sample.application.service;
 
 import com.iokays.common.core.lock.DistributedLock;
-import com.iokays.sample.customer.domain.Customer;
-import com.iokays.sample.customer.domain.CustomerId;
-import com.iokays.sample.customer.domain.CustomerRepository;
-import com.iokays.sample.customer.domain.EmailAddress;
-import com.iokays.sample.customer.domain.command.RegisterCustomer;
+import com.iokays.sample.domain.customer.Customer;
+import com.iokays.sample.domain.customer.CustomerId;
+import com.iokays.sample.domain.customer.CustomerRepository;
+import com.iokays.sample.domain.customer.EmailAddress;
+import com.iokays.sample.domain.customer.command.RegisterCustomer;
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,9 +1,9 @@
-package com.iokays.sample.customer.application.service;
+package com.iokays.sample.application.service;
 
-import com.iokays.sample.customer.domain.EmailAddress;
-import com.iokays.sample.customer.domain.FullName;
-import com.iokays.sample.customer.domain.Gender;
-import com.iokays.sample.customer.domain.command.RegisterCustomer;
+import com.iokays.sample.domain.customer.EmailAddress;
+import com.iokays.sample.domain.customer.FullName;
+import com.iokays.sample.domain.customer.Gender;
+import com.iokays.sample.domain.customer.command.RegisterCustomer;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
