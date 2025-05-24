@@ -68,7 +68,7 @@ public class Group extends AbstractAggregateRoot<Group> {
     }
 
     public void addAuthorities(final String... authorities) {
-        if (null != this.authorities) {
+        if (null == this.authorities) {
             this.authorities = Lists.newArrayList();
         }
         final List<GroupAuthority> list = Arrays.stream(authorities)
