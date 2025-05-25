@@ -49,7 +49,18 @@ public class Group extends AbstractAggregateRoot<Group> {
         return GroupInfo.builder()
                 .groupId(this.groupId)
                 .groupName(this.groupName)
+                .createdDate(this.getCreatedDate())
+                .lastModifiedDate(this.getLastModifiedDate())
+                .build();
+    }
+
+    public GroupAuthorityInfo authorityInfo() {
+        return GroupAuthorityInfo.builder()
+                .groupId(this.groupId)
+                .groupName(this.groupName)
                 .authorities(CollectionUtils.emptyIfNull(this.authorities).stream().map(GroupAuthority::authority).toList())
+                .createdDate(this.getCreatedDate())
+                .lastModifiedDate(this.getLastModifiedDate())
                 .build();
     }
 
