@@ -29,6 +29,7 @@ public class GroupController {
                 v -> PageGroupModel.builder()
                         .groupId(v.groupId().id())
                         .groupName(v.groupName())
+                        .authorities(v.authorities())
                         .createdDate(v.createdDate())
                         .build());
     }

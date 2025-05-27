@@ -45,10 +45,12 @@ public class Group extends AbstractAggregateRoot<Group> {
         return this.groupId;
     }
 
-    public GroupInfo info() {
-        return GroupInfo.builder()
+    public GroupAuthInfo authInfo() {
+        return GroupAuthInfo.builder()
                 .groupId(this.groupId)
                 .groupName(this.groupName)
+                .authorities(CollectionUtils.emptyIfNull(this.authorities).stream()
+                        .map(GroupAuthority::authority).toList())
                 .createdDate(this.getCreatedDate())
                 .lastModifiedDate(this.getLastModifiedDate())
                 .build();

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 public record PageGroupModel(
@@ -14,6 +14,7 @@ public record PageGroupModel(
 
         String groupName,
 
+        List<String> authorities,
         /**
          * 创建时间，表示记录的创建时间戳。
          */

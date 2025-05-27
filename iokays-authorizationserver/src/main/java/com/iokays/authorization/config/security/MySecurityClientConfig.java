@@ -54,6 +54,7 @@ public class MySecurityClientConfig {
                     handler.setTargetUrlParameter("targetUrl");
                     v.successHandler(handler);
                 })
+                .logout(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) // 禁用 CSRF 保护 [如果不是统一访问(代理)入口，需要禁用]
                 .oauth2Login(v -> v
                         .loginPage(DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL)

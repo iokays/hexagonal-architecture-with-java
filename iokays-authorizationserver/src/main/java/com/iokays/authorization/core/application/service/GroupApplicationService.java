@@ -1,8 +1,8 @@
 package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.domain.group.Group;
+import com.iokays.authorization.core.domain.group.GroupAuthInfo;
 import com.iokays.authorization.core.domain.group.GroupId;
-import com.iokays.authorization.core.domain.group.GroupInfo;
 import com.iokays.authorization.core.domain.group.GroupRepository;
 import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.authorization.core.utils.Pages;
@@ -28,12 +28,12 @@ public class GroupApplicationService implements ApplicationService {
         return groupRepository.save(group).groupId();
     }
 
-    public GroupInfo findGroupInfo(String groupName) {
+    public GroupAuthInfo findGroupInfo(String groupName) {
         final Group group = groupRepository.findByGroupName(groupName);
         if (null == group) {
             return null;
         }
-        return group.info();
+        return group.authInfo();
     }
 
     public void addAuthority(GroupId groupId, final String authority) {
@@ -46,9 +46,9 @@ public class GroupApplicationService implements ApplicationService {
         group.addMember(username);
     }
 
-    public Page<GroupInfo> findAll(Pageable pageable) {
+    public Page<GroupAuthInfo> findAll(Pageable pageable) {
         final Page<Group> page = groupRepository.findAll(pageable);
-        return Pages.toNewPage(pageable, page, Group::info);
+        return Pages.toNewPage(pageable, page, Group::authInfo);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.iokays;
 
 import com.iokays.authorization.core.application.service.GroupApplicationService;
+import com.iokays.authorization.core.domain.group.GroupAuthInfo;
 import com.iokays.authorization.core.domain.group.GroupId;
-import com.iokays.authorization.core.domain.group.GroupInfo;
 import com.iokays.authorization.core.domain.user.Username;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +24,13 @@ public class MyCreateAdminGroupRunner implements CommandLineRunner {
     public void run(String... args) {
         final var groupName = "admin";
 
-        final GroupInfo groupInfo = groupApplicationService.findGroupInfo(groupName);
+        final GroupAuthInfo groupInfo = groupApplicationService.findGroupInfo(groupName);
         GroupId groupId = null != groupInfo ? groupInfo.groupId() : null;
         if (groupId == null) {
             groupId = groupApplicationService.save(groupName, List.of());
         }
         groupApplicationService.addAuthority(groupId, "authorization:users:page");
+        groupApplicationService.addAuthority(groupId, "authorization:groups:page");
         groupApplicationService.addMember(groupId, Username.of("admin"));
     }
 }

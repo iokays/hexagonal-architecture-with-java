@@ -34,31 +34,40 @@ https://www.iokays.com/docs/hexagonal-architecture-with-java[Hexagonal Architect
 == PostgreSQL数据库
 
 === 使用 postgres 用户连接
+
  sudo -u postgres psql
 
 === 在 PostgreSQL 中查看数据库列表
+
  \l, \l+ (更详细的版本)
 
 === 在 PostgreSQL 中查看模式列表
+
  \dn, \dn+ (更详细的版本)
 
 === 进入指定数据库
+
  \c iokays
 
 === 删除指定的模式
+
  DROP SCHEMA authorization_del;
  DROP SCHEMA authorization_del CASCADE;
 
 === 授予删除权限
+
  GRANT USAGE ON SCHEMA authorization_del TO postgres;
 
 === 将模式所有权转移给postgres用户
+
  ALTER SCHEMA authorization_del OWNER TO postgres;
 
 === 或者授予USAGE和CREATE权限（拥有者自动有删除权限）
+
  GRANT USAGE, CREATE ON SCHEMA authorization_del TO postgres;
 
 === 查找依赖关系
+
  SELECT * FROM pg_catalog.pg_depend
  WHERE objid = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = 'authorization_del');
 
