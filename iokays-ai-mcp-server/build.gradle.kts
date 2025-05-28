@@ -6,10 +6,7 @@ dependencies {
     implementation(project(":common-core"))
     implementation("commons-validator:commons-validator:1.9.0")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("org.postgresql:r2dbc-postgresql:1.0.7.RELEASE")
-
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.ai:spring-ai-starter-mcp-server-webflux:1.0.0")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
@@ -19,13 +16,16 @@ dependencies {
     implementation("com.github.jsqlparser:jsqlparser:5.2")
     // JSQL格式化工具，用于美化SQL语句
     implementation("com.manticore-projects.jsqlformatter:jsqlformatter:5.0")
+    //JWT生成工具
+    implementation("com.nimbusds:nimbus-jose-jwt:10.3")
+
 
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
 
+
     implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
-
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 

@@ -22,6 +22,10 @@ spring:
     chat:
       client:
         enabled: true
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
     openai:
       api-key: "${deepseek.api-key}"
       base-url: https://api.deepseek.com
@@ -32,3 +36,16 @@ spring:
       # The DeepSeek API doesn't support embeddings, so we need to disable it.
       embedding:
         enabled: false
+    mcp:
+      client:
+        enabled: true
+        name: iokays-ai-mcp-client
+        version: 1.0.0
+        request-timeout: 30s
+        type: ASYNC
+        toolcallback:
+          enabled: true
+        sse:
+          connections:
+            server1:
+              url: http://localhost:1111

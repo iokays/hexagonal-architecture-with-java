@@ -1,4 +1,4 @@
-package com.iokays.tools.core.adapter.web;
+package com.iokays.mcp.core.adapter.web;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;

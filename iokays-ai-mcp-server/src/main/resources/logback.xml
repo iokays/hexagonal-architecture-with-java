@@ -12,6 +12,5 @@
     </root>
 
     <logger name="com.iokays" level="DEBUG"/>
-    <logger name="org.springframework" level="INFO"/>
 
 </configuration>

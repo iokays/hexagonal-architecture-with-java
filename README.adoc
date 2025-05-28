@@ -28,8 +28,8 @@ https://www.iokays.com/docs/hexagonal-architecture-with-java[Hexagonal Architect
  pkill -f "iokays-ai.jar"
  nohup java -jar iokays-ai.jar > ai.log 2>&1 &
 
- pkill -f "iokays-tools.jar"
- nohup java -jar iokays-tools.jar > tools.log 2>&1 &
+ pkill -f "iokays-ai-mcp-server.jar"
+ nohup java -jar iokays-ai-mcp-server.jar > mcp.log 2>&1 &
 
 == PostgreSQL数据库
 

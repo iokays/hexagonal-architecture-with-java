@@ -1,4 +1,4 @@
-package com.iokays.tools.core.adapter.web;
+package com.iokays.mcp.core.adapter.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

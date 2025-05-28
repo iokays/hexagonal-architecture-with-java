@@ -10,10 +10,11 @@ dependencies {
 
     implementation("org.springframework.data:spring-data-commons")
 
-    implementation("org.springframework.ai:spring-ai-starter-model-openai:1.0.0-M8")
-    implementation("org.springframework.ai:spring-ai-starter-mcp-server:1.0.0-M8")
-    implementation("org.springframework.ai:spring-ai-starter-model-chat-memory-jdbc:1.0.0-M8")
+    implementation("org.springframework.ai:spring-ai-starter-model-openai:1.0.0")
+    implementation("org.springframework.ai:spring-ai-starter-model-chat-memory-repository-jdbc:1.0.0")
     implementation("org.postgresql:postgresql:42.7.5")
+
+    implementation("org.springframework.ai:spring-ai-starter-mcp-client-webflux:1.0.0")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 

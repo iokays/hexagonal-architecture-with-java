@@ -10,12 +10,12 @@ include("common-serialization-with-jackson")
 
 // 项目模块
 include("iokays-ai") //AI
+include("iokays-ai-mcp-server") //AI
 include("iokays-authorizationserver") //鉴权
 include("iokays-dispatch") //任务
 include("iokays-deeplearning") //深度学习
 include("iokays-flowable") //工作流
 include("iokays-webflux") //WebFlux
-include("iokays-tools") //tools
 
 // 插件模块
 include("iokays-plugin-codegen")

@@ -1,0 +1,24 @@
+# 该配置已经列出全部参数名, 只是有些有些私人参数的值放在了 common-config.yml 中.
+server:
+  port: 1111
+
+spring:
+  application:
+    name: iokays-ai-mcp-server
+  config:
+    import:
+      - classpath:common-config.yml
+  ai:
+    mcp:
+      server:
+        name: iokays-ai-mcp-server
+        version: 1.0.0
+        type: ASYNC  # Recommended for reactive applications
+        instructions: "This reactive server provides weather information tools and resources"
+        sse-message-endpoint: /mcp/messages
+        capabilities:
+          tool: true
+          resource: true
+          prompt: true
+          completion: true
+

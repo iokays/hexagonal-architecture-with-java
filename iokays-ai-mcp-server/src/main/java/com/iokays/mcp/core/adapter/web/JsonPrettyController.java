@@ -1,4 +1,4 @@
-package com.iokays.tools.core.adapter.web;
+package com.iokays.mcp.core.adapter.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
