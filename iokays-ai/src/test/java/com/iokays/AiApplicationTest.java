@@ -16,7 +16,7 @@ class AiApplicationTest {
     @Test
     void test() {
         log.info("hello world");
-        final String content = chatClient.prompt().user("Tell me a joke").call().content();
+        final String content = chatClient.prompt().user("帮忙提供一份长度为2048位的RSA的公钥和私钥").call().content();
         log.info("content: {}", content);
     }
 

@@ -5,6 +5,7 @@ import lombok.Builder;
 @Builder
 public record ConversationModel(
         String conversationId,
-        String message
+        String message,
+        String prompt
 ) {
 }

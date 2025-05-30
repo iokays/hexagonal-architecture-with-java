@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
-public class WeatherService {
+public class WeatherMcpService {
 
     @Tool(description = "获取指定城市的天气信息")
     public String getWeather(String cityName) {

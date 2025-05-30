@@ -1,7 +1,7 @@
 package com.iokays.mcp.config.tools;
 
-import com.iokays.mcp.core.adapter.service.RsaService;
-import com.iokays.mcp.core.adapter.service.WeatherService;
+import com.iokays.mcp.core.adapter.service.RsaMcpService;
+import com.iokays.mcp.core.adapter.service.WeatherMcpService;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +12,10 @@ public class ToolsConfig {
 
     @Bean
     public ToolCallbackProvider weatherTools(
-            WeatherService weatherService,
-            RsaService rsaService) {
+            WeatherMcpService weatherMcpService,
+            RsaMcpService rsaMcpService) {
         return MethodToolCallbackProvider.builder()
-                .toolObjects(weatherService, rsaService)
+                .toolObjects(weatherMcpService, rsaMcpService)
                 .build();
     }
 }

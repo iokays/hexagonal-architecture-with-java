@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,26 +19,30 @@ import java.util.function.Consumer;
 /**
  * @see com.nimbusds.jose.JWSAlgorithm.Family
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class KeyGeneratorApplicationService {
 
     public ResponseModel keyGenerator(String type, Integer size) {
-        final var result = ResponseModel.builder();
+        log.info("keyGenerator type: {}, size: {}", type, size);
+        final var resultBuilder = ResponseModel.builder();
 
-        if (StringUtils.equalsAnyIgnoreCase(type, "ras")) {
+        if (StringUtils.equalsAnyIgnoreCase(type, "rsa")) {
             final var keyId = UUID.randomUUID().toString();
-            result.keyId(keyId);
+            resultBuilder.keyId(keyId);
             this.rsa(keyId, size,
                     (key) -> Try.run(() -> {
-                        result.publicKey(key.toPublicKey().getEncoded());
-                        result.privateKey(key.toPrivateKey().getEncoded());
+                        resultBuilder.publicKey(key.toPublicKey().getEncoded());
+                        resultBuilder.privateKey(key.toPrivateKey().getEncoded());
                     }).onFailure(throwable -> {
                         throw new RuntimeException(throwable);
                     }));
         }
 
-        return result.build();
+        final var result = resultBuilder.build();
+        log.info("keyGenerator type: {}, size: {}, result: {}", type, size, result);
+        return result;
     }
 
     private void rsa(final String keyId, final Integer size, Consumer<RSAKey> customizer) {

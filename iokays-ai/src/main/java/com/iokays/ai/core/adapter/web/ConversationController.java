@@ -25,11 +25,16 @@ public class ConversationController {
 
     @PostMapping
     public Flux<String> conversation(@RequestBody ConversationModel model) {
+        final ChatClient.ChatClientRequestSpec prompt = Optional.ofNullable(model.prompt())
+                .filter(StringUtils::isNotBlank)
+                .map(chatBotClient::prompt)
+                .orElseGet(chatBotClient::prompt);
+
         final var conversationId = Optional.ofNullable(model.conversationId())
                 .filter(StringUtils::isNotBlank)
                 .orElseGet(() -> UUID.randomUUID().toString());
 
-        return chatBotClient.prompt()
+        return prompt
                 .user(model.message())
                 .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId))
                 .stream()
