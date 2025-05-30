@@ -1,19 +1,15 @@
 package com.iokays.mcp.core.adapter.service;
 
-import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iokays.mcp.core.adapter.service.model.RsaResponseModel;
 import com.iokays.mcp.core.application.service.KeyGeneratorApplicationService;
-import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Slf4j

@@ -41,6 +41,7 @@ public class KeyGeneratorController {
     }
 
     @Builder
-    public record RequestModel(String type, Integer size) implements Serializable { }
+    public record RequestModel(String type, Integer size) implements Serializable {
+    }
 
 }

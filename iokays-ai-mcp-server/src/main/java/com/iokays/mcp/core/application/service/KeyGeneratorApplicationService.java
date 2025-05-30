@@ -8,9 +8,6 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -57,6 +54,7 @@ public class KeyGeneratorApplicationService {
     }
 
     @Builder
-    public record ResponseModel(String keyId, byte[] publicKey, byte[] privateKey) implements Serializable { }
+    public record ResponseModel(String keyId, byte[] publicKey, byte[] privateKey) implements Serializable {
+    }
 
 }

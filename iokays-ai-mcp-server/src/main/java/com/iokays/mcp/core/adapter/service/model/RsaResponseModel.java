@@ -7,4 +7,5 @@ import java.io.Serializable;
 @Builder
 public record RsaResponseModel(String keyId,
                                String publicKey,
-                               String privateKey) implements Serializable {}
+                               String privateKey) implements Serializable {
+}
