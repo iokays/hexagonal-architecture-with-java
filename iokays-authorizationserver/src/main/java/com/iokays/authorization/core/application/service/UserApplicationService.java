@@ -1,15 +1,19 @@
 package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.application.service.usecase.user.UserRegistration;
+import com.iokays.authorization.core.domain.group.GroupId;
 import com.iokays.authorization.core.domain.user.*;
 import com.iokays.authorization.core.domain.user.command.RegisterUser;
 import com.iokays.common.core.service.ApplicationService;
 import lombok.AllArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -51,5 +55,9 @@ public class UserApplicationService implements ApplicationService, UserRegistrat
         Validate.isTrue(user == null, "用户名已存在");
     }
 
+    public void addGroup(final Username username, final List<GroupId> groupIds) {
+        final var user = userRepository.findByUsername(username);
+        CollectionUtils.emptyIfNull(groupIds).forEach(user::addGroup);
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.iokays.authorization.core.domain.group;
 
-import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.common.core.infrastructure.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,7 @@ public interface GroupRepository extends Repository {
 
     Group findByGroupName(String groupName);
 
-    List<Group> findByMembersUsername(Username username);
-
     Page<Group> findAll(Pageable pageable);
+
+    List<Group> findByGroupIdIn(List<GroupId> groupIds);
 }

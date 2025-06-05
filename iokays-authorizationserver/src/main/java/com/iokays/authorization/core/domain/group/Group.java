@@ -1,6 +1,7 @@
 package com.iokays.authorization.core.domain.group;
 
 import com.google.common.collect.Lists;
+import com.iokays.authorization.core.domain.DomainRegistry;
 import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
 import jakarta.persistence.*;
@@ -25,13 +26,9 @@ public class Group extends AbstractAggregateRoot<Group> {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<GroupAuthority> authorities;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<GroupMember> members;
-
     protected Group() {
         super();
         this.authorities = Lists.newArrayList();
-        this.members = Lists.newArrayList();
     }
 
     public Group(String groupName, List<String> authorities) {
@@ -67,17 +64,7 @@ public class Group extends AbstractAggregateRoot<Group> {
     }
 
     public void addMember(final Username... username) {
-        if (null == this.members) {
-            this.members = Lists.newArrayList();
-        }
-
-        final List<GroupMember> list = Arrays.stream(username)
-                .map(v -> new GroupMember(this, v))
-                .filter(v -> !this.members.contains(v)).toList();
-
-        if (CollectionUtils.isNotEmpty(list)) {
-            this.members.addAll(list);
-        }
+        DomainRegistry.groupMemberDomainService().create(this.groupId, username);
     }
 
     public void addAuthorities(final String... authorities) {

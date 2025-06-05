@@ -2,6 +2,7 @@ package com.iokays.authorization.core.domain.user;
 
 import com.google.common.collect.Lists;
 import com.iokays.authorization.core.domain.DomainRegistry;
+import com.iokays.authorization.core.domain.group.GroupId;
 import com.iokays.authorization.core.domain.user.event.UserRegistered;
 import com.iokays.common.core.event.EventId;
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
@@ -102,7 +103,11 @@ public class User extends AbstractAggregateRoot<User> {
     }
 
     public List<String> groupAuthorities() {
-        return DomainRegistry.groupDomainService().getGroupAuthorities(this.username);
+        return DomainRegistry.groupMemberDomainService().getGroupAuthorities(this.username);
+    }
+
+    public void addGroup(final GroupId groupId) {
+        DomainRegistry.groupMemberDomainService().create(groupId, this.username);
     }
 
 }

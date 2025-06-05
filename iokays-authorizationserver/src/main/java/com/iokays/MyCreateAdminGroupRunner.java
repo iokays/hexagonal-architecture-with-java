@@ -1,6 +1,7 @@
 package com.iokays;
 
 import com.iokays.authorization.core.application.service.GroupApplicationService;
+import com.iokays.authorization.core.application.service.UserApplicationService;
 import com.iokays.authorization.core.domain.group.GroupAuthInfo;
 import com.iokays.authorization.core.domain.group.GroupId;
 import com.iokays.authorization.core.domain.user.Username;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MyCreateAdminGroupRunner implements CommandLineRunner {
 
     private final GroupApplicationService groupApplicationService;
+    private final UserApplicationService userApplicationService;
 
     @Override
     public void run(String... args) {
@@ -31,6 +33,7 @@ public class MyCreateAdminGroupRunner implements CommandLineRunner {
         }
         groupApplicationService.addAuthority(groupId, "authorization:users:page");
         groupApplicationService.addAuthority(groupId, "authorization:groups:page");
-        groupApplicationService.addMember(groupId, Username.of("admin"));
+
+        userApplicationService.addGroup(Username.of("admin"), List.of(groupId));
     }
 }
