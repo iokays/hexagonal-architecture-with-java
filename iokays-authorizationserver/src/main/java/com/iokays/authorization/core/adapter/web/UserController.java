@@ -3,6 +3,8 @@ package com.iokays.authorization.core.adapter.web;
 import com.iokays.authorization.core.adapter.web.mapping.UserModelMapper;
 import com.iokays.authorization.core.adapter.web.model.CreateMemberGroupsModel;
 import com.iokays.authorization.core.adapter.web.model.PageUserModel;
+import com.iokays.authorization.core.adapter.web.model.UserGroupModel;
+import com.iokays.authorization.core.application.service.GroupApplicationService;
 import com.iokays.authorization.core.application.service.UserApplicationService;
 import com.iokays.authorization.core.application.service.UserQueryApplicationService;
 import com.iokays.authorization.core.domain.group.GroupId;
@@ -10,13 +12,15 @@ import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.adapter.DriverAdapter;
 import lombok.AllArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @DriverAdapter
 @RestController
@@ -26,6 +30,7 @@ public class UserController {
 
     private final UserApplicationService userApplicationService;
     private final UserQueryApplicationService userQueryApplicationService;
+    private final GroupApplicationService groupApplicationService;
     private final UserModelMapper userModelMapper;
 
     @GetMapping
@@ -44,6 +49,27 @@ public class UserController {
                 Username.of(model.username()),
                 model.groupIds().stream().map(GroupId::of).toList()
         );
+    }
+
+    @GetMapping("/{username}/groups")
+    public List<UserGroupModel> groups(@PathVariable("username") final String username) {
+        final var groups = groupApplicationService.findAll(Pageable.unpaged())
+                .getContent();
+
+        if (CollectionUtils.isEmpty(groups)) {
+            return List.of();
+        }
+
+        final var authorized = Stream.ofNullable(userApplicationService.findUserAuthInfoByUsername(username))
+                .flatMap(v -> v.groupIds().stream()).collect(Collectors.toSet());
+
+        return groups.stream().map(group ->
+                UserGroupModel.builder()
+                        .groupId(group.groupId().id())
+                        .groupName(group.groupName())
+                        .authorized(authorized.contains(group.groupId()))
+                        .build()
+        ).toList();
     }
 
 

@@ -1,5 +1,6 @@
 package com.iokays.authorization.core.adapter.domain.service;
 
+import com.iokays.authorization.core.domain.group.Group;
 import com.iokays.authorization.core.domain.group.GroupId;
 import com.iokays.authorization.core.domain.group.GroupRepository;
 import com.iokays.authorization.core.domain.groupmember.GroupMember;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -23,23 +26,21 @@ public class GroupMemberDomainServiceImpl implements GroupMemberDomainService {
     private final GroupMemberRepository groupMemberRepository;
 
     @Override
-    public List<String> getGroupAuthorities(Username username) {
+    public Map<GroupId, List<String>> getGroupAuthorities(Username username) {
         if (null == username) {
-            return List.of();
+            return Map.of();
         }
         final var groupIds = groupMemberRepository.findByUsername(username)
                 .stream()
                 .map(GroupMember::groupId).toList();
 
         if (CollectionUtils.isEmpty(groupIds)) {
-            return List.of();
+            return Map.of();
         }
 
         return CollectionUtils.emptyIfNull(groupRepository.findByGroupIdIn(groupIds))
                 .stream()
-                .flatMap(v -> v.authorities().stream())
-                .distinct()
-                .toList();
+                .collect(Collectors.toMap(Group::groupId, Group::authorities));
     }
 
     @Override

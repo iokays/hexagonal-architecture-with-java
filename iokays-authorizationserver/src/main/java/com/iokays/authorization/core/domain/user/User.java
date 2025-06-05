@@ -8,7 +8,6 @@ import com.iokays.common.core.event.EventId;
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -81,11 +80,14 @@ public class User extends AbstractAggregateRoot<User> {
     }
 
     public UserAuthorityInfo toUserAuthInfo() {
-        return new UserAuthorityInfo(
-                this.username,
-                this.password,
-                this.enabled,
-                ListUtils.union(this.authorities(), this.groupAuthorities()).stream().distinct().toList());
+        final var groupAuthorities = DomainRegistry.groupMemberDomainService().getGroupAuthorities(this.username);
+        return UserAuthorityInfo.builder()
+                .username(this.username)
+                .password(this.password)
+                .enabled(this.enabled)
+                .groupIds(groupAuthorities.keySet().stream().distinct().toList())
+                .authorities(groupAuthorities.values().stream().flatMap(List::stream).distinct().toList())
+                .build();
     }
 
     public Boolean enabled() {
@@ -100,10 +102,6 @@ public class User extends AbstractAggregateRoot<User> {
         return CollectionUtils.emptyIfNull(this.authorities)
                 .stream()
                 .map(Authority::authority).toList();
-    }
-
-    public List<String> groupAuthorities() {
-        return DomainRegistry.groupMemberDomainService().getGroupAuthorities(this.username);
     }
 
     public void addGroup(final GroupId groupId) {
