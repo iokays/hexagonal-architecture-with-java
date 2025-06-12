@@ -1,8 +1,6 @@
 package com.iokays.authorization.core.domain.group;
 
 import com.google.common.collect.Lists;
-import com.iokays.authorization.core.domain.DomainRegistry;
-import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,7 +21,7 @@ public class Group extends AbstractAggregateRoot<Group> {
 
     private String groupName;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<GroupAuthority> authorities;
 
     protected Group() {
@@ -31,11 +29,10 @@ public class Group extends AbstractAggregateRoot<Group> {
         this.authorities = Lists.newArrayList();
     }
 
-    public Group(String groupName, List<String> authorities) {
+    public Group(String groupName) {
         this();
         this.groupId = GroupId.makeGroupId();
         this.groupName = Validate.notBlank(groupName, "groupName must not be blank");
-        this.addAuthorities(CollectionUtils.emptyIfNull(authorities).toArray(new String[]{}));
     }
 
     public GroupId groupId() {
@@ -63,22 +60,20 @@ public class Group extends AbstractAggregateRoot<Group> {
                 .build();
     }
 
-    public void addMember(final Username... username) {
-        DomainRegistry.groupMemberDomainService().create(this.groupId, username);
-    }
+    public void editAuthorities(final List<String> authorities) {
+        Validate.notEmpty(authorities, "authorities must not be empty");
 
-    public void addAuthorities(final String... authorities) {
         if (null == this.authorities) {
             this.authorities = Lists.newArrayList();
         }
-        final List<GroupAuthority> list = Arrays.stream(authorities)
-                .filter(StringUtils::isNotBlank)
-                .map(v -> new GroupAuthority(this, v))
-                .filter(v -> !this.authorities.contains(v)).toList();
 
-        if (CollectionUtils.isNotEmpty(list)) {
-            this.authorities.addAll(list);
-        }
+        this.authorities.clear();
+
+        authorities
+                .stream()
+                .distinct()
+                .map(v -> new GroupAuthority(this, v))
+                .forEach(this.authorities::add);
 
     }
 

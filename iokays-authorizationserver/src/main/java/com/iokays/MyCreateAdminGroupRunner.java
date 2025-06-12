@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Slf4j
-@Order(0)
 @Component
 @AllArgsConstructor
+@Order(Integer.MAX_VALUE)
 public class MyCreateAdminGroupRunner implements CommandLineRunner {
 
     private final GroupApplicationService groupApplicationService;
@@ -24,15 +24,15 @@ public class MyCreateAdminGroupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        final var groupName = "admin";
+        groupApplicationService.save("游客", List.of("authorization:users:page"));
+
+        final var groupName = "管理员";
 
         final GroupAuthInfo groupInfo = groupApplicationService.findGroupInfo(groupName);
         GroupId groupId = null != groupInfo ? groupInfo.groupId() : null;
         if (groupId == null) {
-            groupId = groupApplicationService.save(groupName, List.of());
+            groupId = groupApplicationService.save(groupName, List.of("authorization:users:page", "authorization:groups:page"));
         }
-        groupApplicationService.addAuthority(groupId, "authorization:users:page");
-        groupApplicationService.addAuthority(groupId, "authorization:groups:page");
 
         userApplicationService.addGroup(Username.of("admin"), List.of(groupId));
     }

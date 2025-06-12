@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Slf4j
-@Order(Integer.MAX_VALUE)
 @Component
+@Order(0)
 @AllArgsConstructor
 public class MyCreateAdminUserRunner implements CommandLineRunner {
 

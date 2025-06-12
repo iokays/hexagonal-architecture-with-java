@@ -4,7 +4,6 @@ import com.iokays.authorization.core.domain.group.Group;
 import com.iokays.authorization.core.domain.group.GroupAuthInfo;
 import com.iokays.authorization.core.domain.group.GroupId;
 import com.iokays.authorization.core.domain.group.GroupRepository;
-import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.service.ApplicationService;
 import lombok.AllArgsConstructor;
@@ -24,8 +23,13 @@ public class GroupApplicationService implements ApplicationService {
     private final GroupRepository groupRepository;
 
     public GroupId save(String groupName, List<String> authorities) {
-        Group group = new Group(groupName, authorities);
-        return groupRepository.save(group).groupId();
+        Group group = groupRepository.findByGroupName(groupName);
+        if (null == group) {
+            group = new Group(groupName);
+            groupRepository.save(group);
+        }
+        group.editAuthorities(authorities);
+        return group.groupId();
     }
 
     public GroupAuthInfo findGroupInfo(String groupName) {
@@ -36,14 +40,9 @@ public class GroupApplicationService implements ApplicationService {
         return group.authInfo();
     }
 
-    public void addAuthority(GroupId groupId, final String authority) {
+    public void editAuthority(GroupId groupId, final List<String> authority) {
         final Group group = Objects.requireNonNull(groupRepository.findByGroupId(groupId));
-        group.addAuthorities(authority);
-    }
-
-    public void addMember(final GroupId groupId, final Username username) {
-        final Group group = Objects.requireNonNull(groupRepository.findByGroupId(groupId));
-        group.addMember(username);
+        group.editAuthorities(authority);
     }
 
     public Page<GroupAuthInfo> findAll(Pageable pageable) {

@@ -12,6 +12,8 @@ public interface GroupMemberRepository extends Repository {
 
     void delete(GroupMember groupMember);
 
+    void deleteByUsername(Username username);
+
     List<GroupMember> findByGroupId(GroupId groupId);
 
     List<GroupMember> findByUsername(Username username);

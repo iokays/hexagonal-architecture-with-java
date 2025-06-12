@@ -1,16 +1,17 @@
 package com.iokays.authorization.core.adapter.web;
 
+import com.iokays.authorization.core.adapter.web.model.EditGroupModel;
 import com.iokays.authorization.core.adapter.web.model.PageGroupModel;
+import com.iokays.authorization.core.adapter.web.model.SaveGroupModel;
 import com.iokays.authorization.core.application.service.GroupApplicationService;
+import com.iokays.authorization.core.domain.group.GroupId;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.adapter.DriverAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @DriverAdapter
 @RestController
@@ -32,6 +33,16 @@ public class GroupController {
                         .authorities(v.authorities())
                         .createdDate(v.createdDate())
                         .build());
+    }
+
+    @PostMapping
+    public void save(@RequestBody SaveGroupModel model) {
+        groupApplicationService.save(model.groupName(), model.authorities());
+    }
+
+    @PutMapping
+    public void editaAuthorities(@RequestBody EditGroupModel model) {
+        groupApplicationService.editAuthority(GroupId.of(model.groupId()), model.authorities());
     }
 
 }

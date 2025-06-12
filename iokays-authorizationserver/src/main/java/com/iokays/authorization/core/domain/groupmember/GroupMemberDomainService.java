@@ -11,6 +11,8 @@ public interface GroupMemberDomainService extends DomainService {
 
     Map<GroupId, List<String>> getGroupAuthorities(Username username);
 
-    void create(GroupId groupId, Username... username);
+    void create(Username username, List<GroupId> groupIds);
+
+    void delete(Username username);
 
 }

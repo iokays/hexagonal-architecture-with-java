@@ -8,4 +8,6 @@ public interface UserRepository extends Repository {
 
     User findByUsername(Username username);
 
+    void delete(User user);
+
 }

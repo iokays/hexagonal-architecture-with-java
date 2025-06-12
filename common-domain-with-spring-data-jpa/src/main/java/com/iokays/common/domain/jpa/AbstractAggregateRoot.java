@@ -18,6 +18,11 @@ import java.util.List;
  * 该聚合根实现了Spring Data的{@link DomainEvents}和{@link AfterDomainEventPublication}注解，
  * 复用了AbstractAggregateRoot 的代码
  *
+ * The methods are called every time one of the following a Spring Data repository methods are called:
+ *
+ * save(…), saveAll(…)
+ * delete(…), deleteAll(…), deleteAllInBatch(…), deleteInBatch(…)
+ *
  * @param <A>
  * @see org.springframework.data.domain.AbstractAggregateRoot
  */

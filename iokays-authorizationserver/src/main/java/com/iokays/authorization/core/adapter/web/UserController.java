@@ -3,19 +3,20 @@ package com.iokays.authorization.core.adapter.web;
 import com.iokays.authorization.core.adapter.web.mapping.UserModelMapper;
 import com.iokays.authorization.core.adapter.web.model.CreateMemberGroupsModel;
 import com.iokays.authorization.core.adapter.web.model.PageUserModel;
+import com.iokays.authorization.core.adapter.web.model.RegisterUserModel;
 import com.iokays.authorization.core.adapter.web.model.UserGroupModel;
 import com.iokays.authorization.core.application.service.GroupApplicationService;
 import com.iokays.authorization.core.application.service.UserApplicationService;
 import com.iokays.authorization.core.application.service.UserQueryApplicationService;
 import com.iokays.authorization.core.domain.group.GroupId;
 import com.iokays.authorization.core.domain.user.Username;
+import com.iokays.authorization.core.domain.user.command.RegisterUser;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.adapter.DriverAdapter;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +34,16 @@ public class UserController {
     private final GroupApplicationService groupApplicationService;
     private final UserModelMapper userModelMapper;
 
+
+    @PostMapping
+    public void registerUser(@RequestBody RegisterUserModel model) {
+        this.userApplicationService.registerUser(RegisterUser.builder()
+                .username(model.username())
+                .password(model.password())
+                .build());
+    }
+
     @GetMapping
-    @PreAuthorize("hasAuthority('authorization:users:page')")
     public Page<PageUserModel> page(final Pageable pageable) {
         return Pages.toNewPage(
                 pageable,
@@ -44,15 +53,15 @@ public class UserController {
     }
 
     @PostMapping("/groups")
-    public void addGroup(final CreateMemberGroupsModel model) {
+    public void addGroup(@RequestBody final CreateMemberGroupsModel model) {
         userApplicationService.addGroup(
                 Username.of(model.username()),
                 model.groupIds().stream().map(GroupId::of).toList()
         );
     }
 
-    @GetMapping("/{username}/groups")
-    public List<UserGroupModel> groups(@PathVariable("username") final String username) {
+    @GetMapping("/groups")
+    public List<UserGroupModel> groups(@RequestParam("username") final String username) {
         final var groups = groupApplicationService.findAll(Pageable.unpaged())
                 .getContent();
 
@@ -71,6 +80,5 @@ public class UserController {
                         .build()
         ).toList();
     }
-
 
 }

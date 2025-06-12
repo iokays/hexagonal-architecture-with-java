@@ -1,11 +1,13 @@
 package com.iokays.authorization.core.domain.user;
 
-import com.google.common.collect.Lists;
 import com.iokays.authorization.core.domain.DomainRegistry;
 import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.user.event.UserDeleted;
+import com.iokays.authorization.core.domain.user.event.UserGroupUpdated;
 import com.iokays.authorization.core.domain.user.event.UserRegistered;
 import com.iokays.common.core.event.EventId;
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.AbstractId;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -26,15 +28,11 @@ public class User extends AbstractAggregateRoot<User> {
     @AttributeOverride(name = "value", column = @Column(name = "password"))
     private Password password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Authority> authorities;
-
     @Column(nullable = false)
     private Boolean enabled;
 
     protected User() {
         super();
-        this.authorities = Lists.newArrayList();
     }
 
     public User(Username username, Password password) {
@@ -98,14 +96,22 @@ public class User extends AbstractAggregateRoot<User> {
         return password;
     }
 
-    public List<String> authorities() {
-        return CollectionUtils.emptyIfNull(this.authorities)
-                .stream()
-                .map(Authority::authority).toList();
+    public void group(final List<GroupId> groupIds) {
+        DomainRegistry.groupMemberDomainService().delete(this.username);
+        DomainRegistry.groupMemberDomainService().create(this.username, groupIds);
+
+        //添加权限变更事件
+        this.andEvent(new UserGroupUpdated(
+                EventId.generate(),
+                this.username.id(),
+                CollectionUtils.emptyIfNull(groupIds).stream().map(AbstractId::id).toList(),
+                LocalDateTime.now())
+        );
     }
 
-    public void addGroup(final GroupId groupId) {
-        DomainRegistry.groupMemberDomainService().create(groupId, this.username);
+    @PostRemove
+    private void afterDelete() {
+        this.andEvent(new UserDeleted(EventId.generate(), this.username.id(), LocalDateTime.now()));
     }
 
 }
