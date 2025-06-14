@@ -40,6 +40,15 @@ public class GroupApplicationService implements ApplicationService {
         return group.authInfo();
     }
 
+    public void delete(GroupId groupId) {
+        final var group = groupRepository.findByGroupId(groupId);
+        if (null == group) {
+            return;
+        }
+        groupRepository.delete(group);
+
+    }
+
     public void editAuthority(GroupId groupId, final List<String> authority) {
         final Group group = Objects.requireNonNull(groupRepository.findByGroupId(groupId));
         group.editAuthorities(authority);

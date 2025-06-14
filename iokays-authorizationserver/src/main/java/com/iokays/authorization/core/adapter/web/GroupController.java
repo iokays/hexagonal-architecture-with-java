@@ -45,4 +45,9 @@ public class GroupController {
         groupApplicationService.editAuthority(GroupId.of(model.groupId()), model.authorities());
     }
 
+    @DeleteMapping("/{groupId}")
+    public void delete(@PathVariable("groupId") final String groupId) {
+        groupApplicationService.delete(GroupId.of(groupId));
+    }
+
 }

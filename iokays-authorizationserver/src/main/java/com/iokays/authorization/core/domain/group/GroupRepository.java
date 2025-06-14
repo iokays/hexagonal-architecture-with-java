@@ -12,6 +12,8 @@ public interface GroupRepository extends Repository {
 
     Group save(Group group);
 
+    void delete(Group group);
+
     Group findByGroupName(String groupName);
 
     Page<Group> findAll(Pageable pageable);

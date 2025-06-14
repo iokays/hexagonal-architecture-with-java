@@ -1,10 +1,7 @@
 package com.iokays.authorization.core.adapter.web;
 
 import com.iokays.authorization.core.adapter.web.mapping.UserModelMapper;
-import com.iokays.authorization.core.adapter.web.model.CreateMemberGroupsModel;
-import com.iokays.authorization.core.adapter.web.model.PageUserModel;
-import com.iokays.authorization.core.adapter.web.model.RegisterUserModel;
-import com.iokays.authorization.core.adapter.web.model.UserGroupModel;
+import com.iokays.authorization.core.adapter.web.model.*;
 import com.iokays.authorization.core.application.service.GroupApplicationService;
 import com.iokays.authorization.core.application.service.UserApplicationService;
 import com.iokays.authorization.core.application.service.UserQueryApplicationService;
@@ -50,6 +47,11 @@ public class UserController {
                 userQueryApplicationService.page(pageable),
                 userModelMapper::toUserPageModel
         );
+    }
+
+    @DeleteMapping("/{username}")
+    public void delete(@PathVariable("username") final String username) {
+        userApplicationService.delete(username);
     }
 
     @PostMapping("/groups")
