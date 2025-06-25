@@ -5,10 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import reactor.core.publisher.Flux;
 
 @Slf4j
 @SpringBootTest
-class AiApplicationTest {
+class ChatClientTest {
 
     @Resource
     private ChatClient chatClient;
@@ -16,8 +17,8 @@ class AiApplicationTest {
     @Test
     void test() {
         log.info("hello world");
-        final String content = chatClient.prompt().user("帮忙提供一份长度为2048位的RSA的公钥和私钥").call().content();
-        log.info("content: {}", content);
+        final Flux<String> content = chatClient.prompt().user("你能做什么呢?").stream().content();
+        log.info("content: {}", content.blockFirst());
     }
 
 }

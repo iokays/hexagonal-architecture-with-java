@@ -30,7 +30,7 @@ public class MyCreateSampleJobRunner implements CommandLineRunner {
                 .endAt(LocalDateTime.now().plusMinutes(1))
                 .jobClass(JobClass.SAMPLE)
                 .cronExpression("0/5 * * * * ?")
-                .jobData(Map.of("count", 1))
+                .input(Map.of("count", 1))
                 .build())).isSuccess();
     }
 }

@@ -36,6 +36,13 @@ spring:
       # The DeepSeek API doesn't support embeddings, so we need to disable it.
       embedding:
         enabled: false
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
     mcp:
       client:
         enabled: false

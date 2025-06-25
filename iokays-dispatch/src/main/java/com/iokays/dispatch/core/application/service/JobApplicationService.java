@@ -1,13 +1,14 @@
 package com.iokays.dispatch.core.application.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iokays.common.core.error.ApplicationServiceUnKnowException;
 import com.iokays.common.core.service.ApplicationService;
+import com.iokays.dispatch.core.adapter.utils.JobUtils;
 import com.iokays.dispatch.core.application.service.command.CreateJob;
 import com.iokays.dispatch.core.application.service.exception.JobAlreadyExistsApplicationServiceException;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
 import org.quartz.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class JobApplicationService implements ApplicationService {
 
     private final Scheduler scheduler;
+    private final ObjectMapper objectMapper;
 
     public void scheduleJob(final CreateJob command) {
         final var job = JobBuilder
@@ -31,7 +33,7 @@ public class JobApplicationService implements ApplicationService {
                 .storeDurably()
                 // 定义唯一标识，区分其他任务
                 .withIdentity(command.name(), command.group())
-                .usingJobData(new JobDataMap(MapUtils.emptyIfNull(command.jobData())))
+                .usingJobData(JobUtils.INPUT_DATA, JobUtils.toJson(command.input()))
                 .build();
 
         final var trigger = TriggerBuilder

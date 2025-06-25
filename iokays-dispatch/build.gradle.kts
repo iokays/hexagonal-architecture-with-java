@@ -23,6 +23,7 @@ dependencies {
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
+    implementation("org.springframework.integration:spring-integration-jdbc")
     implementation("org.postgresql:postgresql:42.7.5")
 
     compileOnly("org.projectlombok:lombok:1.18.34")

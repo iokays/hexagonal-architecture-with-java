@@ -17,6 +17,6 @@ public record CreateJob(
         LocalDateTime startAt,
         LocalDateTime endAt,
         JobClass jobClass,
-        Map<?, ?> jobData
+        Object input
 ) implements Command {
 }

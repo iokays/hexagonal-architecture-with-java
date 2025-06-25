@@ -15,6 +15,6 @@ public record CreateJobModel(
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         LocalDateTime endAt,
         JobClass jobClass,
-        Map<?, ?> jobData
+        Object input
 ) {
 }

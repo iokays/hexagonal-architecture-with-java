@@ -8,6 +8,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.integration:spring-integration-jpa")
+    implementation("org.springframework.integration:spring-integration-event")
+
 
     implementation("com.fasterxml.jackson.core:jackson-annotations")
     implementation("com.fasterxml.jackson.core:jackson-databind")

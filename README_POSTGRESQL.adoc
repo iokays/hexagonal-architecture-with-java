@@ -1,0 +1,103 @@
+= PostgreSQL数据库
+
+== 使用 postgres 用户连接
+
+ sudo -u postgres psql
+
+== 在 PostgreSQL 中查看数据库列表
+
+ \l, \l+ (更详细的版本)
+
+== 在 PostgreSQL 中查看模式列表
+
+ \dn, \dn+ (更详细的版本)
+
+== 进入指定数据库
+
+ \c iokays
+
+== 删除指定的模式
+
+ DROP SCHEMA authorization_del;
+ DROP SCHEMA authorization_del CASCADE;
+
+== 授予删除权限
+
+ GRANT USAGE ON SCHEMA authorization_del TO postgres;
+
+== 将模式所有权转移给postgres用户
+
+ ALTER SCHEMA authorization_del OWNER TO postgres;
+
+== 或者授予USAGE和CREATE权限（拥有者自动有删除权限）
+
+ GRANT USAGE, CREATE ON SCHEMA authorization_del TO postgres;
+
+== 查找依赖关系
+
+ SELECT * FROM pg_catalog.pg_depend
+ WHERE objid = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = 'authorization_del');
+
+== PgVector
+
+=== 对于 CentOS 8：
+
+ sudo yum install -y dnf-plugins-core
+ sudo yum config-manager --set-enabled PowerTools
+
+=== 确保 EPEL 和基础依赖
+ sudo yum install -y epel-release
+ sudo yum install -y gcc make perl-devel perl-App-cpanminus
+
+=== 安装关键 Perl 模块依赖
+ sudo yum install -y perl-IO-Tty perl-Time-HiRes perl-Exporter
+
+===  postgresql17-devel 安装
+ sudo yum install -y postgresql17-devel
+
+=== 搜索可能的安装位置
+ sudo find / -name pg_config 2>/dev/null
+
+=== 临时解决方案（推荐）
+ export PATH=/usr/pgsql-17/bin:$PATH
+
+
+ cd /tmp
+ git clone --branch v0.8.0 https://github.com/pgvector/pgvector.git
+ cd pgvector
+ make
+ make install # may need sudo
+
+## Getting Started
+
+Enable the extension (do this once in each database where you want to use it)
+
+```sql
+CREATE EXTENSION vector;
+```
+
+Create a vector column with 3 dimensions
+
+```sql
+CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3));
+```
+
+Insert vectors
+
+```sql
+INSERT INTO items (embedding) VALUES ('[1,2,3]'), ('[4,5,6]');
+```
+
+Get the nearest neighbors by L2 distance
+
+```sql
+SELECT * FROM items ORDER BY embedding <-> '[3,1,2]' LIMIT 5;
+```
+
+ALTER ROLE iokaysuser CREATEROLE CREATEDB;
+
+
+== 安装 postgresql-contrib 包（包含 hstore 等扩展）
+ sudo yum install -y postgresql17-contrib  # 根据你的 PG 版本调整数字
+
+

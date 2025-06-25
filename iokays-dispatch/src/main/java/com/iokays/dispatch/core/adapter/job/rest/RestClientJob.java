@@ -2,7 +2,7 @@ package com.iokays.dispatch.core.adapter.job.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iokays.dispatch.core.adapter.job.JobClass;
+import com.iokays.dispatch.core.adapter.utils.JobUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
@@ -39,18 +39,16 @@ public class RestClientJob implements Job {
 
         // 还可以通过JobDataMap存储数据
         JobDataMap jobDataMap = jobDetail.getJobDataMap();
-        final var content = jobDataMap.get(JobClass.REST_CLIENT.name());
-        if (content instanceof RestClientData data) {
-            log.info("webClientData: {}", data);
-            final var response = send(data);
-            if (isSuccess(response)) {
-                return;
-            }
-            throw new RuntimeException("请求失败");
-        } else {
-            log.error("webClientData is not WebClientData: {}", content);
-            throw new IllegalArgumentException("webClientData is null");
+
+        final RestClientData data = JobUtils.getInputData(jobDataMap, RestClientData.class);
+
+        log.info("webClientData: {}", data);
+        final var response = send(data);
+        jobDataMap.put(JobUtils.OUTPUT_DATA, response.toString());
+        if (isSuccess(response)) {
+            return;
         }
+        throw new RuntimeException("请求失败");
     }
 
     private ResponseEntity<String> send(RestClientData data) {

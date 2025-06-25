@@ -1,5 +1,6 @@
 package com.iokays;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iokays.dispatch.core.adapter.job.JobClass;
 import com.iokays.dispatch.core.adapter.job.rest.RestClientData;
 import com.iokays.dispatch.core.application.service.JobApplicationService;
@@ -21,16 +22,19 @@ import java.util.Map;
 public class MyRestClientJobRunner implements CommandLineRunner {
 
     private final JobApplicationService jobApplicationService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void run(String... args) {
         Try.run(() -> {
             final var data = RestClientData.builder()
-                    .url("https://www.iokays.com/api/users")
+                    .url("https://www.iokays.com/api/authorization/users")
                     .method("get")
                     .headers(Map.of("Content-Type", "application/form-urlencoded"))
                     .body("".getBytes())
                     .build();
+
+
             jobApplicationService.scheduleJob(CreateJob.builder()
                     .name("RestClientJob")
                     .group("RestClientJobGroup")
@@ -38,7 +42,7 @@ public class MyRestClientJobRunner implements CommandLineRunner {
                     .endAt(LocalDateTime.now().plusMinutes(60))
                     .jobClass(JobClass.REST_CLIENT)
                     .cronExpression("0/5 * * * * ?")
-                    .jobData(Map.of(JobClass.REST_CLIENT.name(), data))
+                    .input(data)
                     .build());
         }).isSuccess();
     }
