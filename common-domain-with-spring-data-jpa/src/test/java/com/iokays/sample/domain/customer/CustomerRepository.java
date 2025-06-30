@@ -13,4 +13,8 @@ public interface CustomerRepository {
 
     Optional<Customer> findByEmailAddress(final EmailAddress emailAddress);
 
+    Optional<Customer> findByCustomerId(final CustomerId customerId);
+
+    void delete(Customer entity);
+
 }

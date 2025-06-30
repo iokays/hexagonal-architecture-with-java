@@ -22,5 +22,7 @@ class CustomerApplicationServiceTest {
         final var customerId = service.registerCustomer(cmd);
         System.out.println("customerId = " + customerId);
 
+        service.deleteCustomer(customerId);
+
     }
 }

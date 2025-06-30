@@ -4,6 +4,7 @@ apply(plugin = "io.spring.dependency-management")
 dependencies {
     implementation(project(":common-core"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
 
     implementation("org.postgresql:postgresql:42.7.5")
 

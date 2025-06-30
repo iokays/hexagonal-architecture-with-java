@@ -1,7 +1,9 @@
 package com.iokays.sample.domain.customer;
 
 import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.RegisterDeleteEvent;
 import com.iokays.sample.domain.customer.command.RegisterCustomer;
+import com.iokays.sample.domain.customer.event.CustomerDeleted;
 import com.iokays.sample.domain.customer.event.CustomerRegistered;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.Validate;
@@ -52,6 +54,11 @@ public class Customer extends AbstractAggregateRoot<Customer> {
                 cmd.fullName(),
                 cmd.gender(),
                 cmd.emailAddress());
+    }
+
+    @RegisterDeleteEvent
+    protected void delete() {
+        this.registerEvent(CustomerDeleted.issue(this.customerId));
     }
 
     public CustomerId customerId() {

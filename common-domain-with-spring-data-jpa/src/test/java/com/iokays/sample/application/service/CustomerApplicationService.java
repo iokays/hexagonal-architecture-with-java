@@ -33,4 +33,10 @@ public class CustomerApplicationService {
         return customer.customerId();
     }
 
+    @Transactional
+    @DistributedLock(value = "customer", key = "#cmd.emailAddress.value") //这里未实现
+    public void deleteCustomer(CustomerId customerId) {
+        customers.findByCustomerId(customerId).ifPresent(customers::delete);
+    }
+
 }
