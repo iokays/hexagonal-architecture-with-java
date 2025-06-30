@@ -11,9 +11,9 @@ import java.util.Objects;
 /**
  * 客户已注册的领域事件
  *
- * @param eventId      {@link EventId} 事件标识
- * @param deletedAt {@link Instant} 事件发生时间
- * @param customerId   {@link CustomerId} 客户标识
+ * @param eventId    {@link EventId} 事件标识
+ * @param deletedAt  {@link Instant} 事件发生时间
+ * @param customerId {@link CustomerId} 客户标识
  */
 public record CustomerDeleted(EventId eventId, CustomerId customerId,
                               LocalDateTime deletedAt

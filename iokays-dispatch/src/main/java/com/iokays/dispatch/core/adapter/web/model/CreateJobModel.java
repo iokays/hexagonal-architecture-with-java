@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.iokays.dispatch.core.adapter.job.JobClass;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 public record CreateJobModel(
         String name,

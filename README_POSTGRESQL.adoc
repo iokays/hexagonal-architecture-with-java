@@ -46,21 +46,25 @@
  sudo yum config-manager --set-enabled PowerTools
 
 === 确保 EPEL 和基础依赖
+
  sudo yum install -y epel-release
  sudo yum install -y gcc make perl-devel perl-App-cpanminus
 
 === 安装关键 Perl 模块依赖
+
  sudo yum install -y perl-IO-Tty perl-Time-HiRes perl-Exporter
 
 ===  postgresql17-devel 安装
+
  sudo yum install -y postgresql17-devel
 
 === 搜索可能的安装位置
+
  sudo find / -name pg_config 2>/dev/null
 
 === 临时解决方案（推荐）
- export PATH=/usr/pgsql-17/bin:$PATH
 
+ export PATH=/usr/pgsql-17/bin:$PATH
 
  cd /tmp
  git clone --branch v0.8.0 https://github.com/pgvector/pgvector.git
@@ -96,8 +100,8 @@ SELECT * FROM items ORDER BY embedding <-> '[3,1,2]' LIMIT 5;
 
 ALTER ROLE iokaysuser CREATEROLE CREATEDB;
 
-
 == 安装 postgresql-contrib 包（包含 hstore 等扩展）
+
  sudo yum install -y postgresql17-contrib  # 根据你的 PG 版本调整数字
 
 

@@ -6,7 +6,6 @@ import com.iokays.dispatch.core.adapter.job.JobClass;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Builder
 public record CreateJob(

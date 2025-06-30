@@ -7,6 +7,7 @@ public interface MyChannelMessageStoreQueryProvider extends ChannelMessageStoreQ
     /**
      * Get the query used to retrieve a count of all messages currently persisted
      * for a channel.
+     *
      * @return query string
      */
     @Override
@@ -17,19 +18,21 @@ public interface MyChannelMessageStoreQueryProvider extends ChannelMessageStoreQ
     /**
      * Query that retrieves a message for the provided message id, channel and
      * region.
+     *
      * @return query string
      */
     @Override
     default String getMessageQuery() {
         return """
-				SELECT MESSAGE_ID, CREATED_DATE, MESSAGE_BYTES
-				from %PREFIX%CHANNEL_MESSAGE
-				where MESSAGE_ID=? and GROUP_KEY=? and REGION=? and STATUS=1
-				""";
+                SELECT MESSAGE_ID, CREATED_DATE, MESSAGE_BYTES
+                from %PREFIX%CHANNEL_MESSAGE
+                where MESSAGE_ID=? and GROUP_KEY=? and REGION=? and STATUS=1
+                """;
     }
 
     /**
      * Query that retrieve a count of all messages for a region.
+     *
      * @return query string
      */
     @Override
@@ -39,6 +42,7 @@ public interface MyChannelMessageStoreQueryProvider extends ChannelMessageStoreQ
 
     /**
      * Query to delete a single message from the database.
+     *
      * @return query string
      */
     @Override
@@ -48,20 +52,21 @@ public interface MyChannelMessageStoreQueryProvider extends ChannelMessageStoreQ
 
     /**
      * Query to add a single message to the database.
+     *
      * @return query string
      */
     @Override
     default String getCreateMessageQuery() {
         return """
-				INSERT into %PREFIX%CHANNEL_MESSAGE(
-					MESSAGE_ID,
-					GROUP_KEY,
-					REGION,
-					CREATED_DATE,
-					MESSAGE_PRIORITY,
-					MESSAGE_BYTES,
-					STATUS)
-				values (?, ?, ?, ?, ?, ?, 1)
-				""";
+                INSERT into %PREFIX%CHANNEL_MESSAGE(
+                	MESSAGE_ID,
+                	GROUP_KEY,
+                	REGION,
+                	CREATED_DATE,
+                	MESSAGE_PRIORITY,
+                	MESSAGE_BYTES,
+                	STATUS)
+                values (?, ?, ?, ?, ?, ?, 1)
+                """;
     }
 }

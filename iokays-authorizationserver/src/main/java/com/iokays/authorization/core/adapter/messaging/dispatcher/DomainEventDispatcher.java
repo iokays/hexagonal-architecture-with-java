@@ -23,11 +23,6 @@ public class DomainEventDispatcher extends AbstractDomainEventDispatcher {
         super(entityManagerFactory);
     }
 
-    @Bean
-    public IntegrationFlow domainEventFlow() {
-        return this.domainEventFlow(DomainEventDispatcher::build);
-    }
-
     private static AbstractLocalMessage<?> build(GenericMessage<?> message) {
         //指定的
         if (message.getPayload() instanceof UserDomainEvent<?>) {
@@ -36,6 +31,11 @@ public class DomainEventDispatcher extends AbstractDomainEventDispatcher {
 
         //默认的
         return new LocalMessage(message);
+    }
+
+    @Bean
+    public IntegrationFlow domainEventFlow() {
+        return this.domainEventFlow(DomainEventDispatcher::build);
     }
 
 }
