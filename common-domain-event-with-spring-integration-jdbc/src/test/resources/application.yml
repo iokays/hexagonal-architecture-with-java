@@ -1,0 +1,14 @@
+spring:
+  config:
+    import:
+      - classpath:common-config.yml
+  datasource: # 因为多数据源，所以自定义配置, 并设置为默认
+    url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=test-cdewsij
+    username: ${postgresql.user}
+    password: ${postgresql.password}
+    driver-class-name: org.postgresql.Driver
+  integration:
+    jdbc:
+      initialize-schema: always
+      platform: postgresql
+      schema: classpath:schema-postgresql.sql

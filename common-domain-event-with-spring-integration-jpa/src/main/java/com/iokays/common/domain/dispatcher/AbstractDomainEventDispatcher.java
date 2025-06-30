@@ -2,7 +2,6 @@ package com.iokays.common.domain.dispatcher;
 
 import com.iokays.common.core.event.DomainEvent;
 import com.iokays.common.domain.localmessage.AbstractLocalMessage;
-import com.iokays.common.domain.localmessage.LocalMessage;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.integration.dsl.ConsumerEndpointSpec;
 import org.springframework.integration.dsl.IntegrationFlow;
