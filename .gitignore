@@ -6,3 +6,4 @@ gradlew
 gradlew.bat
 **/common-config.yml
 LICENSE
+/iokays-ai/src/main/resources/onnx/all-MiniLM-L6-v2/

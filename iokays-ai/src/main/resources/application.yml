@@ -11,7 +11,7 @@ spring:
       - classpath:common-config.yml
   datasource: # 因为多数据源，所以自定义配置, 并设置为默认
     ai:
-      jdbc-url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=ai
+      jdbc-url: jdbc:postgresql://${postgresql.host}/iokays?currentSchema=ai
       username: ${postgresql.user}
       password: ${postgresql.password}
       driver-class-name: org.postgresql.Driver
@@ -36,12 +36,20 @@ spring:
       # The DeepSeek API doesn't support embeddings, so we need to disable it.
       embedding:
         enabled: false
+    model:
+      embedding: transformers
+    embedding:
+      transformer:
+        tokenizer:
+          uri: https://modelscope.cn/models/sentence-transformers/all-MiniLM-L6-v2/resolve/master/tokenizer.json
+        onnx:
+          modelUri: https://modelscope.cn/models/sentence-transformers/all-MiniLM-L6-v2/resolve/master/onnx/model.onnx
     vectorstore:
       pgvector:
         initialize-schema: true
         index-type: HNSW
         distance-type: COSINE_DISTANCE
-        dimensions: 1536
+        dimensions: 384
         max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
     mcp:
       client:
