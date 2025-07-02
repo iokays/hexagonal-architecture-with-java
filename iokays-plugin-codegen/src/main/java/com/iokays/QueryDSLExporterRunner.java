@@ -3,6 +3,7 @@ package com.iokays;
 import com.querydsl.codegen.BeanSerializer;
 import com.querydsl.codegen.JavaTypeMappings;
 import com.querydsl.sql.codegen.MetaDataExporter;
+import io.vavr.control.Try;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,53 +21,34 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class QueryDSLExporterRunner implements CommandLineRunner, Serializable {
 
-    @Resource(name = "messageDataSource")
-    private final DataSource messageDataSource;
-
-    @Resource(name = "qrtzDataSource")
-    private final DataSource qrtzDataSource;
+    private final DataSource dataSource;
+    private final String modelName = "iokays-dispatch";
+    private final String packageName = "com.iokays.dispatch.core.adapter.persistence.message.table";
+    private final String prefixToStrip = "int_";
 
     @Override
     public void run(String... args) throws Exception {
-        this.genMessage();
+        this.gen();
     }
 
-    private void genQrtz() {
-        final String modelName = "iokays-dispatch";
-        final String packageName = "com.iokays.dispatch.core.adapter.persistence.quartz.table";
+    private void gen() {
         log.info("开始生成实体");
-        try (final var connection = qrtzDataSource.getConnection()) {
+
+        Try.run(() -> {
             final var exporter = new MetaDataExporter();
             exporter.setExportViews(false);
-            exporter.setTableNamePattern("QRTZ_%");
+            exporter.setTableNamePattern(prefixToStrip + "%");  // 仅匹配以 int_ 开头的表
             exporter.setPackageName(packageName);
-            final var javaTypeMappings = new JavaTypeMappings();
-            exporter.setTypeMappings(javaTypeMappings);
-            exporter.setBeanSerializer(new BeanSerializer()); //生成Bean 类
+            exporter.setTypeMappings(new JavaTypeMappings());
+            exporter.setBeanSerializer(new BeanSerializer());
+
+            exporter.setNamingStrategy(new DynamicPrefixNamingStrategy(prefixToStrip)); // 直接传前缀
+
             exporter.setTargetFolder(new File("%s/src/main/java".formatted(modelName)));
-            exporter.export(connection.getMetaData());
-        } catch (Exception e) {
-            log.error("生成异常: ", e);
-        }
+            exporter.export(dataSource.getConnection().getMetaData());
+        }).onFailure(e -> log.error("生成实体失败", e));
+
     }
 
-    private void genMessage() {
-        final String modelName = "iokays-dispatch";
-        final String packageName = "com.iokays.dispatch.core.adapter.persistence.message.table";
-        log.info("开始生成实体");
-        try (final var connection = messageDataSource.getConnection()) {
-            final var exporter = new MetaDataExporter();
-            exporter.setExportViews(false);
-            exporter.setTableNamePattern("T_LOCAL%");
-            exporter.setPackageName(packageName);
-            final var javaTypeMappings = new JavaTypeMappings();
-            exporter.setTypeMappings(javaTypeMappings);
-            exporter.setBeanSerializer(new BeanSerializer()); //生成Bean 类
-            exporter.setTargetFolder(new File("%s/src/main/java".formatted(modelName)));
-            exporter.export(connection.getMetaData());
-        } catch (Exception e) {
-            log.error("生成异常: ", e);
-        }
-    }
 
 }

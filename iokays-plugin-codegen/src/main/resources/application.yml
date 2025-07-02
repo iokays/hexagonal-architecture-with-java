@@ -1,10 +1,17 @@
 server:
   port: 8888
 spring:
+  config:
+    import:
+      - classpath:common-config.yml
   datasource:
-    message:
-      jdbc-url: jdbc:h2:tcp://localhost:9092/~/h2/db-iokays-authoriazationserver;MODE=MySQL
-      driver-class-name: org.h2.Driver
-    qrtz:
-      url: jdbc:h2:D:/Data/h2/db-iokays-job3;AUTO_SERVER=TRUE;MODE=MySQL
-      driver-class-name: org.h2.Driver
+    platform: postgresql
+    url: jdbc:postgresql://${postgresql.host}/iokays?currentSchema=test-cdewsij
+    username: ${postgresql.user}
+    password: ${postgresql.password}
+    driver-class-name: org.postgresql.Driver
+    auto-commit: true
+    minimum-idle: 4
+    maximum-pool-size: 8
+
+
