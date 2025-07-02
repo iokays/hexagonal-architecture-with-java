@@ -1,17 +1,14 @@
 package com.iokays.dispatch.core.adapter.persistence.message.table;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.processing.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -20,10 +17,8 @@ import java.sql.Types;
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
 public class QGroupToMessage extends com.querydsl.sql.RelationalPathBase<GroupToMessage> {
 
-    private static final long serialVersionUID = 451009768;
-
     public static final QGroupToMessage intGroupToMessage = new QGroupToMessage("int_group_to_message");
-
+    private static final long serialVersionUID = 451009768;
     public final StringPath groupKey = createString("groupKey");
 
     public final StringPath messageId = createString("messageId");

@@ -1,17 +1,14 @@
 package com.iokays.dispatch.core.adapter.persistence.message.table;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.processing.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -20,10 +17,8 @@ import java.sql.Types;
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
 public class QMetadataStore extends com.querydsl.sql.RelationalPathBase<MetadataStore> {
 
-    private static final long serialVersionUID = 128145399;
-
     public static final QMetadataStore intMetadataStore = new QMetadataStore("int_metadata_store");
-
+    private static final long serialVersionUID = 128145399;
     public final StringPath metadataKey = createString("metadataKey");
 
     public final StringPath metadataValue = createString("metadataValue");

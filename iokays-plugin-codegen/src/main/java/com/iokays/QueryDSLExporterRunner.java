@@ -4,7 +4,6 @@ import com.querydsl.codegen.BeanSerializer;
 import com.querydsl.codegen.JavaTypeMappings;
 import com.querydsl.sql.codegen.MetaDataExporter;
 import io.vavr.control.Try;
-import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

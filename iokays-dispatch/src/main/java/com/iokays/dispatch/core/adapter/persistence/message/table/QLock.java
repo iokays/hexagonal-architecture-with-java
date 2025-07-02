@@ -1,17 +1,15 @@
 package com.iokays.dispatch.core.adapter.persistence.message.table;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.DateTimePath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.processing.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -20,10 +18,8 @@ import java.sql.Types;
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
 public class QLock extends com.querydsl.sql.RelationalPathBase<Lock> {
 
-    private static final long serialVersionUID = 328529542;
-
     public static final QLock intLock = new QLock("int_lock");
-
+    private static final long serialVersionUID = 328529542;
     public final StringPath clientId = createString("clientId");
 
     public final DateTimePath<java.sql.Timestamp> createdDate = createDateTime("createdDate", java.sql.Timestamp.class);

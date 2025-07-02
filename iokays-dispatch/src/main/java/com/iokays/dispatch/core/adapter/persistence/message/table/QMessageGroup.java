@@ -1,17 +1,16 @@
 package com.iokays.dispatch.core.adapter.persistence.message.table;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.DateTimePath;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.processing.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -20,10 +19,8 @@ import java.sql.Types;
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
 public class QMessageGroup extends com.querydsl.sql.RelationalPathBase<MessageGroup> {
 
-    private static final long serialVersionUID = 284793107;
-
     public static final QMessageGroup intMessageGroup = new QMessageGroup("int_message_group");
-
+    private static final long serialVersionUID = 284793107;
     public final NumberPath<Long> complete = createNumber("complete", Long.class);
 
     public final DateTimePath<java.sql.Timestamp> createdDate = createDateTime("createdDate", java.sql.Timestamp.class);
