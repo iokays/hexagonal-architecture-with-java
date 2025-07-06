@@ -1,21 +1,21 @@
 = 启动脚本:
 
- cd /home/ftpuser/iokays-project
+ cd /opt/iokays/iokays-java
 
  pkill -f "iokays-plugin-h2.jar"
- nohup java -jar iokays-plugin-h2.jar > h2.log 2>&1 &
+ nohup java -jar iokays-plugin-h2.jar > logs/h2.log 2>&1 &
 
  pkill -f "iokays-authorizationserver.jar"
- nohup java -jar iokays-authorizationserver.jar > authorizationserver.log 2>&1 &
+ nohup java -jar iokays-authorizationserver.jar > logs/authorizationserver.log 2>&1 &
 
  pkill -f "iokays-dispatch.jar"
- nohup java -jar iokays-dispatch.jar > quartz.log 2>&1 &
+ nohup java -jar iokays-dispatch.jar > logs/quartz.log 2>&1 &
 
  pkill -f "iokays-flowable.jar"
- nohup java -jar iokays-flowable.jar > flowable.log 2>&1 &
+ nohup java -jar iokays-flowable.jar > logs/flowable.log 2>&1 &
 
  pkill -f "iokays-ai.jar"
- nohup java -jar iokays-ai.jar > ai.log 2>&1 &
+ nohup java -jar iokays-ai.jar > logs/ai.log 2>&1 &
 
  pkill -f "iokays-ai-mcp-server.jar"
- nohup java -jar iokays-ai-mcp-server.jar > mcp.log 2>&1 &
+ nohup java -jar iokays-ai-mcp-server.jar > logs/mcp.log 2>&1 &
