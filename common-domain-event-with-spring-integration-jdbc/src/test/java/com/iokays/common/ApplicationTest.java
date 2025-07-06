@@ -1,7 +1,7 @@
 package com.iokays.common;
 
 import com.iokays.common.core.event.DomainEvent;
-import com.iokays.common.integration.jdbc.store.channel.DomainEventDeserializer;
+import com.iokays.common.integration.jdbc.store.channel.DomainEventInteropDeserializer;
 import com.iokays.common.integration.jdbc.store.channel.DomainEventSerializer;
 import com.iokays.common.integration.jdbc.store.channel.MyPostgresChannelMessageStoreQueryProvider;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,13 +32,13 @@ public class ApplicationTest {
         final var messageStore = new JdbcChannelMessageStore(dataSource);
         messageStore.setChannelMessageStoreQueryProvider(new MyPostgresChannelMessageStoreQueryProvider());
         messageStore.setSerializer(new DomainEventSerializer());
-        messageStore.setDeserializer(new DomainEventDeserializer());
+        messageStore.setDeserializer(new DomainEventInteropDeserializer());
         return messageStore;
     }
 
     @Bean
     public QueueChannel queueChannel(JdbcChannelMessageStore messageStore) {
-        return new PriorityChannel(messageStore, "domain-events");
+        return new PriorityChannel(messageStore, "authorization");
     }
 
     @Bean

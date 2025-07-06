@@ -28,10 +28,10 @@ public class MessageDao {
 
     private Tuple2<SQLQueryFactory, String> target(final String category) {
         if (StringUtils.equals("users", category)) {
-            return Tuple.of(localMessageSQLQueryFactory, "T_USER_LOCAL_MESSAGE");
+            return Tuple.of(localMessageSQLQueryFactory, "int_channel_message");
         }
         if (StringUtils.equals("other", category)) {
-            return Tuple.of(localMessageSQLQueryFactory, "T_LOCAL_MESSAGE");
+            return Tuple.of(localMessageSQLQueryFactory, "int_channel_message");
         }
         return null;
     }
