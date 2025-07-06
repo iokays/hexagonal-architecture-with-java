@@ -3,7 +3,7 @@ package com.iokays.authorization.core.domain.registeredclient;
 import com.iokays.authorization.core.domain.registeredclient.commond.RegisterClient;
 import com.iokays.authorization.core.domain.registeredclient.event.ClientRegistered;
 import com.iokays.common.core.event.EventId;
-import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "t_oauth2_registered_client")
-public class RegisteredClient extends AbstractAggregateRoot<RegisteredClient> {
+public class RegisteredClient extends AbstractJpaAggregateRoot<RegisteredClient> {
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "registered_client_id", length = 40, unique = true, nullable = false))

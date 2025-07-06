@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Reflective
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-public @interface RegisterDeleteEvent {
+public @interface JpaRegisterDeleteEvent {
 }

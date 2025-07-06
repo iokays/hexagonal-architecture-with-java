@@ -1,10 +1,7 @@
 package com.iokays.sample.application.service;
 
 import com.iokays.common.core.lock.DistributedLock;
-import com.iokays.sample.domain.customer.Customer;
-import com.iokays.sample.domain.customer.CustomerId;
-import com.iokays.sample.domain.customer.CustomerRepository;
-import com.iokays.sample.domain.customer.EmailAddress;
+import com.iokays.sample.domain.customer.*;
 import com.iokays.sample.domain.customer.command.RegisterCustomer;
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
@@ -31,6 +28,15 @@ public class CustomerApplicationService {
         customers.save(customer);
 
         return customer.customerId();
+    }
+
+    @Transactional
+    @DistributedLock(value = "customer", key = "#cmd.emailAddress.value") //这里未实现
+    public void updateFullName(CustomerId customerId, FullName fullName)  {
+        customers.findByCustomerId(customerId).ifPresent(customer -> {
+            customer.fullName(fullName);
+            // customers.save(customer); // 因为使用的Spring Data Jpa, 需要使用save触发事件发送, 如果使用 AbstractPersistableAggregateRoot, 则不需要
+        });
     }
 
     @Transactional

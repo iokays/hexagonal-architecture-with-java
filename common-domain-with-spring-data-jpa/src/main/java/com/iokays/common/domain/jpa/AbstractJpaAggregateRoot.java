@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * 聚合根
  * 该聚合根实现了Spring Data的{@link DomainEvents}和{@link AfterDomainEventPublication}注解，
+ * 需要用户显式的调用 save, delete 方法来触发事件发送
  * 复用了AbstractAggregateRoot 的代码
  * <p>
  * The methods are called every time one of the following a Spring Data repository methods are called:
@@ -27,7 +28,7 @@ import java.util.List;
  * @see org.springframework.data.domain.AbstractAggregateRoot
  */
 @MappedSuperclass
-public abstract class AbstractAggregateRoot<A extends AbstractAggregateRoot<A>> extends ConcurrencySafeEntity<A> implements AggregateRoot {
+public abstract class AbstractJpaAggregateRoot<A extends AbstractJpaAggregateRoot<A>> extends ConcurrencySafeEntity<A> implements AggregateRoot {
 
     @Transient
     private final transient List<DomainEvent> domainEvents = new ArrayList<>();

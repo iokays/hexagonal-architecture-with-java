@@ -3,7 +3,7 @@ package com.iokays.authorization.core.domain.clientregistration;
 import com.iokays.authorization.core.domain.clientregistration.command.CreateClientRegistration;
 import com.iokays.authorization.core.domain.clientregistration.event.ClientRegistrationCreated;
 import com.iokays.common.core.event.EventId;
-import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "t_client_registrations")
-public class ClientRegistration extends AbstractAggregateRoot<ClientRegistration> {
+public class ClientRegistration extends AbstractJpaAggregateRoot<ClientRegistration> {
 
     @AttributeOverride(name = "id", column = @Column(name = "client_registration_id", length = 40, nullable = false))
     @Embedded

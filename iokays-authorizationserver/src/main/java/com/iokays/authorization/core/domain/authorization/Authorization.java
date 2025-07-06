@@ -5,7 +5,7 @@ import com.iokays.authorization.core.domain.authorization.event.AuthorizationCre
 import com.iokays.authorization.core.domain.authorization.event.AuthorizationUpdated;
 import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
 import com.iokays.common.core.event.EventId;
-import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "t_oauth2_authorization")
-public class Authorization extends AbstractAggregateRoot<Authorization> {
+public class Authorization extends AbstractJpaAggregateRoot<Authorization> {
 
     @AttributeOverride(name = "id", column = @Column(name = "authorization_id", unique = true, length = 40, nullable = false))
     private AuthorizationId authorizationId;

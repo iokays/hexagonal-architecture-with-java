@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.domain.group;
 
 import com.google.common.collect.Lists;
-import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "t_groups")
-public class Group extends AbstractAggregateRoot<Group> {
+public class Group extends AbstractJpaAggregateRoot<Group> {
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "group_id", length = 40, unique = true, nullable = false))

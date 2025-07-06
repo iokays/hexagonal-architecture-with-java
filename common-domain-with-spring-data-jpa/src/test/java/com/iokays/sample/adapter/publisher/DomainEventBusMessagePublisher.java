@@ -18,7 +18,7 @@ class DomainEventBusMessagePublisher {
     @EventListener
     public void handle(final DomainEvent<?> evt) {
         //消息发布[入库], 分布式事务本地消息表的持久化的位置
-        log.info("消息发布[入库]: 客户已注册事件: {}", evt);
+        log.info("消息发布[入库]: 客户事件: {}", evt);
 //        throw new RuntimeException("测试异常，业务与事件同时回滚");
     }
 }

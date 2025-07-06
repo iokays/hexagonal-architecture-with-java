@@ -1,9 +1,10 @@
 package com.iokays.sample.domain.customer;
 
-import com.iokays.common.domain.jpa.AbstractAggregateRoot;
-import com.iokays.common.domain.jpa.RegisterDeleteEvent;
+import com.iokays.common.domain.hibernate.AbstractHibernateAggregateRoot;
+import com.iokays.common.domain.jpa.JpaRegisterDeleteEvent;
 import com.iokays.sample.domain.customer.command.RegisterCustomer;
 import com.iokays.sample.domain.customer.event.CustomerDeleted;
+import com.iokays.sample.domain.customer.event.CustomerFullNameUpdated;
 import com.iokays.sample.domain.customer.event.CustomerRegistered;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.Validate;
@@ -13,7 +14,7 @@ import java.util.Objects;
 
 
 @Entity(name = "t_customer")
-public class Customer extends AbstractAggregateRoot<Customer> {
+public class Customer extends AbstractHibernateAggregateRoot<Customer> {
 
     @AttributeOverride(name = "id", column = @Column(name = "customer_id"))
     private CustomerId customerId;
@@ -47,6 +48,11 @@ public class Customer extends AbstractAggregateRoot<Customer> {
         this.registerEvent(CustomerRegistered.issue(this.customerId, this.registeredAt));
     }
 
+    public void fullName(FullName fullName) {
+        this.fullName = fullName;
+        this.registerEvent(CustomerFullNameUpdated.issue(this.customerId, this.fullName, LocalDateTime.now()));
+    }
+
     public static Customer registerBy(final RegisterCustomer cmd) {
         Validate.notNull(cmd, "注册客户的命令不能为空");
 
@@ -56,7 +62,8 @@ public class Customer extends AbstractAggregateRoot<Customer> {
                 cmd.emailAddress());
     }
 
-    @RegisterDeleteEvent
+    @PreRemove //Hibernate 触发机制
+    @JpaRegisterDeleteEvent //Spring Data JPA 触发机制
     protected void delete() {
         this.registerEvent(CustomerDeleted.issue(this.customerId));
     }

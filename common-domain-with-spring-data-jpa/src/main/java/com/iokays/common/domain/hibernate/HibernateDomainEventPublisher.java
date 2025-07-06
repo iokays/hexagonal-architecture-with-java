@@ -1,0 +1,23 @@
+package com.iokays.common.domain.hibernate;
+
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
+import org.springframework.stereotype.Component;
+
+@Component
+public class HibernateDomainEventPublisher implements ApplicationEventPublisherAware {
+
+    private static ApplicationEventPublisher domainEventPublisher;
+
+    @Override
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        domainEventPublisher = applicationEventPublisher;
+    }
+
+    protected static void publish(Object event) {
+        if (domainEventPublisher != null) {
+            domainEventPublisher.publishEvent(event);
+        }
+    }
+
+}

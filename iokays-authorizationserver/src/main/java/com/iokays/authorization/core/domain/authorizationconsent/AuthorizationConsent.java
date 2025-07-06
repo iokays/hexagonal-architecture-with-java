@@ -2,14 +2,14 @@ package com.iokays.authorization.core.domain.authorizationconsent;
 
 import com.iokays.authorization.core.domain.authorizationconsent.command.SaveAuthorizationConsent;
 import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
-import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "t_oauth2_authorization_consent", uniqueConstraints = @UniqueConstraint(columnNames = {"registered_client_id", "principal_name"}))
-public class AuthorizationConsent extends AbstractAggregateRoot<AuthorizationConsent> {
+public class AuthorizationConsent extends AbstractJpaAggregateRoot<AuthorizationConsent> {
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "authorization_consent_id", unique = true, length = 40, nullable = false))

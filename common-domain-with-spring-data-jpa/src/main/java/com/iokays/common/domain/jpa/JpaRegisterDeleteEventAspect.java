@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 
 @Aspect
 @Component
-public class RegisterDeleteEventAspect {
+public class JpaRegisterDeleteEventAspect {
 
     @Before("execution(* org.springframework.data.jpa.repository.JpaRepository+.delete(..)) && args(entity)")
     public void registerDeleteEvent(JoinPoint joinPoint, Object entity) {
@@ -27,12 +27,12 @@ public class RegisterDeleteEventAspect {
         try {
             final Class<?> clazz = entity.getClass();
 
-            if (!AbstractAggregateRoot.class.isAssignableFrom(clazz)) {
+            if (!AbstractJpaAggregateRoot.class.isAssignableFrom(clazz)) {
                 return;
             }
 
             for (Method method : clazz.getDeclaredMethods()) {
-                if (method.isAnnotationPresent(RegisterDeleteEvent.class)) {
+                if (method.isAnnotationPresent(JpaRegisterDeleteEvent.class)) {
                     if (method.getParameterCount() != 0 || method.getReturnType() != void.class) {
                         throw new RuntimeException("Method annotated with @RegisterDeleteEvent must be void and no-arg");
                     }

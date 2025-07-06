@@ -6,7 +6,7 @@ import com.iokays.authorization.core.domain.user.event.UserDeleted;
 import com.iokays.authorization.core.domain.user.event.UserGroupUpdated;
 import com.iokays.authorization.core.domain.user.event.UserRegistered;
 import com.iokays.common.core.event.EventId;
-import com.iokays.common.domain.jpa.AbstractAggregateRoot;
+import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import com.iokays.common.domain.jpa.AbstractId;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "t_users")
-public class User extends AbstractAggregateRoot<User> {
+public class User extends AbstractJpaAggregateRoot<User> {
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "username", length = 40, unique = true, nullable = false))
