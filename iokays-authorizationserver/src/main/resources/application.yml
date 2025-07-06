@@ -21,11 +21,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        event:
-          merge:
-            entity_copy_observer: disabled  # 禁用hibernate的实体自动更新
 
 
   session:
