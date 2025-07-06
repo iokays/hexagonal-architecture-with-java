@@ -4,6 +4,7 @@ apply(plugin = "io.spring.dependency-management")
 dependencies {
 
     implementation(project(":common-core"))
+    implementation(project(":common-serialization-with-jackson"))
 
     implementation("org.springframework.integration:spring-integration-jdbc")
     implementation("org.springframework.integration:spring-integration-event")

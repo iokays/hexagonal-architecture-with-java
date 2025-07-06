@@ -10,13 +10,10 @@ import java.time.LocalDateTime;
 public class PageMessageModel implements Serializable {
 
     private String messageId;
-    private String messageType;
+    private String groupKey;
     private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime createdDate;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime lastModifiedDate;
 
 }

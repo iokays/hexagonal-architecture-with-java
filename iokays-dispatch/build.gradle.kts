@@ -4,6 +4,7 @@ apply(plugin = "io.spring.dependency-management")
 dependencies {
 
     implementation(project(":common-core"))
+    implementation(project(":common-domain-event-with-spring-integration-jdbc"))
 
     implementation("commons-validator:commons-validator:1.9.0")
 

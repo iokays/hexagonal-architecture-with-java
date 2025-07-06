@@ -1,9 +1,9 @@
-package com.iokays.common.domain.serialization;
+package com.iokays.serialization.jackson.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.iokays.common.domain.jpa.AbstractId;
+import com.iokays.common.core.domain.Identity;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * @param <T>
  */
-public abstract class AbstractIdDeserializer<T extends AbstractId> extends JsonDeserializer<T> {
+public abstract class AbstractIdentityDeserializer<T extends Identity> extends JsonDeserializer<T> {
 
     @Override
     public final T deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {

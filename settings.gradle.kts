@@ -2,7 +2,6 @@
 include("common-core")
 include("common-domain-with-spring-data-jpa")
 include("common-domain-with-spring-data-mongodb")
-include("common-domain-serialization-with-jackson")
 include("common-domain-event-with-spring-integration-jpa")
 include("common-domain-event-with-spring-integration-jdbc")
 include("common-distributed-lock-with-spring-integration")

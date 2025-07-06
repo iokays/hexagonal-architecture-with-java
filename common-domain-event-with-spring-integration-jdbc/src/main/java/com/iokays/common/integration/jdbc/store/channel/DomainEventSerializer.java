@@ -1,5 +1,6 @@
 package com.iokays.common.integration.jdbc.store.channel;
 
+import com.iokays.serialization.jackson.DomainEventStoreJsonMapper;
 import org.springframework.core.serializer.Serializer;
 import org.springframework.messaging.Message;
 

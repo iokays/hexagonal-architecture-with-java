@@ -7,7 +7,7 @@ dependencies {
 
     implementation(project(":common-core"))
     implementation(project(":common-domain-with-spring-data-jpa"))
-    implementation(project(":common-domain-event-with-spring-integration-jpa"))
+    implementation(project(":common-domain-event-with-spring-integration-jdbc"))
 
     implementation("commons-validator:commons-validator:1.9.0")
 
@@ -22,7 +22,7 @@ dependencies {
     implementation("org.springframework.session:spring-session-jdbc")
 
     implementation("org.springframework.integration:spring-integration-event")
-    implementation("org.springframework.integration:spring-integration-jpa")
+    implementation("org.springframework.integration:spring-integration-jdbc")
     implementation("com.querydsl:querydsl-sql-spring:5.1.0")
 
     implementation("org.postgresql:postgresql:42.7.5")

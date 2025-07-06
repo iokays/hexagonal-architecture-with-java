@@ -1,5 +1,7 @@
 package com.iokays.dispatch.core.adapter.persistence.message;
 
+import com.iokays.dispatch.core.adapter.persistence.message.table.ChannelMessage;
+import com.iokays.dispatch.core.adapter.persistence.message.table.QChannelMessage;
 import com.iokays.dispatch.core.adapter.persistence.message.table.QTLocalMessage;
 import com.iokays.dispatch.core.adapter.persistence.message.table.TLocalMessage;
 import com.querydsl.sql.SQLQueryFactory;
@@ -34,7 +36,7 @@ public class MessageDao {
         return null;
     }
 
-    public Page<TLocalMessage> page(String category, Pageable pageable) {
+    public Page<ChannelMessage> page(String category, Pageable pageable) {
         final var target = this.target(category);
         if (null == target) {
             return Page.empty();
@@ -43,7 +45,7 @@ public class MessageDao {
         final SQLQueryFactory sqlQueryFactory = target._1();
         final String tableName = target._2();
 
-        final var message = new QTLocalMessage(tableName, "PUBLIC", tableName);
+        final var message = new QChannelMessage(tableName, "PUBLIC", tableName);
 
         //总数
         final var total = sqlQueryFactory.from(message).fetchCount();
@@ -52,7 +54,7 @@ public class MessageDao {
         final var q = sqlQueryFactory
                 .select(message)
                 .from(message)
-                .where(message.deleted.eq("F"));
+                .where(message.status.eq(1));
 
         if (pageable.isPaged()) {
             q.offset(pageable.getOffset()).limit(pageable.getPageSize());

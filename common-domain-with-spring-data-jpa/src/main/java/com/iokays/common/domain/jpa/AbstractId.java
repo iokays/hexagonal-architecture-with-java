@@ -1,5 +1,6 @@
 package com.iokays.common.domain.jpa;
 
+import com.iokays.common.core.domain.Identity;
 import jakarta.persistence.MappedSuperclass;
 import org.apache.commons.lang3.Validate;
 

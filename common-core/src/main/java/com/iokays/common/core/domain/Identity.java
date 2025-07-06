@@ -1,4 +1,4 @@
-package com.iokays.common.domain.jpa;
+package com.iokays.common.core.domain;
 
 public interface Identity {
 

@@ -7,7 +7,7 @@ dependencies {
 
     implementation("commons-validator:commons-validator:1.9.0")
 
-    implementation(platform("ai.djl:bom:0.31.1"))
+    implementation(platform("ai.djl:bom:0.32.0"))
     implementation("ai.djl:api")
     implementation("ai.djl.pytorch:pytorch-engine")
 

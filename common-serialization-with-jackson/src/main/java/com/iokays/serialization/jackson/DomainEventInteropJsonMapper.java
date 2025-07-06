@@ -1,21 +1,24 @@
-package com.iokays.common.integration.jdbc.store.channel;
+package com.iokays.serialization.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.common.collect.Maps;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.iokays.common.core.domain.Identity;
+import com.iokays.common.core.event.DomainEvent;
+import com.iokays.common.core.event.EventId;
+import com.iokays.serialization.jackson.serialization.EventIdSerializer;
+import com.iokays.serialization.jackson.serialization.IdentitySerializer;
 import io.vavr.control.Try;
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
-
-import static io.vavr.API.println;
-
-public class DomainEventStoreJsonMapper {
+/**
+ * 该Json对没有使用领域接口,抽象类使用的Json序列化,反序列化工具
+ */
+public class DomainEventInteropJsonMapper {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -24,7 +27,10 @@ public class DomainEventStoreJsonMapper {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.registerModule(new JavaTimeModule());
     }
+
 
     public static String toJson(Object x) {
         return Try.of(() -> objectMapper.writeValueAsString(x)).get();
@@ -40,15 +46,6 @@ public class DomainEventStoreJsonMapper {
 
     public static <T> T fromJson(String json, Class<T> targetType) {
         return Try.of(() -> objectMapper.readValue(json, targetType)).get();
-    }
-
-    public static void main(String[] args) throws IOException {
-        final Map<String, Object> map = Maps.newHashMap();
-        map.put("name", "sixOne");
-        map.put("age", 18);
-        map.put("birthday", null);
-        final var bytes = objectMapper.writeValueAsBytes(map);
-        println(StringUtils.toEncodedString(bytes, StandardCharsets.UTF_8));
     }
 
 }
