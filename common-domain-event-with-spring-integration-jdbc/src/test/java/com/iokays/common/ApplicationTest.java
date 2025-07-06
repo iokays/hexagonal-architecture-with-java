@@ -63,7 +63,7 @@ public class ApplicationTest {
     public PostgresSubscribableChannel postgresSubscribableChannel(
             PostgresChannelMessageTableSubscriber subscriber,
             JdbcChannelMessageStore messageStore) {
-        return new PostgresSubscribableChannel(messageStore, "domain-events", subscriber);
+        return new PostgresSubscribableChannel(messageStore, "authorization", subscriber);
     }
 
 }

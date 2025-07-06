@@ -54,7 +54,8 @@ public class MessageDao {
         final var q = sqlQueryFactory
                 .select(message)
                 .from(message)
-                .where(message.status.eq(1));
+//                .where(message.status.eq(1))
+                ;
 
         if (pageable.isPaged()) {
             q.offset(pageable.getOffset()).limit(pageable.getPageSize());
