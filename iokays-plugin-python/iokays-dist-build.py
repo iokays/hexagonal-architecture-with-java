@@ -71,6 +71,7 @@ try:
 
     print("所有操作已完成!")
 
+    # nginx -t -c /opt/iokays/iokays-nginx/nginx.conf
     # nginx -s reload -c /opt/iokays/iokays-nginx/nginx.conf
 
 except Exception as e:
