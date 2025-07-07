@@ -17,7 +17,6 @@ class DomainEventInteropJsonMapperTest {
         log.info("message: {}", message);
 
 
-
     }
 
 }

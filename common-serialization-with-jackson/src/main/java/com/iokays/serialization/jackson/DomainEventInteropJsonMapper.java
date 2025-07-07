@@ -1,18 +1,11 @@
 package com.iokays.serialization.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.iokays.common.core.domain.Identity;
-import com.iokays.common.core.event.DomainEvent;
-import com.iokays.common.core.event.EventId;
-import com.iokays.serialization.jackson.serialization.EventIdSerializer;
-import com.iokays.serialization.jackson.serialization.IdentitySerializer;
 import io.vavr.control.Try;
 
 /**

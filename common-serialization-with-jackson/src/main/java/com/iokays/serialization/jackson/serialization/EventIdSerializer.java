@@ -9,11 +9,11 @@ import java.io.IOException;
 
 public class EventIdSerializer<T extends EventId> extends JsonSerializer<T> {
 
-        @Override
-        public void serialize(T value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-            // 自定义序列化逻辑
-            if (null != value) {
-                gen.writeString(value.id());
-            }
+    @Override
+    public void serialize(T value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        // 自定义序列化逻辑
+        if (null != value) {
+            gen.writeString(value.id());
         }
     }
+}

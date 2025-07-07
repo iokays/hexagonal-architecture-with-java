@@ -6,7 +6,7 @@ public class MyPostgresChannelMessageStoreQueryProvider implements MyChannelMess
     public String getPollFromGroupExcludeIdsQuery() {
         return """
                    update %PREFIX%CHANNEL_MESSAGE
-                   set STATUS = 0
+                   set STATUS = 2
                 where CTID = (select CTID
                 				from %PREFIX%CHANNEL_MESSAGE
                 				where %PREFIX%CHANNEL_MESSAGE.GROUP_KEY = :group_key
@@ -23,7 +23,7 @@ public class MyPostgresChannelMessageStoreQueryProvider implements MyChannelMess
     public String getPollFromGroupQuery() {
         return """
                 update %PREFIX%CHANNEL_MESSAGE
-                   set STATUS = 0
+                   set STATUS = 2
                 where CTID = (select CTID
                 				from %PREFIX%CHANNEL_MESSAGE
                 				where %PREFIX%CHANNEL_MESSAGE.GROUP_KEY = :group_key
@@ -39,7 +39,7 @@ public class MyPostgresChannelMessageStoreQueryProvider implements MyChannelMess
     public String getPriorityPollFromGroupExcludeIdsQuery() {
         return """
                 update %PREFIX%CHANNEL_MESSAGE
-                   set STATUS = 0
+                   set STATUS = 2
                 where CTID = (select CTID
                 				from %PREFIX%CHANNEL_MESSAGE
                 				where %PREFIX%CHANNEL_MESSAGE.GROUP_KEY = :group_key
@@ -56,7 +56,7 @@ public class MyPostgresChannelMessageStoreQueryProvider implements MyChannelMess
     public String getPriorityPollFromGroupQuery() {
         return """
                 update %PREFIX%CHANNEL_MESSAGE
-                   set STATUS = 0
+                   set STATUS = 2
                 where CTID = (select CTID
                 				from %PREFIX%CHANNEL_MESSAGE
                 				where %PREFIX%CHANNEL_MESSAGE.GROUP_KEY = :group_key

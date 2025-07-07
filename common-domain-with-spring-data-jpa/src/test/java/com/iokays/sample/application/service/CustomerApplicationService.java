@@ -32,7 +32,7 @@ public class CustomerApplicationService {
 
     @Transactional
     @DistributedLock(value = "customer", key = "#cmd.emailAddress.value") //这里未实现
-    public void updateFullName(CustomerId customerId, FullName fullName)  {
+    public void updateFullName(CustomerId customerId, FullName fullName) {
         customers.findByCustomerId(customerId).ifPresent(customer -> {
             customer.fullName(fullName);
             // customers.save(customer); // 因为使用的Spring Data Jpa, 需要使用save触发事件发送, 如果使用 AbstractPersistableAggregateRoot, 则不需要

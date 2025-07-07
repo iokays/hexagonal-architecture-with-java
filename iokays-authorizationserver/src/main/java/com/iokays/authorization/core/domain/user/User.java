@@ -6,8 +6,8 @@ import com.iokays.authorization.core.domain.user.event.UserDeleted;
 import com.iokays.authorization.core.domain.user.event.UserGroupUpdated;
 import com.iokays.authorization.core.domain.user.event.UserRegistered;
 import com.iokays.common.core.event.EventId;
-import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import com.iokays.common.domain.jpa.AbstractId;
+import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
 

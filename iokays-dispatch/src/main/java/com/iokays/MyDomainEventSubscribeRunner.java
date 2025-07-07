@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class MyDomainEventSubscribeRunner implements CommandLineRunner {
 
     private final PostgresSubscribableChannel channel;
+
     @Override
     public void run(String... args) {
         log.info("Subscribing to channel");

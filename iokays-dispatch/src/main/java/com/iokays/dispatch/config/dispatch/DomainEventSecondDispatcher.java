@@ -1,6 +1,5 @@
 package com.iokays.dispatch.config.dispatch;
 
-import com.iokays.common.integration.jdbc.store.channel.DomainEventDeserializer;
 import com.iokays.common.integration.jdbc.store.channel.DomainEventInteropDeserializer;
 import com.iokays.common.integration.jdbc.store.channel.MyPostgresChannelMessageStoreQueryProvider;
 import lombok.extern.slf4j.Slf4j;

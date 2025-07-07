@@ -8,6 +8,7 @@ import org.springframework.aop.framework.AopContext;
 public interface SpringAopProxy<T extends ApplicationService> extends CurrentProxy<T> {
 
     @Override
+    @SuppressWarnings("unchecked")
     default T _this() {
         return (T) AopContext.currentProxy();
     }

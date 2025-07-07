@@ -48,11 +48,6 @@ public class Customer extends AbstractHibernateAggregateRoot<Customer> {
         this.registerEvent(CustomerRegistered.issue(this.customerId, this.registeredAt));
     }
 
-    public void fullName(FullName fullName) {
-        this.fullName = fullName;
-        this.registerEvent(CustomerFullNameUpdated.issue(this.customerId, this.fullName, LocalDateTime.now()));
-    }
-
     public static Customer registerBy(final RegisterCustomer cmd) {
         Validate.notNull(cmd, "注册客户的命令不能为空");
 
@@ -60,6 +55,11 @@ public class Customer extends AbstractHibernateAggregateRoot<Customer> {
                 cmd.fullName(),
                 cmd.gender(),
                 cmd.emailAddress());
+    }
+
+    public void fullName(FullName fullName) {
+        this.fullName = fullName;
+        this.registerEvent(CustomerFullNameUpdated.issue(this.customerId, this.fullName, LocalDateTime.now()));
     }
 
     @PreRemove //Hibernate 触发机制

@@ -2,8 +2,6 @@ package com.iokays.dispatch.core.adapter.persistence.message;
 
 import com.iokays.dispatch.core.adapter.persistence.message.table.ChannelMessage;
 import com.iokays.dispatch.core.adapter.persistence.message.table.QChannelMessage;
-import com.iokays.dispatch.core.adapter.persistence.message.table.QTLocalMessage;
-import com.iokays.dispatch.core.adapter.persistence.message.table.TLocalMessage;
 import com.querydsl.sql.SQLQueryFactory;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;

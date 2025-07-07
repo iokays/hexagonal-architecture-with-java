@@ -1,12 +1,10 @@
 package com.iokays.dispatch.core.adapter.web.mapping;
 
 import com.iokays.dispatch.core.adapter.persistence.message.table.ChannelMessage;
-import com.iokays.dispatch.core.adapter.persistence.message.table.TLocalMessage;
 import com.iokays.dispatch.core.adapter.web.model.PageMessageModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import javax.xml.crypto.Data;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

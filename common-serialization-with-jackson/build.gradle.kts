@@ -1,4 +1,3 @@
-
 dependencies {
     //jackson
     implementation(project(":common-core"))

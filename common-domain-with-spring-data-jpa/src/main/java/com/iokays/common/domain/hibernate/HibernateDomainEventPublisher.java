@@ -9,15 +9,15 @@ public class HibernateDomainEventPublisher implements ApplicationEventPublisherA
 
     private static ApplicationEventPublisher domainEventPublisher;
 
-    @Override
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        domainEventPublisher = applicationEventPublisher;
-    }
-
     protected static void publish(Object event) {
         if (domainEventPublisher != null) {
             domainEventPublisher.publishEvent(event);
         }
+    }
+
+    @Override
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        domainEventPublisher = applicationEventPublisher;
     }
 
 }

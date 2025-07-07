@@ -47,7 +47,7 @@ public interface MyChannelMessageStoreQueryProvider extends ChannelMessageStoreQ
      */
     @Override
     default String getDeleteMessageQuery() {
-        return "UPDATE %PREFIX%CHANNEL_MESSAGE SET STATUS = 0 where MESSAGE_ID=? and GROUP_KEY=? and REGION=? and STATUS=1";
+        return "UPDATE %PREFIX%CHANNEL_MESSAGE SET STATUS = 2 where MESSAGE_ID=? and GROUP_KEY=? and REGION=? and STATUS=1";
     }
 
     /**
