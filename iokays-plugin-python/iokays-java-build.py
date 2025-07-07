@@ -29,7 +29,7 @@ os.chdir(target_dir)
 
 # 5. 执行gradle构建
 print("执行gradle构建...")
-subprocess.run([gradle_path, "clean", "build", "-x", "Test"], check=True)
+# subprocess.run([gradle_path, "clean", "build", "-x", "Test"], check=True)
 
 # 6. 定义JAR文件映射
 module_jars = {
@@ -58,16 +58,17 @@ try:
         if os.path.exists(local_path):
             remote_path = f"/opt/iokays/iokays-java/{jar}"
             print(f"上传 {local_path}...")
-            scp.put(local_path, remote_path)
+#             scp.put(local_path, remote_path)
         else:
             print(f"! 未找到 {local_path}")
 
-#     # 后台启动服务
-#     print("启动远程服务...")
-#     stdin, stdout, stderr = ssh.exec_command("python3 /opt/iokays/iokays-java-run.py")
-#     print(stdout.read().decode())
-#     if stderr.read().decode():
-#         print("错误:", stderr.read().decode())
+    # 后台启动服务
+    print("启动远程服务...")
+    stdin, stdout, stderr = ssh.exec_command("source /etc/profile && /usr/bin/python3 /opt/iokays/iokays-java-run.py")
+
+    print(stdout.read().decode())
+    if stderr.read().decode():
+        print("错误:", stderr.read().decode())
 
     print("所有操作已完成!")
 
