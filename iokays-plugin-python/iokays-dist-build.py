@@ -69,15 +69,6 @@ try:
         else:
             print(f"! 未找到 {folder}")
 
-
-    # 后台启动服务
-    print("启动远程服务...")
-    stdin, stdout, stderr = ssh.exec_command("source /etc/profile && /usr/bin/python3 /opt/iokays/iokays-java-run.py")
-
-    print(stdout.read().decode())
-    if stderr.read().decode():
-        print("错误:", stderr.read().decode())
-
     print("所有操作已完成!")
 
 except Exception as e:
