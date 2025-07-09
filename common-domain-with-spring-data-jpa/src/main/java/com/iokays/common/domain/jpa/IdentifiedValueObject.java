@@ -2,8 +2,11 @@ package com.iokays.common.domain.jpa;
 
 
 import com.iokays.common.core.domain.ValueObject;
+import jakarta.persistence.Column;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 /**
  * 具有唯一标识的值对象
@@ -14,6 +17,10 @@ public abstract class IdentifiedValueObject<T> extends IdentifiedDomainObject im
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDate;
 
     /**
      * 受保护的构造函数，防止直接实例化，用于Hibernate等ORM框架

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: common-specification-pattern-with-jpa-test
+  config:
+    import:
+      - classpath:common-config.yml
+  datasource:
+    url: jdbc:postgresql://${postgresql.host}:5432/iokays?currentSchema=test-specification
+    username: ${postgresql.user}
+    password: ${postgresql.password}
+    driver-class-name: org.postgresql.Driver
+    auto-commit: true
+    minimum-idle: 4
+    maximum-pool-size: 8
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+

@@ -7,6 +7,7 @@ include("common-domain-event-with-spring-integration-jdbc")
 include("common-distributed-lock-with-spring-integration")
 include("common-distributed-id-with-snowflake")
 include("common-serialization-with-jackson")
+include("common-specification-pattern-with-jpa")
 
 // 项目模块
 include("iokays-ai") //AI

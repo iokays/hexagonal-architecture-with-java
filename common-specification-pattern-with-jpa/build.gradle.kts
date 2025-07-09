@@ -12,15 +12,11 @@ tasks.getByName<Jar>("jar") {
 
 dependencies {
     implementation(project(":common-core"))
+    implementation(project(":common-domain-with-spring-data-jpa"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
-
-
-    implementation("commons-validator:commons-validator:1.8.0")
+    implementation("org.mvel:mvel2:2.5.2.Final")
 
     testImplementation("org.postgresql:postgresql:42.7.5")
-    //h2
-    testImplementation("com.h2database:h2:2.3.232")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
