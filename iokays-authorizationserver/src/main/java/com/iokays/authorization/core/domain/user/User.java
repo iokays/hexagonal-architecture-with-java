@@ -1,12 +1,12 @@
 package com.iokays.authorization.core.domain.user;
 
 import com.iokays.authorization.core.domain.DomainRegistry;
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.domain.user.event.UserDeleted;
 import com.iokays.authorization.core.domain.user.event.UserGroupUpdated;
 import com.iokays.authorization.core.domain.user.event.UserRegistered;
 import com.iokays.common.core.event.EventId;
-import com.iokays.common.domain.jpa.AbstractId;
+import com.iokays.common.domain.jpa.AbstractCode;
 import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -41,7 +41,7 @@ public class User extends AbstractJpaAggregateRoot<User> {
         this.password(password);
         this.enabled(true);
         //添加事件
-        this.andEvent(new UserRegistered(EventId.generate(), this.username.id(), this.enabled, LocalDateTime.now()));
+        this.andEvent(new UserRegistered(EventId.generate(), this.username.code(), this.enabled, LocalDateTime.now()));
     }
 
     private void username(final Username username) {
@@ -96,22 +96,22 @@ public class User extends AbstractJpaAggregateRoot<User> {
         return password;
     }
 
-    public void group(final List<GroupId> groupIds) {
+    public void group(final List<GroupCode> groupIds) {
         DomainRegistry.groupMemberDomainService().delete(this.username);
         DomainRegistry.groupMemberDomainService().create(this.username, groupIds);
 
         //添加权限变更事件
         this.andEvent(new UserGroupUpdated(
                 EventId.generate(),
-                this.username.id(),
-                CollectionUtils.emptyIfNull(groupIds).stream().map(AbstractId::id).toList(),
+                this.username.code(),
+                CollectionUtils.emptyIfNull(groupIds).stream().map(AbstractCode::code).toList(),
                 LocalDateTime.now())
         );
     }
 
     @PostRemove
     private void afterDelete() {
-        this.andEvent(new UserDeleted(EventId.generate(), this.username.id(), LocalDateTime.now()));
+        this.andEvent(new UserDeleted(EventId.generate(), this.username.code(), LocalDateTime.now()));
     }
 
 }

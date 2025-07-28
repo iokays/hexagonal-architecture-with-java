@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.iokays.common.domain.jpa.AbstractId;
+import com.iokays.common.domain.jpa.AbstractCode;
 import io.vavr.control.Try;
 
 import java.io.IOException;
@@ -22,12 +22,12 @@ public abstract class LocalMessageMapper {
         objectMapper.registerModule(new JavaTimeModule());
 
         final SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(AbstractId.class, new JsonSerializer<>() {
+        simpleModule.addSerializer(AbstractCode.class, new JsonSerializer<>() {
             @Override
-            public void serialize(AbstractId value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            public void serialize(AbstractCode value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
                 // 自定义序列化逻辑
                 if (null != value) {
-                    gen.writeString(value.id());
+                    gen.writeString(value.code());
                 }
             }
         });

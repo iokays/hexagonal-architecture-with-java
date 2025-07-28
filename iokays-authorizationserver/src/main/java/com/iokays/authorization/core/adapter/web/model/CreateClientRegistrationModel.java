@@ -2,7 +2,7 @@ package com.iokays.authorization.core.adapter.web.model;
 
 
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationType;
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationCode;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -17,7 +17,7 @@ import java.util.Set;
  * 实现了Serializable接口，支持序列化操作。
  */
 public record CreateClientRegistrationModel(
-        RegistrationId registrationId,
+        RegistrationCode registrationId,
         ClientRegistrationType clientRegistrationType, //
         String clientId, // 客户端的唯一标识符，用于在授权服务器中识别客户端
         String clientName, // 客户端的名称，用于展示或管理

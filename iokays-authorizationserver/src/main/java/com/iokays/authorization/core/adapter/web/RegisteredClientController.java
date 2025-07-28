@@ -6,7 +6,7 @@ import com.iokays.authorization.core.adapter.web.model.CreateRegisteredClientMod
 import com.iokays.authorization.core.adapter.web.model.PageRegisteredClientModel;
 import com.iokays.authorization.core.application.service.RegisteredClientApplicationService;
 import com.iokays.authorization.core.application.service.RegisteredClientQueryApplicationService;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.adapter.DriverAdapter;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class RegisteredClientController implements RegisteredClientApi {
     public ResponseEntity<String> create(CreateRegisteredClientModel model) {
         final var registerClient = registeredClientModelMapper.toRegisterClient(model);
         final var registeredClientId = applicationService.save(registerClient);
-        return ResponseEntity.ok(registeredClientId.id());
+        return ResponseEntity.ok(registeredClientId.code());
     }
 
     @GetMapping
@@ -46,7 +46,7 @@ public class RegisteredClientController implements RegisteredClientApi {
 
     @DeleteMapping("/{registrationId}")
     public void delete(@PathVariable String registrationId) {
-        applicationService.delete(new RegisteredClientId(registrationId));
+        applicationService.delete(new RegisteredClientCode(registrationId));
     }
 
 }

@@ -8,7 +8,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(
         componentModel = SPRING,
-        uses = {AbstractIdMapper.class}
+        uses = {AbstractCodeMapper.class}
 )
 public interface OauthUserModelMapper {
 

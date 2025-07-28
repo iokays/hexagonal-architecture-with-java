@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Builder
-public record ClientRegistrationInfo(RegistrationId registrationId,
+public record ClientRegistrationInfo(RegistrationCode registrationId,
                                      ClientRegistrationType clientRegistrationType,
                                      String clientId,
                                      String clientName,

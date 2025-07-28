@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.domain.authorization.Authorization;
-import com.iokays.authorization.core.domain.authorization.AuthorizationId;
+import com.iokays.authorization.core.domain.authorization.AuthorizationCode;
 import com.iokays.authorization.core.domain.authorization.AuthorizationInfo;
 import com.iokays.authorization.core.domain.authorization.AuthorizationRepository;
 import com.iokays.authorization.core.domain.authorization.command.SaveAuthorization;
@@ -25,7 +25,7 @@ public class AuthorizationApplicationService implements ApplicationService {
     private final AuthorizationRepository authorizationRepository;
 
     @CacheEvict(value = "AuthorizationInfoByAuthorizationId", key = "#result.id")
-    public AuthorizationId save(final SaveAuthorization command) {
+    public AuthorizationCode save(final SaveAuthorization command) {
         final var authorizationId = command.authorizationId();
 
         authorizationRepository.findByAuthorizationId(authorizationId)
@@ -38,12 +38,12 @@ public class AuthorizationApplicationService implements ApplicationService {
     }
 
     @CacheEvict(value = "AuthorizationInfoByAuthorizationId", key = "#authorizationId.id")
-    public void remove(final AuthorizationId authorizationId) {
+    public void remove(final AuthorizationCode authorizationId) {
         authorizationRepository.deleteByAuthorizationId(authorizationId);
     }
 
     @Cacheable(value = "AuthorizationInfoByAuthorizationId", key = "#authorizationId.id")
-    public AuthorizationInfo findByAuthorizationId(final AuthorizationId authorizationId) {
+    public AuthorizationInfo findByAuthorizationId(final AuthorizationCode authorizationId) {
         return authorizationRepository.findByAuthorizationId(authorizationId).map(Authorization::info).orElse(null);
     }
 
@@ -87,7 +87,7 @@ public class AuthorizationApplicationService implements ApplicationService {
     }
 
     @Cacheable(value = "AuthorizationIdByTokenValue", key = "#tokenValue")
-    protected AuthorizationId findAuthorizationIdByToken(final String tokenValue) {
+    protected AuthorizationCode findAuthorizationIdByToken(final String tokenValue) {
         return authorizationRepository
                 .findByStateOrAuthorizationCodeValueOrAccessTokenValueOrRefreshTokenValueOrOidcIdTokenValueOrUserCodeValueOrDeviceCodeValue(tokenValue)
                 .orElse(null);

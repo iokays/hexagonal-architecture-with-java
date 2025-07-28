@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.groupmember;
 
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.common.domain.jpa.IdentifiedEntity;
 import jakarta.persistence.*;
@@ -12,12 +12,12 @@ import java.util.Objects;
 public class GroupMember extends IdentifiedEntity<GroupMember> {
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "group_member_id", length = 80, unique = true, nullable = false))
-    private GroupMemberId groupMemberId;
+    @AttributeOverride(name = "code", column = @Column(name = "group_member_code", length = 80, unique = true, nullable = false))
+    private GroupMemberCode groupMemberCode;
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "group_id", length = 40, nullable = false))
-    private GroupId groupId;
+    @AttributeOverride(name = "code", column = @Column(name = "group_code", length = 40, nullable = false))
+    private GroupCode groupCode;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "username", length = 40, nullable = false))
@@ -27,26 +27,26 @@ public class GroupMember extends IdentifiedEntity<GroupMember> {
         super();
     }
 
-    public GroupMember(GroupId groupId, Username username) {
+    public GroupMember(GroupCode groupCode, Username username) {
         this();
-        this.groupMemberId = new GroupMemberId(groupId, username);
+        this.groupMemberCode = new GroupMemberCode(groupCode, username);
         this.username = username;
-        this.groupId = groupId;
+        this.groupCode = groupCode;
     }
 
-    public GroupId groupId() {
-        return this.groupId;
+    public GroupCode groupCode() {
+        return this.groupCode;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final GroupMember that = (GroupMember) o;
-        return Objects.equals(groupMemberId, that.groupMemberId);
+        return Objects.equals(groupMemberCode, that.groupMemberCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupMemberId);
+        return Objects.hash(groupMemberCode);
     }
 }

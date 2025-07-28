@@ -6,7 +6,7 @@ public interface AuthorizationRepository {
 
     Authorization save(Authorization entity);
 
-    Optional<Authorization> findByAuthorizationId(AuthorizationId authorizationId);
+    Optional<Authorization> findByAuthorizationId(AuthorizationCode authorizationId);
 
     Optional<Authorization> findByState(String state);
 
@@ -22,9 +22,9 @@ public interface AuthorizationRepository {
 
     Optional<Authorization> findByDeviceCodeValue(String deviceCode);
 
-    Optional<AuthorizationId> findByStateOrAuthorizationCodeValueOrAccessTokenValueOrRefreshTokenValueOrOidcIdTokenValueOrUserCodeValueOrDeviceCodeValue(String token);
+    Optional<AuthorizationCode> findByStateOrAuthorizationCodeValueOrAccessTokenValueOrRefreshTokenValueOrOidcIdTokenValueOrUserCodeValueOrDeviceCodeValue(String token);
 
-    void deleteByAuthorizationId(AuthorizationId authorizationId);
+    void deleteByAuthorizationId(AuthorizationCode authorizationId);
 
 
 }

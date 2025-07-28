@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.adapter.domain.service;
 
 import com.iokays.authorization.core.domain.group.Group;
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.domain.group.GroupRepository;
 import com.iokays.authorization.core.domain.groupmember.GroupMember;
 import com.iokays.authorization.core.domain.groupmember.GroupMemberDomainService;
@@ -25,13 +25,13 @@ public class GroupMemberDomainServiceImpl implements GroupMemberDomainService {
     private final GroupMemberRepository groupMemberRepository;
 
     @Override
-    public Map<GroupId, List<String>> getGroupAuthorities(Username username) {
+    public Map<GroupCode, List<String>> getGroupAuthorities(Username username) {
         if (null == username) {
             return Map.of();
         }
         final var groupIds = groupMemberRepository.findByUsername(username)
                 .stream()
-                .map(GroupMember::groupId).toList();
+                .map(GroupMember::groupCode).toList();
 
         if (CollectionUtils.isEmpty(groupIds)) {
             return Map.of();
@@ -39,11 +39,11 @@ public class GroupMemberDomainServiceImpl implements GroupMemberDomainService {
 
         return CollectionUtils.emptyIfNull(groupRepository.findByGroupIdIn(groupIds))
                 .stream()
-                .collect(Collectors.toMap(Group::groupId, Group::authorities));
+                .collect(Collectors.toMap(Group::groupCode, Group::authorities));
     }
 
     @Override
-    public void create(Username username, List<GroupId> groupIds) {
+    public void create(Username username, List<GroupCode> groupIds) {
         Validate.notNull(username, "username must not be null");
 
         CollectionUtils.emptyIfNull(groupIds).forEach(groupId -> {

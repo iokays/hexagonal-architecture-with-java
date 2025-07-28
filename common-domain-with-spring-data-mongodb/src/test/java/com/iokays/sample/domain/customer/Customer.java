@@ -15,8 +15,8 @@ import static org.springframework.data.mongodb.core.mapping.Unwrapped.OnEmpty.US
 @Document
 public class Customer extends AbstractAggregateRoot<Customer> {
 
-    @ValueConverter(CustomerIdConverter.class)
-    private CustomerId customerId;
+    @ValueConverter(CustomerCodeConverter.class)
+    private CustomerCode customerCode;
 
     @Unwrapped(onEmpty = USE_NULL)
     private EmailAddress emailAddress;
@@ -33,14 +33,14 @@ public class Customer extends AbstractAggregateRoot<Customer> {
 
     public Customer(FullName fullName, Gender gender, EmailAddress emailAddress) {
         this();
-        this.customerId = CustomerId.makeCustomerId();
+        this.customerCode = CustomerCode.makeCustomerId();
         this.registeredAt = LocalDateTime.now();
 
         this.fullName = Validate.notNull(fullName, "name must not be null");
         this.gender = Validate.notNull(gender, "gender must not be null");
         this.emailAddress = Validate.notNull(emailAddress, "emailAddress must not be null");
 
-        this.registerEvent(CustomerRegistered.issue(this.customerId, this.registeredAt));
+        this.registerEvent(CustomerRegistered.issue(this.customerCode, this.registeredAt));
     }
 
     public static Customer registerBy(final RegisterCustomer cmd) {
@@ -54,7 +54,7 @@ public class Customer extends AbstractAggregateRoot<Customer> {
 
     @Override
     public boolean sameIdentityAs(Customer other) {
-        return this.customerId.equals(other.customerId);
+        return this.customerCode.equals(other.customerCode);
     }
 
 

@@ -9,7 +9,7 @@ public interface RegisteredClientRepository extends Repository {
 
     RegisteredClient save(RegisteredClient registeredClient);
 
-    RegisteredClient findByRegisteredClientId(RegisteredClientId registeredClientId);
+    RegisteredClient findByRegisteredClientId(RegisteredClientCode registeredClientId);
 
     Optional<RegisteredClient> findByClientId(String clientId);
 

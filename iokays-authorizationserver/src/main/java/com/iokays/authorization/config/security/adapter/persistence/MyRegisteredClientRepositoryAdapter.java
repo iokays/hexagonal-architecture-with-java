@@ -1,7 +1,7 @@
 package com.iokays.authorization.config.security.adapter.persistence;
 
 import com.iokays.authorization.core.application.service.RegisteredClientApplicationService;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.authorization.core.domain.registeredclient.RegisteredClientInfo;
 import com.iokays.authorization.core.domain.registeredclient.commond.RegisterClient;
 import com.iokays.common.core.command.CommandId;
@@ -43,7 +43,7 @@ public class MyRegisteredClientRepositoryAdapter implements RegisteredClientRepo
 
     protected static RegisteredClient build(RegisteredClientInfo client) {
 
-        final var result = RegisteredClient.withId(client.registeredClientId().id())
+        final var result = RegisteredClient.withId(client.registeredClientId().code())
                 .clientId(client.clientId())
                 .clientSecret(client.clientSecret())
                 .clientAuthenticationMethods(v -> v.addAll(client.clientAuthenticationMethods().stream().map(ClientAuthenticationMethod::new).toList()))
@@ -69,7 +69,7 @@ public class MyRegisteredClientRepositoryAdapter implements RegisteredClientRepo
 
     @Override
     public RegisteredClient findById(String id) {
-        final var info = registeredClientApplicationService.findById(new RegisteredClientId(id));
+        final var info = registeredClientApplicationService.findById(new RegisteredClientCode(id));
         return build(info);
     }
 

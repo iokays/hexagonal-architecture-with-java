@@ -21,7 +21,7 @@ public class MyUserDetailsServiceAdapter implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("用户没有找到");
         }
-        return User.withUsername(user.username().id())
+        return User.withUsername(user.username().code())
                 .password(user.password().getValue())
                 .roles("USER")
                 .disabled(!user.enabled())

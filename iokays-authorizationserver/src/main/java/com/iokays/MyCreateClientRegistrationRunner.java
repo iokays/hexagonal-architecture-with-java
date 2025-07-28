@@ -2,7 +2,7 @@ package com.iokays;
 
 import com.iokays.authorization.core.application.service.ClientRegistrationApplicationService;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationType;
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationCode;
 import com.iokays.authorization.core.domain.clientregistration.command.CreateClientRegistration;
 import com.iokays.common.core.command.CommandId;
 import io.vavr.control.Try;
@@ -29,7 +29,7 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
         {
             final var clientRegistration = CreateClientRegistration.builder()
                     .id(CommandId.generate())
-                    .registrationId(new RegistrationId("GOOGLE"))
+                    .registrationId(new RegistrationCode("GOOGLE"))
                     .clientRegistrationType(ClientRegistrationType.GOOGLE)
                     .clientId(customProperties.getGoogleClientId())
                     .clientName("Google")
@@ -79,7 +79,7 @@ public class MyCreateClientRegistrationRunner implements CommandLineRunner {
             final var clientRegistration = CreateClientRegistration.builder()
                     .id(CommandId.generate())
                     .clientRegistrationType(ClientRegistrationType.IOKAYS)
-                    .registrationId(new RegistrationId("IOKAYS"))
+                    .registrationId(new RegistrationCode("IOKAYS"))
                     .clientName("IOKAYS登录")
                     .clientId("login-code")
                     .clientSecret("openid-connect")

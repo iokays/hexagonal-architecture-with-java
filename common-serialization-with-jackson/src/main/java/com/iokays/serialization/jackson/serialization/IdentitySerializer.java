@@ -8,8 +8,8 @@ import com.iokays.common.core.domain.Identity;
 import java.io.IOException;
 
 /**
- * 将默认的 abstractId.id() 序列化为Id字符串
- * 当对象是 AbstractId, 将值序列化为: abstractId.id。而不是默认的嵌套结构。
+ * 将默认的 abstractCode.code() 序列化为Id字符串
+ * 当对象是 AbstractCode, 将值序列化为: abstractCode.code。而不是默认的嵌套结构。
  */
 public class IdentitySerializer<T extends Identity> extends JsonSerializer<T> {
 
@@ -17,7 +17,7 @@ public class IdentitySerializer<T extends Identity> extends JsonSerializer<T> {
     public void serialize(T value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         // 自定义序列化逻辑
         if (null != value) {
-            gen.writeString(value.id());
+            gen.writeString(value.code());
         }
     }
 }

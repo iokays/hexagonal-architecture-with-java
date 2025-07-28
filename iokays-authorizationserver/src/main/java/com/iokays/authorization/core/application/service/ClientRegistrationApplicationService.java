@@ -3,7 +3,7 @@ package com.iokays.authorization.core.application.service;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistration;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationInfo;
 import com.iokays.authorization.core.domain.clientregistration.ClientRegistrationRepository;
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationCode;
 import com.iokays.authorization.core.domain.clientregistration.command.CreateClientRegistration;
 import com.iokays.common.core.service.ApplicationService;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class ClientRegistrationApplicationService implements ApplicationService 
     @Cacheable(value = "ClientRegistrationById", key = "#registrationId")
     public ClientRegistrationInfo findByRegistrationId(String registrationId) {
         log.info("registrationId: {}", registrationId);
-        final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByRegistrationId(new RegistrationId(registrationId)));
+        final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByRegistrationId(new RegistrationCode(registrationId)));
         return clientRegistration.info();
     }
 
@@ -47,10 +47,10 @@ public class ClientRegistrationApplicationService implements ApplicationService 
                     @CacheEvict(value = "ClientRegistrationByAll"),
                     @CacheEvict(value = "ClientRegistrationById", key = "#result.id")
             })
-    public RegistrationId createClientRegistration(CreateClientRegistration command) {
+    public RegistrationCode createClientRegistration(CreateClientRegistration command) {
         Validate.isTrue(!this.checkClientNameExist(command.clientName()), "ClientName: " + command.clientName() + " 已经存在");
         log.info("创建客户端:{}", command.clientName());
-        return clientRegistrationRepository.save(new ClientRegistration(command)).clientRegistrationId();
+        return clientRegistrationRepository.save(new ClientRegistration(command)).clientRegistrationCode();
     }
 
     @Caching(
@@ -60,7 +60,7 @@ public class ClientRegistrationApplicationService implements ApplicationService 
             })
     public void deleteRegistrationId(String registrationId) {
         log.info("registrationId: {}", registrationId);
-        final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByRegistrationId(new RegistrationId(registrationId)));
+        final var clientRegistration = Objects.requireNonNull(clientRegistrationRepository.findByRegistrationId(new RegistrationCode(registrationId)));
         clientRegistrationRepository.delete(clientRegistration);
     }
 

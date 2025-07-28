@@ -9,7 +9,7 @@ import java.util.List;
 
 @Builder
 public record RegisteredClientInfo(
-        RegisteredClientId registeredClientId,
+        RegisteredClientCode registeredClientId,
         String clientId,
         Instant clientIdIssuedAt,
         String clientSecret,

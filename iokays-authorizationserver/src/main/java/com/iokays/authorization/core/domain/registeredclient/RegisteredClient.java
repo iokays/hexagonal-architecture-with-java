@@ -20,8 +20,8 @@ import java.util.Objects;
 public class RegisteredClient extends AbstractJpaAggregateRoot<RegisteredClient> {
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "registered_client_id", length = 40, unique = true, nullable = false))
-    private RegisteredClientId registeredClientId;
+    @AttributeOverride(name = "code", column = @Column(name = "registered_client_code", length = 40, unique = true, nullable = false))
+    private RegisteredClientCode registeredClientCode;
 
     @Column(length = 1000, unique = true, nullable = false)
     private String clientId;
@@ -65,7 +65,7 @@ public class RegisteredClient extends AbstractJpaAggregateRoot<RegisteredClient>
 
     public static RegisteredClient make(RegisterClient registerClient) {
         final RegisteredClient registeredClient = new RegisteredClient();
-        registeredClient.setRegisteredClientId(RegisteredClientId.makeRegisteredClientId());
+        registeredClient.setRegisteredClientCode(RegisteredClientCode.makeRegisteredClientId());
         registeredClient.setClientId(registerClient.clientId());
         registeredClient.setClientIdIssuedAt(registerClient.clientIdIssuedAt());
         registeredClient.setClientSecret(registerClient.clientSecret());
@@ -80,18 +80,18 @@ public class RegisteredClient extends AbstractJpaAggregateRoot<RegisteredClient>
         registeredClient.setTokenSettings(registerClient.tokenSettings());
 
         // 事件
-        registeredClient.registerEvent(new ClientRegistered(EventId.generate(), registeredClient.registeredClientId, registeredClient.clientId, registeredClient.clientName, registeredClient.clientIdIssuedAt));
+        registeredClient.registerEvent(new ClientRegistered(EventId.generate(), registeredClient.registeredClientCode, registeredClient.clientId, registeredClient.clientName, registeredClient.clientIdIssuedAt));
 
         return registeredClient;
     }
 
-    public RegisteredClientId registeredClientId() {
-        return this.registeredClientId;
+    public RegisteredClientCode registeredClientId() {
+        return this.registeredClientCode;
     }
 
     public RegisteredClientInfo info() {
         return RegisteredClientInfo.builder()
-                .registeredClientId(this.registeredClientId)
+                .registeredClientId(this.registeredClientCode)
                 .clientId(this.clientId)
                 .clientIdIssuedAt(this.clientIdIssuedAt)
                 .clientSecret(this.clientSecret)
@@ -122,8 +122,8 @@ public class RegisteredClient extends AbstractJpaAggregateRoot<RegisteredClient>
         this.clientId = clientId;
     }
 
-    private void setRegisteredClientId(RegisteredClientId registeredClientId) {
-        this.registeredClientId = registeredClientId;
+    private void setRegisteredClientCode(RegisteredClientCode registeredClientCode) {
+        this.registeredClientCode = registeredClientCode;
     }
 
     private void setClientIdIssuedAt(Instant clientIdIssuedAt) {
@@ -174,11 +174,11 @@ public class RegisteredClient extends AbstractJpaAggregateRoot<RegisteredClient>
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final RegisteredClient that = (RegisteredClient) o;
-        return Objects.equals(registeredClientId, that.registeredClientId);
+        return Objects.equals(registeredClientCode, that.registeredClientCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(registeredClientId);
+        return Objects.hashCode(registeredClientCode);
     }
 }

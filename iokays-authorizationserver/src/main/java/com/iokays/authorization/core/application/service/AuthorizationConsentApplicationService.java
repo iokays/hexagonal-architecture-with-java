@@ -4,7 +4,7 @@ import com.iokays.authorization.core.domain.authorizationconsent.AuthorizationCo
 import com.iokays.authorization.core.domain.authorizationconsent.AuthorizationConsentInfo;
 import com.iokays.authorization.core.domain.authorizationconsent.AuthorizationConsentRepository;
 import com.iokays.authorization.core.domain.authorizationconsent.command.SaveAuthorizationConsent;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.common.core.service.ApplicationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,14 +33,14 @@ public class AuthorizationConsentApplicationService implements ApplicationServic
     }
 
     @Cacheable(value = "AuthorizationConsentInfoByRegisteredClientIdAndPrincipalName", key = "#registeredClientId.id + ':' + #principalName")
-    public AuthorizationConsentInfo findBy(RegisteredClientId registeredClientId, String principalName) {
+    public AuthorizationConsentInfo findBy(RegisteredClientCode registeredClientId, String principalName) {
         return authorizationConsentRepository.findByRegisteredClientIdAndPrincipalName(registeredClientId, principalName)
                 .map(AuthorizationConsent::info)
                 .orElse(null);
     }
 
     @CacheEvict(value = "AuthorizationConsentInfoByRegisteredClientIdAndPrincipalName", key = "#registeredClientId.id + ':' + #principalName")
-    public void deleteBy(RegisteredClientId registeredClientId, String principalName) {
+    public void deleteBy(RegisteredClientCode registeredClientId, String principalName) {
         authorizationConsentRepository.deleteByRegisteredClientIdAndPrincipalName(registeredClientId, principalName);
     }
 

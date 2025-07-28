@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.application.service.usecase.user.UserRegistration;
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.domain.user.*;
 import com.iokays.authorization.core.domain.user.command.RegisterUser;
 import com.iokays.common.core.service.ApplicationService;
@@ -54,7 +54,7 @@ public class UserApplicationService implements ApplicationService, UserRegistrat
         Validate.isTrue(user == null, "用户名已存在");
     }
 
-    public void addGroup(final Username username, final List<GroupId> groupIds) {
+    public void addGroup(final Username username, final List<GroupCode> groupIds) {
         final var user = userRepository.findByUsername(username);
         user.group(groupIds);
         userRepository.save(user);

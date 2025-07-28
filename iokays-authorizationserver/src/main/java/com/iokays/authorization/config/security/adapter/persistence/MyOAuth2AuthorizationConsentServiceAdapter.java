@@ -4,7 +4,7 @@ import com.iokays.authorization.core.application.service.AuthorizationConsentApp
 import com.iokays.authorization.core.application.service.RegisteredClientApplicationService;
 import com.iokays.authorization.core.domain.authorizationconsent.AuthorizationConsentInfo;
 import com.iokays.authorization.core.domain.authorizationconsent.command.SaveAuthorizationConsent;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -36,7 +36,7 @@ public class MyOAuth2AuthorizationConsentServiceAdapter implements OAuth2Authori
 
     @Override
     public void remove(OAuth2AuthorizationConsent authorizationConsent) {
-        final var registeredClientId = new RegisteredClientId(authorizationConsent.getRegisteredClientId());
+        final var registeredClientId = new RegisteredClientCode(authorizationConsent.getRegisteredClientId());
         final var principalName = authorizationConsent.getPrincipalName();
         Validate.notNull(registeredClientId, "registeredClientId cannot be empty");
         Validate.notEmpty(principalName, "principalName cannot be empty");
@@ -48,13 +48,13 @@ public class MyOAuth2AuthorizationConsentServiceAdapter implements OAuth2Authori
     public OAuth2AuthorizationConsent findById(String registeredClientId, String principalName) {
         Validate.notEmpty(registeredClientId, "registeredClientId cannot be empty");
         Validate.notEmpty(principalName, "principalName cannot be empty");
-        final var info = this.authorizationConsentApplicationService.findBy(new RegisteredClientId(registeredClientId), principalName);
+        final var info = this.authorizationConsentApplicationService.findBy(new RegisteredClientCode(registeredClientId), principalName);
         return info == null ? null : toObject(info);
     }
 
     private SaveAuthorizationConsent toCommand(OAuth2AuthorizationConsent authorizationConsent) {
         return SaveAuthorizationConsent.builder()
-                .registeredClientId(new RegisteredClientId(authorizationConsent.getRegisteredClientId()))
+                .registeredClientId(new RegisteredClientCode(authorizationConsent.getRegisteredClientId()))
                 .principalName(authorizationConsent.getPrincipalName())
                 .authorities(CollectionUtils.emptyIfNull(authorizationConsent.getAuthorities()).stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
                 .build();
@@ -68,7 +68,7 @@ public class MyOAuth2AuthorizationConsentServiceAdapter implements OAuth2Authori
                     "The RegisteredClient with id '" + registeredClientId + "' was not found in the RegisteredClientRepository.");
         }
 
-        final var builder = OAuth2AuthorizationConsent.withId(registeredClientId.id(), authorizationConsent.principalName());
+        final var builder = OAuth2AuthorizationConsent.withId(registeredClientId.code(), authorizationConsent.principalName());
 
         Arrays.stream(StringUtils.defaultString(authorizationConsent.authorities()).split(","))
                 .forEach(v -> builder.authority(new SimpleGrantedAuthority(v)));

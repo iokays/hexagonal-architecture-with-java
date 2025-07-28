@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GroupRepository extends Repository {
 
-    Group findByGroupId(GroupId groupId);
+    Group findByGroupId(GroupCode groupId);
 
     Group save(Group group);
 
@@ -18,5 +18,5 @@ public interface GroupRepository extends Repository {
 
     Page<Group> findAll(Pageable pageable);
 
-    List<Group> findByGroupIdIn(List<GroupId> groupIds);
+    List<Group> findByGroupIdIn(List<GroupCode> groupIds);
 }

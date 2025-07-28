@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.domain.authorizationconsent;
 
 import com.iokays.authorization.core.domain.authorizationconsent.command.SaveAuthorizationConsent;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.*;
 
@@ -12,13 +12,13 @@ import java.util.Objects;
 public class AuthorizationConsent extends AbstractJpaAggregateRoot<AuthorizationConsent> {
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "authorization_consent_id", unique = true, length = 40, nullable = false))
-    private AuthorizationConsentId authorizationConsentId;
+    @AttributeOverride(name = "code", column = @Column(name = "authorization_consent_", unique = true, length = 40, nullable = false))
+    private AuthorizationConsentCode authorizationConsentCode;
 
     @Embedded
     @Column(nullable = false)
-    @AttributeOverride(name = "id", column = @Column(name = "registered_client_id", length = 40, unique = true, nullable = false))
-    private RegisteredClientId registeredClientId;
+    @AttributeOverride(name = "code", column = @Column(name = "registered_client_code", length = 40, unique = true, nullable = false))
+    private RegisteredClientCode registeredClientCode;
 
     @Column(nullable = false)
     private String principalName;
@@ -32,8 +32,8 @@ public class AuthorizationConsent extends AbstractJpaAggregateRoot<Authorization
 
     public AuthorizationConsent(SaveAuthorizationConsent command) {
         this();
-        this.authorizationConsentId = AuthorizationConsentId.makeAuthorizationConsentId(command.registeredClientId(), command.principalName());
-        this.registeredClientId = command.registeredClientId();
+        this.authorizationConsentCode = AuthorizationConsentCode.makeAuthorizationConsentId(command.registeredClientId(), command.principalName());
+        this.registeredClientCode = command.registeredClientId();
         this.principalName = command.principalName();
         this.setAuthorities(command.authorities());
     }
@@ -48,8 +48,8 @@ public class AuthorizationConsent extends AbstractJpaAggregateRoot<Authorization
 
     public AuthorizationConsentInfo info() {
         return AuthorizationConsentInfo.builder()
-                .authorizationConsentId(this.authorizationConsentId)
-                .registeredClientId(this.registeredClientId)
+                .authorizationConsentId(this.authorizationConsentCode)
+                .registeredClientId(this.registeredClientCode)
                 .principalName(this.principalName)
                 .authorities(this.authorities)
                 .build();
@@ -59,11 +59,11 @@ public class AuthorizationConsent extends AbstractJpaAggregateRoot<Authorization
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final AuthorizationConsent that = (AuthorizationConsent) o;
-        return Objects.equals(authorizationConsentId, that.authorizationConsentId);
+        return Objects.equals(authorizationConsentCode, that.authorizationConsentCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authorizationConsentId);
+        return Objects.hash(authorizationConsentCode);
     }
 }

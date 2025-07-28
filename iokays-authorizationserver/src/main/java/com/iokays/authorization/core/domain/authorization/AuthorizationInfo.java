@@ -1,14 +1,14 @@
 package com.iokays.authorization.core.domain.authorization;
 
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import lombok.Builder;
 
 import java.time.Instant;
 
 @Builder
 public record AuthorizationInfo(
-        AuthorizationId authorizationId,
-        RegisteredClientId registeredClientId,
+        AuthorizationCode authorizationId,
+        RegisteredClientCode registeredClientId,
         String principalName,
         String authorizationGrantType,
         String authorizedScopes,

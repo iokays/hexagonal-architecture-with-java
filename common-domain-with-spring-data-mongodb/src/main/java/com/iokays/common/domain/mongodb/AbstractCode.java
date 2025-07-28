@@ -8,19 +8,19 @@ import java.io.Serializable;
 /**
  * 业务主键
  */
-public abstract class AbstractId implements Identity, Comparable<AbstractId>, Serializable {
+public abstract class AbstractCode implements Identity, Comparable<AbstractCode>, Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     private String id;
 
-    protected AbstractId(String anId) {
+    protected AbstractCode(String aCode) {
         this();
-        this.setId(anId);
+        this.setCode(aCode);
     }
 
-    protected AbstractId() {
+    protected AbstractCode() {
         super();
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractId implements Identity, Comparable<AbstractId>, Se
             return true;
         }
 
-        if (anObject instanceof AbstractId other) {
+        if (anObject instanceof AbstractCode other) {
             return this.id().equals(other.id());
         }
 
@@ -60,19 +60,19 @@ public abstract class AbstractId implements Identity, Comparable<AbstractId>, Se
         return 263;
     }
 
-    protected void validateId(String anId) {
+    protected void validateCode(String aCode) {
         // implemented by subclasses for validation.
         // throws a runtime exception if invalid.
     }
 
-    private void setId(String anId) {
-        Validate.notNull(anId, "The basic identity is required.");
-        this.validateId(anId);
-        this.id = anId;
+    private void setCode(String aCode) {
+        Validate.notNull(aCode, "The basic identity is required.");
+        this.validateCode(aCode);
+        this.id = aCode;
     }
 
     @Override
-    public int compareTo(AbstractId o) {
+    public int compareTo(AbstractCode o) {
         return this.id().compareTo(o.id());
     }
 

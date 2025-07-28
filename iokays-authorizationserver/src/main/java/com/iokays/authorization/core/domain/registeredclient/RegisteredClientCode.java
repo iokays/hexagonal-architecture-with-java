@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.registeredclient;
 
-import com.iokays.common.domain.jpa.AbstractId;
+import com.iokays.common.domain.jpa.AbstractCode;
 import jakarta.persistence.Embeddable;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,20 +10,20 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Slf4j
 @Embeddable
-public class RegisteredClientId extends AbstractId {
+public class RegisteredClientCode extends AbstractCode {
 
-    protected RegisteredClientId() {
+    protected RegisteredClientCode() {
         super();
     }
 
-    public RegisteredClientId(String id) {
+    public RegisteredClientCode(String id) {
         super(id);
     }
 
-    public static RegisteredClientId makeRegisteredClientId() {
+    public static RegisteredClientCode makeRegisteredClientId() {
         String id = UUID.randomUUID().toString().replace("-", EMPTY);
         log.info("makeRegisteredClientId: {}", id);
-        return new RegisteredClientId(id);
+        return new RegisteredClientCode(id);
     }
 
 

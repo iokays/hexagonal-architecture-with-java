@@ -4,7 +4,7 @@ import com.iokays.authorization.core.adapter.web.model.EditGroupModel;
 import com.iokays.authorization.core.adapter.web.model.PageGroupModel;
 import com.iokays.authorization.core.adapter.web.model.SaveGroupModel;
 import com.iokays.authorization.core.application.service.GroupApplicationService;
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.adapter.DriverAdapter;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ public class GroupController {
                 pageable,
                 groupApplicationService.findAll(pageable),
                 v -> PageGroupModel.builder()
-                        .groupId(v.groupId().id())
+                        .groupId(v.groupId().code())
                         .groupName(v.groupName())
                         .authorities(v.authorities())
                         .createdDate(v.createdDate())
@@ -42,12 +42,12 @@ public class GroupController {
 
     @PutMapping
     public void editaAuthorities(@RequestBody EditGroupModel model) {
-        groupApplicationService.editAuthority(GroupId.of(model.groupId()), model.authorities());
+        groupApplicationService.editAuthority(GroupCode.of(model.groupId()), model.authorities());
     }
 
     @DeleteMapping("/{groupId}")
     public void delete(@PathVariable("groupId") final String groupId) {
-        groupApplicationService.delete(GroupId.of(groupId));
+        groupApplicationService.delete(GroupCode.of(groupId));
     }
 
 }

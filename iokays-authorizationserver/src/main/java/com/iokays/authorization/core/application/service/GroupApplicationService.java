@@ -2,7 +2,7 @@ package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.domain.group.Group;
 import com.iokays.authorization.core.domain.group.GroupAuthInfo;
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.domain.group.GroupRepository;
 import com.iokays.authorization.core.utils.Pages;
 import com.iokays.common.core.service.ApplicationService;
@@ -22,14 +22,14 @@ public class GroupApplicationService implements ApplicationService {
 
     private final GroupRepository groupRepository;
 
-    public GroupId save(String groupName, List<String> authorities) {
+    public GroupCode save(String groupName, List<String> authorities) {
         Group group = groupRepository.findByGroupName(groupName);
         if (null == group) {
             group = new Group(groupName);
             groupRepository.save(group);
         }
         group.editAuthorities(authorities);
-        return group.groupId();
+        return group.groupCode();
     }
 
     public GroupAuthInfo findGroupInfo(String groupName) {
@@ -40,7 +40,7 @@ public class GroupApplicationService implements ApplicationService {
         return group.authInfo();
     }
 
-    public void delete(GroupId groupId) {
+    public void delete(GroupCode groupId) {
         final var group = groupRepository.findByGroupId(groupId);
         if (null == group) {
             return;
@@ -49,7 +49,7 @@ public class GroupApplicationService implements ApplicationService {
 
     }
 
-    public void editAuthority(GroupId groupId, final List<String> authority) {
+    public void editAuthority(GroupCode groupId, final List<String> authority) {
         final Group group = Objects.requireNonNull(groupRepository.findByGroupId(groupId));
         group.editAuthorities(authority);
     }

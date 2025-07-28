@@ -3,7 +3,7 @@ package com.iokays;
 import com.iokays.authorization.core.application.service.GroupApplicationService;
 import com.iokays.authorization.core.application.service.UserApplicationService;
 import com.iokays.authorization.core.domain.group.GroupAuthInfo;
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.domain.user.Username;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class MyCreateAdminGroupRunner implements CommandLineRunner {
         final var groupName = "管理员";
 
         final GroupAuthInfo groupInfo = groupApplicationService.findGroupInfo(groupName);
-        GroupId groupId = null != groupInfo ? groupInfo.groupId() : null;
+        GroupCode groupId = null != groupInfo ? groupInfo.groupId() : null;
         if (groupId == null) {
             groupId = groupApplicationService.save(groupName, List.of("authorization:users:page", "authorization:groups:page"));
         }

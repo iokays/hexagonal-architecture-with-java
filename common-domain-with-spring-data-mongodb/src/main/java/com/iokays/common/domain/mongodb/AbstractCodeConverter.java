@@ -4,10 +4,10 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
 
 @WritingConverter
-public class AbstractIdConverter implements Converter<AbstractId, String> {
+public class AbstractCodeConverter implements Converter<AbstractCode, String> {
 
     @Override
-    public String convert(AbstractId source) {
+    public String convert(AbstractCode source) {
         return source.id();
     }
 }

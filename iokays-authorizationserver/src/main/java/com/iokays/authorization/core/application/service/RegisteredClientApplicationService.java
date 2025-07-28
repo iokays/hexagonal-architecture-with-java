@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.application.service;
 
 import com.iokays.authorization.core.domain.registeredclient.RegisteredClient;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.authorization.core.domain.registeredclient.RegisteredClientInfo;
 import com.iokays.authorization.core.domain.registeredclient.RegisteredClientRepository;
 import com.iokays.authorization.core.domain.registeredclient.commond.RegisterClient;
@@ -26,14 +26,14 @@ public class RegisteredClientApplicationService implements ApplicationService {
             @CacheEvict(value = "ClientRegistrationByClientId", key = "#registerClient.clientId"),
             @CacheEvict(value = "ClientRegistrationById", key = "#result.id")
     })
-    public RegisteredClientId save(RegisterClient registerClient) {
+    public RegisteredClientCode save(RegisterClient registerClient) {
         final RegisteredClient registeredClient = RegisteredClient.make(registerClient);
         registeredClientRepository.save(registeredClient);
         return registeredClient.registeredClientId();
     }
 
     @Cacheable(value = "ClientRegistrationById", key = "#id.id")
-    public RegisteredClientInfo findById(final RegisteredClientId id) {
+    public RegisteredClientInfo findById(final RegisteredClientCode id) {
         return registeredClientRepository.findByRegisteredClientId(id).info();
     }
 
@@ -45,7 +45,7 @@ public class RegisteredClientApplicationService implements ApplicationService {
     @Caching(evict = {
             @CacheEvict(value = "ClientRegistrationById", key = "#id.id")
     })
-    public void delete(final RegisteredClientId id) {
+    public void delete(final RegisteredClientCode id) {
         final var entity = registeredClientRepository.findByRegisteredClientId(id);
         registeredClientRepository.delete(entity);
     }

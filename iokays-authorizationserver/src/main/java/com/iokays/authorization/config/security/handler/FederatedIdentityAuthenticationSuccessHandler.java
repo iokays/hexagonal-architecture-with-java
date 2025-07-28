@@ -18,7 +18,7 @@ package com.iokays.authorization.config.security.handler;
 // tag::imports[]
 
 import com.iokays.authorization.core.application.service.OauthUserApplicationService;
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationCode;
 import com.iokays.authorization.core.domain.oauth2user.command.SaveOauthUser;
 import com.iokays.common.core.command.CommandId;
 import jakarta.servlet.ServletException;
@@ -56,7 +56,7 @@ public final class FederatedIdentityAuthenticationSuccessHandler implements Auth
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         if (authentication instanceof OAuth2AuthenticationToken oAuth2AuthenticationToken) {
-            final var clientRegistrationId = new RegistrationId(oAuth2AuthenticationToken.getAuthorizedClientRegistrationId());
+            final var clientRegistrationId = new RegistrationCode(oAuth2AuthenticationToken.getAuthorizedClientRegistrationId());
 
             if (oAuth2AuthenticationToken.getPrincipal() instanceof OidcUser oidcUser) {
                 this.oauthUserApplicationService.save(toSaveOauthUser(clientRegistrationId, oidcUser));
@@ -68,7 +68,7 @@ public final class FederatedIdentityAuthenticationSuccessHandler implements Auth
         this.delegate.onAuthenticationSuccess(request, response, authentication);
     }
 
-    private SaveOauthUser toSaveOauthUser(final RegistrationId registrationId, OAuth2User oauth2User) {
+    private SaveOauthUser toSaveOauthUser(final RegistrationCode registrationId, OAuth2User oauth2User) {
         return SaveOauthUser.builder()
                 .id(CommandId.generate())
                 .registrationId(registrationId)

@@ -13,7 +13,7 @@ public interface CustomerRepository {
 
     Optional<Customer> findByEmailAddress(final EmailAddress emailAddress);
 
-    Optional<Customer> findByCustomerId(final CustomerId customerId);
+    Optional<Customer> findByCustomerId(final CustomerCode customerId);
 
     void delete(Customer entity);
 

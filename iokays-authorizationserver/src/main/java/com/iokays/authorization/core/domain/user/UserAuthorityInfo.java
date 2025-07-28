@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.user;
 
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import lombok.Builder;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public record UserAuthorityInfo(
         Username username,
         Password password,
         Boolean enabled,
-        List<GroupId> groupIds,
+        List<GroupCode> groupIds,
         List<String> authorities
 ) {
 }

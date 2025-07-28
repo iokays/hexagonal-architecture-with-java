@@ -1,13 +1,13 @@
 package com.iokays.authorization.core.domain.registeredclient.event;
 
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.common.core.event.DomainEvent;
 import com.iokays.common.core.event.EventId;
 
 import java.time.Instant;
 
 public record ClientRegistered(EventId eventId,
-                               RegisteredClientId registeredClientId,
+                               RegisteredClientCode registeredClientId,
                                String clientId,
                                String clientName,
                                Instant registeredAt) implements DomainEvent<ClientRegistered> {

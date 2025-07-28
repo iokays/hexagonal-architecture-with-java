@@ -3,7 +3,7 @@ package com.iokays.authorization.core.domain.authorization;
 import com.iokays.authorization.core.domain.authorization.command.SaveAuthorization;
 import com.iokays.authorization.core.domain.authorization.event.AuthorizationCreated;
 import com.iokays.authorization.core.domain.authorization.event.AuthorizationUpdated;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.common.core.event.EventId;
 import com.iokays.common.domain.jpa.AbstractJpaAggregateRoot;
 import jakarta.persistence.AttributeOverride;
@@ -19,11 +19,11 @@ import java.util.Objects;
 @Table(name = "t_oauth2_authorization")
 public class Authorization extends AbstractJpaAggregateRoot<Authorization> {
 
-    @AttributeOverride(name = "id", column = @Column(name = "authorization_id", unique = true, length = 40, nullable = false))
-    private AuthorizationId authorizationId;
+    @AttributeOverride(name = "code", column = @Column(name = "authorization_code", unique = true, length = 40, nullable = false))
+    private AuthorizationCode authorizationCode;
 
-    @AttributeOverride(name = "id", column = @Column(name = "registeredClient_id", length = 40, nullable = false))
-    private RegisteredClientId registeredClientId;
+    @AttributeOverride(name = "code", column = @Column(name = "registeredClient_code", length = 40, nullable = false))
+    private RegisteredClientCode registeredClientCode;
 
     @Column(nullable = false)
     private String principalName;
@@ -91,17 +91,17 @@ public class Authorization extends AbstractJpaAggregateRoot<Authorization> {
     public Authorization(SaveAuthorization command) {
         this();
         this.set(command);
-        this.registerEvent(AuthorizationCreated.builder().eventId(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
+        this.registerEvent(AuthorizationCreated.builder().eventId(EventId.generate()).authorizationId(this.authorizationCode).createdAt(Instant.now()).build());
     }
 
     public void update(SaveAuthorization command) {
         this.set(command);
-        this.registerEvent(AuthorizationUpdated.builder().eventId(EventId.generate()).authorizationId(this.authorizationId).createdAt(Instant.now()).build());
+        this.registerEvent(AuthorizationUpdated.builder().eventId(EventId.generate()).authorizationId(this.authorizationCode).createdAt(Instant.now()).build());
     }
 
     private void set(SaveAuthorization command) {
-        this.authorizationId = command.authorizationId();
-        this.registeredClientId = command.registeredClientId();
+        this.authorizationCode = command.authorizationId();
+        this.registeredClientCode = command.registeredClientId();
         this.principalName = command.principalName();
         this.authorizationGrantType = command.authorizationGrantType();
         this.authorizedScopes = command.authorizedScopes();
@@ -146,8 +146,8 @@ public class Authorization extends AbstractJpaAggregateRoot<Authorization> {
 
     public AuthorizationInfo info() {
         return AuthorizationInfo.builder()
-                .authorizationId(this.authorizationId)
-                .registeredClientId(this.registeredClientId)
+                .authorizationId(this.authorizationCode)
+                .registeredClientId(this.registeredClientCode)
                 .principalName(this.principalName)
                 .authorizationGrantType(this.authorizationGrantType)
                 .authorizedScopes(this.authorizedScopes)
@@ -187,11 +187,11 @@ public class Authorization extends AbstractJpaAggregateRoot<Authorization> {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final Authorization that = (Authorization) o;
-        return Objects.equals(authorizationId, that.authorizationId);
+        return Objects.equals(authorizationCode, that.authorizationCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authorizationId, registeredClientId);
+        return Objects.hash(authorizationCode, registeredClientCode);
     }
 }

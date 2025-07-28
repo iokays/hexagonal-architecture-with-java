@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.oauth2user;
 
-import com.iokays.common.domain.jpa.AbstractId;
+import com.iokays.common.domain.jpa.AbstractCode;
 import jakarta.persistence.Embeddable;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,20 +10,20 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Slf4j
 @Embeddable
-public class OauthUserId extends AbstractId {
+public class OauthUserCode extends AbstractCode {
 
-    protected OauthUserId() {
+    protected OauthUserCode() {
         super();
     }
 
-    public OauthUserId(String id) {
+    public OauthUserCode(String id) {
         super(id);
     }
 
-    public static OauthUserId makeUserId() {
+    public static OauthUserCode makeUserId() {
         String id = UUID.randomUUID().toString().replace("-", EMPTY);
         log.info("makeOauth2UserId: {}", id);
-        return new OauthUserId(id);
+        return new OauthUserCode(id);
     }
 
 }

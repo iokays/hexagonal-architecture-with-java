@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 public record GroupAuthorityInfo(
-        GroupId groupId,
+        GroupCode groupId,
         String groupName,
         List<String> authorities,
         LocalDateTime createdDate,

@@ -14,8 +14,8 @@ import java.util.Objects;
 public class Group extends AbstractJpaAggregateRoot<Group> {
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "group_id", length = 40, unique = true, nullable = false))
-    private GroupId groupId;
+    @AttributeOverride(name = "code", column = @Column(name = "group_code", length = 40, unique = true, nullable = false))
+    private GroupCode groupCode;
 
     private String groupName;
 
@@ -29,17 +29,17 @@ public class Group extends AbstractJpaAggregateRoot<Group> {
 
     public Group(String groupName) {
         this();
-        this.groupId = GroupId.makeGroupId();
+        this.groupCode = GroupCode.makeGroupCode();
         this.groupName = Validate.notBlank(groupName, "groupName must not be blank");
     }
 
-    public GroupId groupId() {
-        return this.groupId;
+    public GroupCode groupCode() {
+        return this.groupCode;
     }
 
     public GroupAuthInfo authInfo() {
         return GroupAuthInfo.builder()
-                .groupId(this.groupId)
+                .groupId(this.groupCode)
                 .groupName(this.groupName)
                 .authorities(CollectionUtils.emptyIfNull(this.authorities).stream()
                         .map(GroupAuthority::authority).toList())
@@ -50,7 +50,7 @@ public class Group extends AbstractJpaAggregateRoot<Group> {
 
     public GroupAuthorityInfo authorityInfo() {
         return GroupAuthorityInfo.builder()
-                .groupId(this.groupId)
+                .groupId(this.groupCode)
                 .groupName(this.groupName)
                 .authorities(CollectionUtils.emptyIfNull(this.authorities).stream().map(GroupAuthority::authority).toList())
                 .createdDate(this.getCreatedDate())
@@ -85,12 +85,12 @@ public class Group extends AbstractJpaAggregateRoot<Group> {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final Group group = (Group) o;
-        return Objects.equals(groupId, group.groupId);
+        return Objects.equals(groupCode, group.groupCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(groupId);
+        return Objects.hashCode(groupCode);
     }
 
 }

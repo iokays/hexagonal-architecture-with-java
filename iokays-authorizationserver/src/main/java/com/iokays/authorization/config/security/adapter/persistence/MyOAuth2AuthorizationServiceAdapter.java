@@ -9,10 +9,10 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.iokays.authorization.core.application.service.AuthorizationApplicationService;
 import com.iokays.authorization.core.application.service.RegisteredClientApplicationService;
-import com.iokays.authorization.core.domain.authorization.AuthorizationId;
+import com.iokays.authorization.core.domain.authorization.AuthorizationCode;
 import com.iokays.authorization.core.domain.authorization.AuthorizationInfo;
 import com.iokays.authorization.core.domain.authorization.command.SaveAuthorization;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.common.core.command.CommandId;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
@@ -80,12 +80,12 @@ public class MyOAuth2AuthorizationServiceAdapter implements OAuth2AuthorizationS
     @Override
     public void remove(OAuth2Authorization authorization) {
         Validate.notNull(authorization, "authorization cannot be null");
-        this.authorizationApplicationService.remove(new AuthorizationId(authorization.getId()));
+        this.authorizationApplicationService.remove(new AuthorizationCode(authorization.getId()));
     }
 
     @Override
     public OAuth2Authorization findById(String id) {
-        final var info = authorizationApplicationService.findByAuthorizationId(new AuthorizationId(id));
+        final var info = authorizationApplicationService.findByAuthorizationId(new AuthorizationCode(id));
         return toOAuth2Authorization(info);
     }
 
@@ -104,7 +104,7 @@ public class MyOAuth2AuthorizationServiceAdapter implements OAuth2AuthorizationS
         }
 
         OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(build(registeredClient))
-                .id(info.authorizationId().id())
+                .id(info.authorizationId().code())
                 .principalName(info.principalName())
                 .authorizationGrantType(resolveAuthorizationGrantType(info.authorizationGrantType()))
                 .authorizedScopes(StringUtils.commaDelimitedListToSet(info.authorizedScopes()))
@@ -169,8 +169,8 @@ public class MyOAuth2AuthorizationServiceAdapter implements OAuth2AuthorizationS
 
     private SaveAuthorization toCreateAuthorization(OAuth2Authorization authorization) {
         final var builder = SaveAuthorization.builder().id(CommandId.generate());
-        builder.authorizationId(new AuthorizationId(authorization.getId()));
-        builder.registeredClientId(new RegisteredClientId(authorization.getRegisteredClientId()));
+        builder.authorizationId(new AuthorizationCode(authorization.getId()));
+        builder.registeredClientId(new RegisteredClientCode(authorization.getRegisteredClientId()));
         builder.principalName(authorization.getPrincipalName());
         builder.authorizationGrantType(authorization.getAuthorizationGrantType().getValue());
         builder.authorizedScopes(StringUtils.collectionToDelimitedString(authorization.getAuthorizedScopes(), ","));

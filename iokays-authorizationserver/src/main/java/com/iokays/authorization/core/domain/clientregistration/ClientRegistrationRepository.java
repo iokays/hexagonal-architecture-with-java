@@ -8,7 +8,7 @@ public interface ClientRegistrationRepository extends Repository {
 
     ClientRegistration findByClientName(String clientName);
 
-    ClientRegistration findByRegistrationId(RegistrationId registrationId);
+    ClientRegistration findByRegistrationId(RegistrationCode registrationId);
 
     List<ClientRegistration> findAll();
 

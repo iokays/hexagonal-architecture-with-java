@@ -1,7 +1,7 @@
 package com.iokays.authorization.core.domain.authorization.command;
 
-import com.iokays.authorization.core.domain.authorization.AuthorizationId;
-import com.iokays.authorization.core.domain.registeredclient.RegisteredClientId;
+import com.iokays.authorization.core.domain.authorization.AuthorizationCode;
+import com.iokays.authorization.core.domain.registeredclient.RegisteredClientCode;
 import com.iokays.common.core.command.Command;
 import com.iokays.common.core.command.CommandId;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import java.time.Instant;
 @Builder
 public record SaveAuthorization(
         CommandId id,
-        AuthorizationId authorizationId,
-        RegisteredClientId registeredClientId,
+        AuthorizationCode authorizationId,
+        RegisteredClientCode registeredClientId,
         String principalName,
         String authorizationGrantType,
         String authorizedScopes,

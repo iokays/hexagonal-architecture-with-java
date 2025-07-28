@@ -11,25 +11,25 @@ import java.io.Serializable;
  * 业务主键
  */
 @MappedSuperclass
-public abstract class AbstractId implements Identity, Comparable<AbstractId>, Serializable {
+public abstract class AbstractCode implements Identity, Comparable<AbstractCode>, Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private String code;
 
-    protected AbstractId(String anId) {
+    protected AbstractCode(String code) {
         this();
-        this.setId(anId);
+        this.setCode(code);
     }
 
-    protected AbstractId() {
+    protected AbstractCode() {
         super();
     }
 
     @Override
-    public String id() {
-        return this.id;
+    public String code() {
+        return this.code;
     }
 
     @Override
@@ -38,8 +38,8 @@ public abstract class AbstractId implements Identity, Comparable<AbstractId>, Se
             return true;
         }
 
-        if (anObject instanceof AbstractId other) {
-            return this.id().equals(other.id());
+        if (anObject instanceof AbstractCode other) {
+            return this.code().equals(other.code());
         }
 
         return false;
@@ -47,12 +47,12 @@ public abstract class AbstractId implements Identity, Comparable<AbstractId>, Se
 
     @Override
     public int hashCode() {
-        return +(this.hashOddValue() * this.hashPrimeValue()) + this.id().hashCode();
+        return +(this.hashOddValue() * this.hashPrimeValue()) + this.code().hashCode();
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " [id=" + id + "]";
+        return this.getClass().getSimpleName() + " [id=" + code + "]";
     }
 
     protected int hashOddValue() {
@@ -63,20 +63,20 @@ public abstract class AbstractId implements Identity, Comparable<AbstractId>, Se
         return 263;
     }
 
-    protected void validateId(String anId) {
+    protected void validateCode(String aCode) {
         // implemented by subclasses for validation.
         // throws a runtime exception if invalid.
     }
 
-    private void setId(String anId) {
-        Validate.notNull(anId, "The basic identity is required.");
-        this.validateId(anId);
-        this.id = anId;
+    private void setCode(String aCode) {
+        Validate.notNull(aCode, "The basic identity is required.");
+        this.validateCode(aCode);
+        this.code = aCode;
     }
 
     @Override
-    public int compareTo(AbstractId o) {
-        return this.id().compareTo(o.id());
+    public int compareTo(AbstractCode o) {
+        return this.code().compareTo(o.code());
     }
 
 }

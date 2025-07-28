@@ -19,7 +19,7 @@ public class CustomerApplicationService {
 
     @Transactional
     @DistributedLock(value = "customer", key = "#cmd.emailAddress.value") //这里未实现
-    public CustomerId registerCustomer(final RegisterCustomer cmd) {
+    public CustomerCode registerCustomer(final RegisterCustomer cmd) {
         final EmailAddress emailAddress = cmd.emailAddress();
 
         Validate.isTrue(customers.findByEmailAddress(emailAddress).isEmpty(), String.format("给定的电子邮件地址: %s 已经存在", emailAddress));
@@ -32,7 +32,7 @@ public class CustomerApplicationService {
 
     @Transactional
     @DistributedLock(value = "customer", key = "#cmd.emailAddress.value") //这里未实现
-    public void updateFullName(CustomerId customerId, FullName fullName) {
+    public void updateFullName(CustomerCode customerId, FullName fullName) {
         customers.findByCustomerId(customerId).ifPresent(customer -> {
             customer.fullName(fullName);
             // customers.save(customer); // 因为使用的Spring Data Jpa, 需要使用save触发事件发送, 如果使用 AbstractPersistableAggregateRoot, 则不需要
@@ -41,7 +41,7 @@ public class CustomerApplicationService {
 
     @Transactional
     @DistributedLock(value = "customer", key = "#cmd.emailAddress.value") //这里未实现
-    public void deleteCustomer(CustomerId customerId) {
+    public void deleteCustomer(CustomerCode customerId) {
         customers.findByCustomerId(customerId).ifPresent(customers::delete);
     }
 

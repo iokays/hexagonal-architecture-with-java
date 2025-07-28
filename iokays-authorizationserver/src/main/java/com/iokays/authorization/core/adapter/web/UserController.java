@@ -8,7 +8,7 @@ import com.iokays.authorization.core.adapter.web.model.UserGroupModel;
 import com.iokays.authorization.core.application.service.GroupApplicationService;
 import com.iokays.authorization.core.application.service.UserApplicationService;
 import com.iokays.authorization.core.application.service.UserQueryApplicationService;
-import com.iokays.authorization.core.domain.group.GroupId;
+import com.iokays.authorization.core.domain.group.GroupCode;
 import com.iokays.authorization.core.domain.user.Username;
 import com.iokays.authorization.core.domain.user.command.RegisterUser;
 import com.iokays.authorization.core.utils.Pages;
@@ -61,7 +61,7 @@ public class UserController {
     public void addGroup(@RequestBody final CreateMemberGroupsModel model) {
         userApplicationService.addGroup(
                 Username.of(model.username()),
-                model.groupIds().stream().map(GroupId::of).toList()
+                model.groupIds().stream().map(GroupCode::of).toList()
         );
     }
 
@@ -79,7 +79,7 @@ public class UserController {
 
         return groups.stream().map(group ->
                 UserGroupModel.builder()
-                        .groupId(group.groupId().id())
+                        .groupId(group.groupId().code())
                         .groupName(group.groupName())
                         .authorized(authorized.contains(group.groupId()))
                         .build()

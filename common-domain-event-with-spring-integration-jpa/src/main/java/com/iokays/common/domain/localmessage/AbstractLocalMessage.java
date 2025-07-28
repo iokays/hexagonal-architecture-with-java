@@ -28,8 +28,8 @@ import java.util.Objects;
 public abstract class AbstractLocalMessage<T extends AbstractLocalMessage<?>> extends IdentifiedDomainObject implements Entity<T> {
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "message_id", length = 64, nullable = false, updatable = false))
-    private LocalMessageId messageId;
+    @AttributeOverride(name = "code", column = @Column(name = "message_code", length = 64, nullable = false, updatable = false))
+    private LocalMessageCode messageCode;
 
 
     private String messageType;
@@ -60,7 +60,7 @@ public abstract class AbstractLocalMessage<T extends AbstractLocalMessage<?>> ex
 
     protected AbstractLocalMessage(final GenericMessage<?> message) {
         this();
-        this.messageId = new LocalMessageId(Objects.requireNonNull(message.getHeaders().getId()).toString());
+        this.messageCode = new LocalMessageCode(Objects.requireNonNull(message.getHeaders().getId()).toString());
 
         final Object payload = message.getPayload();
         this.messageType = payload.getClass().getSimpleName();
@@ -68,8 +68,8 @@ public abstract class AbstractLocalMessage<T extends AbstractLocalMessage<?>> ex
         this.messageBytes = LocalMessageMapper.toBytes(payload);
     }
 
-    protected LocalMessageId localMessageId() {
-        return this.messageId;
+    protected LocalMessageCode localMessageCode() {
+        return this.messageCode;
     }
 
     protected void validateMessageBytes(Object body) {
@@ -78,6 +78,6 @@ public abstract class AbstractLocalMessage<T extends AbstractLocalMessage<?>> ex
 
     @Override
     public boolean sameIdentityAs(T other) {
-        return this.getClass().equals(other.getClass()) && this.localMessageId().equals(other.localMessageId());
+        return this.getClass().equals(other.getClass()) && this.localMessageCode().equals(other.localMessageCode());
     }
 }

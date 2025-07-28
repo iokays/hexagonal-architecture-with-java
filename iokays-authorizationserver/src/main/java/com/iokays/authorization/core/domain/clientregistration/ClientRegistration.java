@@ -18,9 +18,9 @@ import java.util.Set;
 @Table(name = "t_client_registrations")
 public class ClientRegistration extends AbstractJpaAggregateRoot<ClientRegistration> {
 
-    @AttributeOverride(name = "id", column = @Column(name = "client_registration_id", length = 40, nullable = false))
+    @AttributeOverride(name = "code", column = @Column(name = "client_registration_code", length = 40, nullable = false))
     @Embedded
-    private RegistrationId registrationId;
+    private RegistrationCode registrationCode;
 
     @Enumerated(value = EnumType.STRING)
     private ClientRegistrationType clientRegistrationType;
@@ -64,7 +64,7 @@ public class ClientRegistration extends AbstractJpaAggregateRoot<ClientRegistrat
     }
 
     public ClientRegistration(CreateClientRegistration command) {
-        this.registrationId = command.registrationId();
+        this.registrationCode = command.registrationId();
         this.clientRegistrationType = command.clientRegistrationType();
         this.clientId = command.clientId();
         this.clientName = command.clientName();
@@ -82,13 +82,13 @@ public class ClientRegistration extends AbstractJpaAggregateRoot<ClientRegistrat
         this.andEvent(new ClientRegistrationCreated(EventId.generate(), this.clientName, LocalDateTime.now()));
     }
 
-    public RegistrationId clientRegistrationId() {
-        return this.registrationId;
+    public RegistrationCode clientRegistrationCode() {
+        return this.registrationCode;
     }
 
     public ClientRegistrationInfo info() {
         return ClientRegistrationInfo.builder()
-                .registrationId(this.registrationId)
+                .registrationId(this.registrationCode)
                 .clientRegistrationType(this.clientRegistrationType)
                 .clientId(this.clientId)
                 .clientName(this.clientName)
@@ -111,11 +111,11 @@ public class ClientRegistration extends AbstractJpaAggregateRoot<ClientRegistrat
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final ClientRegistration that = (ClientRegistration) o;
-        return Objects.equals(registrationId, that.registrationId);
+        return Objects.equals(registrationCode, that.registrationCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(registrationId);
+        return Objects.hash(registrationCode);
     }
 }

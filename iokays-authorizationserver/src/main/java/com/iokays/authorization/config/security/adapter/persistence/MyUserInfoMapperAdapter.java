@@ -2,7 +2,7 @@ package com.iokays.authorization.config.security.adapter.persistence;
 
 import com.iokays.authorization.core.application.service.OauthUserApplicationService;
 import com.iokays.authorization.core.application.service.UserApplicationService;
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationCode;
 import com.iokays.authorization.core.domain.oauth2user.OauthUserInfo;
 import com.iokays.authorization.core.domain.user.UserInfo;
 import lombok.AllArgsConstructor;
@@ -70,7 +70,7 @@ public class MyUserInfoMapperAdapter implements Function<OidcUserInfoAuthenticat
 
         if (Objects.nonNull(oauthLogin)) {
             //本业务系统的用户信息
-            return toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new RegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
+            return toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new RegistrationCode(oauthLogin.getAuthorizedClientRegistrationId())));
 
             //第三方的用户信息
 //            Map<String, Object> thirdPartyClaims = extractClaims(oauthLogin);
@@ -83,14 +83,14 @@ public class MyUserInfoMapperAdapter implements Function<OidcUserInfoAuthenticat
 
     public OidcUserInfo toOidcUserInfo(UserInfo userInfo) {
         return OidcUserInfo.builder()
-                .subject(userInfo.username().id())
-                .name(userInfo.username().id())
+                .subject(userInfo.username().code())
+                .name(userInfo.username().code())
                 .build();
     }
 
     public OidcUserInfo toOidcUserInfo(OauthUserInfo userInfo) {
         return OidcUserInfo.builder()
-                .subject(userInfo.oauthUserId().id())
+                .subject(userInfo.oauthUserId().code())
                 .name(userInfo.name())
                 .givenName(userInfo.givenName())
                 .familyName(userInfo.familyName())
@@ -146,7 +146,7 @@ public class MyUserInfoMapperAdapter implements Function<OidcUserInfoAuthenticat
 //            });
 
             //本业务系统的用户信息
-            final OidcUserInfo oidcUserInfo = toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new RegistrationId(oauthLogin.getAuthorizedClientRegistrationId())));
+            final OidcUserInfo oidcUserInfo = toOidcUserInfo(oauthUserApplicationService.findBySubjectAndClientRegistrationId(principal.getName(), new RegistrationCode(oauthLogin.getAuthorizedClientRegistrationId())));
             context.getClaims().claims(claims -> claims.putAll(oidcUserInfo.getClaims()));
             return;
         }

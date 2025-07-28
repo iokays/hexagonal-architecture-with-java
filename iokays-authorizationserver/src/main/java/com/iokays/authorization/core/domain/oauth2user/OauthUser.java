@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.domain.oauth2user;
 
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationCode;
 import com.iokays.authorization.core.domain.oauth2user.command.SaveOauthUser;
 import com.iokays.common.domain.jpa.ConcurrencySafeEntity;
 import jakarta.persistence.*;
@@ -18,12 +18,12 @@ import java.util.Objects;
 public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "oauth_user_id", length = 40, unique = true, nullable = false))
-    private OauthUserId oauthUserId;
+    @AttributeOverride(name = "code", column = @Column(name = "oauth_user_code", length = 40, unique = true, nullable = false))
+    private OauthUserCode oauthUserCode;
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "client_registration_id", length = 40, nullable = false))
-    private RegistrationId registrationId;
+    @AttributeOverride(name = "code", column = @Column(name = "client_registration_code", length = 40, nullable = false))
+    private RegistrationCode registrationCode;
 
     @Column(nullable = false)
     private String subject;
@@ -94,8 +94,8 @@ public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
 
     public OauthUser(final SaveOauthUser command) {
         this();
-        this.oauthUserId = OauthUserId.makeUserId();
-        this.registrationId = command.registrationId();
+        this.oauthUserCode = OauthUserCode.makeUserId();
+        this.registrationCode = command.registrationId();
         this.set(command);
     }
 
@@ -131,8 +131,8 @@ public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
 
     public OauthUserInfo info() {
         return OauthUserInfo.builder()
-                .oauthUserId(this.oauthUserId)
-                .registrationId(this.registrationId)
+                .oauthUserId(this.oauthUserCode)
+                .registrationId(this.registrationCode)
                 .subject(this.subject)
                 .name(this.name)
                 .givenName(this.givenName)
@@ -160,11 +160,11 @@ public class OauthUser extends ConcurrencySafeEntity<OauthUser> {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final OauthUser oauthUser = (OauthUser) o;
-        return Objects.equals(oauthUserId, oauthUser.oauthUserId);
+        return Objects.equals(oauthUserCode, oauthUser.oauthUserCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(oauthUserId);
+        return Objects.hashCode(oauthUserCode);
     }
 }

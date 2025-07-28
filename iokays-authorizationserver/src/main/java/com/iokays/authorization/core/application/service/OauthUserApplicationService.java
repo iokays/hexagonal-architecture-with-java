@@ -1,6 +1,6 @@
 package com.iokays.authorization.core.application.service;
 
-import com.iokays.authorization.core.domain.clientregistration.RegistrationId;
+import com.iokays.authorization.core.domain.clientregistration.RegistrationCode;
 import com.iokays.authorization.core.domain.oauth2user.OauthUser;
 import com.iokays.authorization.core.domain.oauth2user.OauthUserInfo;
 import com.iokays.authorization.core.domain.oauth2user.OauthUserRepository;
@@ -33,7 +33,7 @@ public class OauthUserApplicationService implements ApplicationService {
     }
 
     @Cacheable(value = "OauthUserInfoBySubjectAndClientRegistrationId", key = "#subject + '_' + #registrationId")
-    public OauthUserInfo findBySubjectAndClientRegistrationId(String subject, RegistrationId registrationId) {
+    public OauthUserInfo findBySubjectAndClientRegistrationId(String subject, RegistrationCode registrationId) {
         return oauthUserRepository
                 .findBySubjectAndRegistrationId(subject, registrationId)
                 .map(OauthUser::info)

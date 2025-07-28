@@ -16,8 +16,8 @@ import java.util.Objects;
 @Entity(name = "t_customer")
 public class Customer extends AbstractHibernateAggregateRoot<Customer> {
 
-    @AttributeOverride(name = "id", column = @Column(name = "customer_id"))
-    private CustomerId customerId;
+    @AttributeOverride(name = "code", column = @Column(name = "customer_code"))
+    private CustomerCode customerCode;
 
     @AttributeOverride(name = "value", column = @Column(name = "email_address"))
     private EmailAddress emailAddress;
@@ -38,14 +38,14 @@ public class Customer extends AbstractHibernateAggregateRoot<Customer> {
 
     public Customer(FullName fullName, Gender gender, EmailAddress emailAddress) {
         this();
-        this.customerId = CustomerId.makeCustomerId();
+        this.customerCode = CustomerCode.makeCustomerId();
         this.registeredAt = LocalDateTime.now();
 
         this.fullName = Validate.notNull(fullName, "name must not be null");
         this.gender = Validate.notNull(gender, "gender must not be null");
         this.emailAddress = Validate.notNull(emailAddress, "emailAddress must not be null");
 
-        this.registerEvent(CustomerRegistered.issue(this.customerId, this.registeredAt));
+        this.registerEvent(CustomerRegistered.issue(this.customerCode, this.registeredAt));
     }
 
     public static Customer registerBy(final RegisterCustomer cmd) {
@@ -59,22 +59,22 @@ public class Customer extends AbstractHibernateAggregateRoot<Customer> {
 
     public void fullName(FullName fullName) {
         this.fullName = fullName;
-        this.registerEvent(CustomerFullNameUpdated.issue(this.customerId, this.fullName, LocalDateTime.now()));
+        this.registerEvent(CustomerFullNameUpdated.issue(this.customerCode, this.fullName, LocalDateTime.now()));
     }
 
     @PreRemove //Hibernate 触发机制
     @JpaRegisterDeleteEvent //Spring Data JPA 触发机制
     protected void delete() {
-        this.registerEvent(CustomerDeleted.issue(this.customerId));
+        this.registerEvent(CustomerDeleted.issue(this.customerCode));
     }
 
-    public CustomerId customerId() {
-        return customerId;
+    public CustomerCode customerId() {
+        return customerCode;
     }
 
     @Override
     public boolean sameIdentityAs(Customer other) {
-        return Objects.equals(this.customerId, other.customerId);
+        return Objects.equals(this.customerCode, other.customerCode);
     }
 
 }
